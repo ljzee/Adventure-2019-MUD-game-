@@ -2,16 +2,10 @@
 // Created by Adrien on 1/17/2019.
 //
 
+#include "world.h"
+
 #include <iostream>
 
-
-class World {
-
-public:
-    void getMessageFromServer(std::string msg);
-    std::string getMotd();
-    World();
-};
 
 void World::getMessageFromServer(std::string msg) {
     std::cout << "This is in the World Class. From client-server: " << msg << std::endl;
