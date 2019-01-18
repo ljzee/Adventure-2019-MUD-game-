@@ -56,7 +56,7 @@ processMessages(Server &server,
             std::cout << "User: " << message.connection.id << " requested the MOTD from the world\n";
             result << world.getMotd() << "\n";
         } else {
-            world.getMessageFromServer(message.text);
+            world.getMessageFromServer(message.text, message.connection.id);
             result << message.connection.id << "> " << message.text << "\n";
         }
     }

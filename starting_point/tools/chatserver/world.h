@@ -10,7 +10,7 @@
 class World {
 
 public:
-    void getMessageFromServer(std::string msg);
+    void getMessageFromServer(std::string msg, uintptr_t id);
     std::string getMotd();
     World();
 };
