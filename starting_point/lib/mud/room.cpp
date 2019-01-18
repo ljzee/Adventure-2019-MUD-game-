@@ -2,9 +2,6 @@
 // Created by Alex on 1/18/2019.
 //
 
-#ifndef ROOM_H
-#define ROOM_H
-
 #include <iostream>
 #include <string>
 #include <stdlib.h>     /* srand, rand */
