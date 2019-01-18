@@ -1,0 +1,37 @@
+[
+{
+  "directory": "/Users/dev/CLionProjects/adventure2019/adventurebuild/lib/networking",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++   -I/Users/dev/CLionProjects/adventure2019/starting_point/lib/networking/include -I/usr/local/include -I/Users/dev/CLionProjects/adventure2019/starting_point/lib/networking/src   -Wall -fno-rtti -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -std=gnu++1z -o CMakeFiles/networking.dir/src/Server.cpp.o -c /Users/dev/CLionProjects/adventure2019/starting_point/lib/networking/src/Server.cpp",
+  "file": "/Users/dev/CLionProjects/adventure2019/starting_point/lib/networking/src/Server.cpp"
+},
+{
+  "directory": "/Users/dev/CLionProjects/adventure2019/adventurebuild/lib/networking",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++   -I/Users/dev/CLionProjects/adventure2019/starting_point/lib/networking/include -I/usr/local/include -I/Users/dev/CLionProjects/adventure2019/starting_point/lib/networking/src   -Wall -fno-rtti -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -std=gnu++1z -o CMakeFiles/networking.dir/src/Client.cpp.o -c /Users/dev/CLionProjects/adventure2019/starting_point/lib/networking/src/Client.cpp",
+  "file": "/Users/dev/CLionProjects/adventure2019/starting_point/lib/networking/src/Client.cpp"
+},
+{
+  "directory": "/Users/dev/CLionProjects/adventure2019/adventurebuild/lib/user",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++   -I/Users/dev/CLionProjects/adventure2019/starting_point/lib/user/include -I/usr/local/include -I/Users/dev/CLionProjects/adventure2019/starting_point/lib/user/src -I/Users/dev/CLionProjects/adventure2019/starting_point/lib/networking/include   -Wall -fno-rtti -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -std=gnu++1z -o CMakeFiles/user.dir/src/User.cpp.o -c /Users/dev/CLionProjects/adventure2019/starting_point/lib/user/src/User.cpp",
+  "file": "/Users/dev/CLionProjects/adventure2019/starting_point/lib/user/src/User.cpp"
+},
+{
+  "directory": "/Users/dev/CLionProjects/adventure2019/adventurebuild/tools/chatserver",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++   -I/Users/dev/CLionProjects/adventure2019/starting_point/lib/networking/include -I/usr/local/include -I/Users/dev/CLionProjects/adventure2019/starting_point/lib/user/include   -Wall -fno-rtti -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -std=gnu++1z -o CMakeFiles/chatserver.dir/chatserver.cpp.o -c /Users/dev/CLionProjects/adventure2019/starting_point/tools/chatserver/chatserver.cpp",
+  "file": "/Users/dev/CLionProjects/adventure2019/starting_point/tools/chatserver/chatserver.cpp"
+},
+{
+  "directory": "/Users/dev/CLionProjects/adventure2019/adventurebuild/tools/chatserver",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++   -I/Users/dev/CLionProjects/adventure2019/starting_point/lib/networking/include -I/usr/local/include -I/Users/dev/CLionProjects/adventure2019/starting_point/lib/user/include   -Wall -fno-rtti -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -std=gnu++1z -o CMakeFiles/chatserver.dir/world.cpp.o -c /Users/dev/CLionProjects/adventure2019/starting_point/tools/chatserver/world.cpp",
+  "file": "/Users/dev/CLionProjects/adventure2019/starting_point/tools/chatserver/world.cpp"
+},
+{
+  "directory": "/Users/dev/CLionProjects/adventure2019/adventurebuild/tools/chatclient",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++   -I/Users/dev/CLionProjects/adventure2019/starting_point/lib/networking/include -I/usr/local/include   -Wall -fno-rtti -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -std=gnu++1z -o CMakeFiles/chatclient.dir/chatclient.cpp.o -c /Users/dev/CLionProjects/adventure2019/starting_point/tools/chatclient/chatclient.cpp",
+  "file": "/Users/dev/CLionProjects/adventure2019/starting_point/tools/chatclient/chatclient.cpp"
+},
+{
+  "directory": "/Users/dev/CLionProjects/adventure2019/adventurebuild/tools/chatclient",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++   -I/Users/dev/CLionProjects/adventure2019/starting_point/lib/networking/include -I/usr/local/include   -Wall -fno-rtti -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk   -std=gnu++1z -o CMakeFiles/chatclient.dir/ChatWindow.cpp.o -c /Users/dev/CLionProjects/adventure2019/starting_point/tools/chatclient/ChatWindow.cpp",
+  "file": "/Users/dev/CLionProjects/adventure2019/starting_point/tools/chatclient/ChatWindow.cpp"
+}
+]
