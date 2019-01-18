@@ -55,6 +55,14 @@ processMessages(Server &server,
         } else if (message.text == "!motd") {
             std::cout << "User: " << message.connection.id << " requested the MOTD from the world\n";
             result << world.getMotd() << "\n";
+          else if (message.text.subtr(4) == "!NEW" ) {
+            std::cout << "Connection: " << message.connection.id << " requests a new user account\n";
+            //call user creation with credentials following NEW
+          }
+          else if (message.text.substr(6) == "!LOGIN") {
+            std::cout << "Connection: " <<
+          }
+          else if (message.text)
         } else {
             world.getMessageFromServer(message.text, message.connection.id);
             result << message.connection.id << "> " << message.text << "\n";
