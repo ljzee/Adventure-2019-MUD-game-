@@ -60,7 +60,7 @@ processMessages(Server &server,
             //call user creation with credentials following NEW
           }
           else if (message.text.substr(6) == "!LOGIN") {
-            std::cout << "Connection: " <<
+            std::cout << "Connection: " << message.connectionlid << " attempted login\n";
           }
           else if (message.text)
         } else {
