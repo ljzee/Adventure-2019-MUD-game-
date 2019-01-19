@@ -1,10 +1,9 @@
 # adventure2019
 
-To clone my branch:
 
-git clone git@csil-git1.cs.surrey.sfu.ca:373-19-1-babka/adventure2019.git
+Merged w/ starting_point branch, created by Adrien ...
 
-git checkout starting_point
+
 
 To build with cmake:
 
