@@ -22,14 +22,23 @@ void World::getMessageFromServer(std::string msg, uintptr_t id) {
         message += " " + *beg;
     }
 
-    if(message.find("say") == 0) {
-        cout << id << " says:" << message << endl;
-    } else if(message.find("yell") == 0) {
+//    if(boost::iequals(cmd, "say")) {
+//        cout << id << " says:" << message << endl;
+//    } else if(boost::iequals(cmd, "yell")) {
+//        cout << id << " yells:" << message << endl;
+//    } else if(boost::iequals(cmd, "tell")) {
+//        cout << id << " tells someone:" << message << endl;
+//    } else {
+//        cout << id << " entered an invalid command" << endl;
+//    }
+
+    if(boost::starts_with(cmd, "yell")) {
         cout << id << " yells:" << message << endl;
-    } else if(message.find("tell") == 0) {
-        cout << id << " tells someone:" << message << endl;
-    } else (){
-        cout << id << "" << endl;
+    } else if(boost::starts_with(cmd, "tell")) {
+        //replace 2nd id with another users id
+        cout << id << " tells:" << id << message << endl;
+    } else {
+        cout << id << " says:" << msg << endl;
     }
 
 }
