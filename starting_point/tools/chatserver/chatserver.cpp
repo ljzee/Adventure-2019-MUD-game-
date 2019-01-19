@@ -7,7 +7,7 @@
 
 
 #include "Server.h"
-#include "World.h"
+#include "world.h"
 
 #include <fstream>
 #include <iostream>
