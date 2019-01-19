@@ -8,6 +8,7 @@
 
 #include "Server.h"
 #include "World.h"
+#include "User.h"
 
 #include <fstream>
 #include <iostream>
@@ -29,6 +30,7 @@ void
 onConnect(Connection c) {
     std::cout << "New connection found: " << c.id << "\n";
     clients.push_back(c);
+    User user{"User1", "Password1", c};
 }
 
 

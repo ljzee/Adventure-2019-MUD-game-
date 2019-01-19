@@ -5,11 +5,16 @@
 #include "../include/User.h"
 
 
-
-User(string username, string password, Roles role)
+User::User(std::string username, std::string password, networking::Connection connection)
     : Username(username),
       Password(password),
-      Role(role)
+      CurrentConnection(connection),
+      Authenticated(false),
+      Role(User::Unknown)
 {
-    std::cout << "New user has been created" << endl;
+    std::cout << "New user has been created" << std::endl;
 };
+
+bool User::isAuthenticated(){
+    return this->Authenticated;
+}

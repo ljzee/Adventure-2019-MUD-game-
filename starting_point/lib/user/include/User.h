@@ -7,24 +7,28 @@
 
 #include <iostream>
 #include <boost/algorithm/string.hpp>
-
-using namespace boost;
+#include "Server.h"
 
 class User {
 
 public:
     enum Roles
     {
-        WorldBuilder = 0,
-        Casual
+        Unknown = 0,
+        Casual,
+        WorldBuilder
     };
 
-    User(string username, string password, Roles role);
+    User(std::string username, std::string password, networking::Connection connection);
+
+    bool isAuthenticated();
 
 private:
 
     std::string Username;
     std::string Password;
+    networking::Connection CurrentConnection;
+    bool Authenticated;
     Roles Role;
 
 };
