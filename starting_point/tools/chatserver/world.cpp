@@ -6,6 +6,7 @@
 #include <iostream>
 #include <boost/tokenizer.hpp>
 #include <boost/algorithm/string.hpp>
+
 using namespace std;
 using namespace boost;
 
@@ -23,11 +24,11 @@ void World::getMessageFromServer(std::string msg, uintptr_t id) {
     }
 
     if(message.find("say") == 0) {
-        cout << id << " says:" << message << endl;
+        cout << id << " says: " << message << endl;
     } else if(message.find("yell") == 0) {
-        cout << id << " yells:" << message << endl;
+        cout << id << " yells: " << message << endl;
     } else if(message.find("tell") == 0) {
-        cout << id << " tells someone:" << message << endl;
+        cout << id << " tells someone: " << message << endl;
     } else (){
         cout << id << "" << endl;
     }
@@ -36,7 +37,7 @@ void World::getMessageFromServer(std::string msg, uintptr_t id) {
 
 std::string World::getMotd() {
     cout << "The world sent a message to the user who requested the MOTD" << endl;
-    string motd = "Welcome to Babka's World. The world is currently on development.";
+    string motd = "Welcome to Babka's World. The world is currently in development.";
     return motd;
 }
 
