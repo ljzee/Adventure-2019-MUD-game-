@@ -10,7 +10,6 @@ using namespace std;
 using namespace boost;
 
 void World::getMessageFromServer(std::string msg, uintptr_t id) {
-   // std::cout << "This is in the World Class. From client-server: " << msg << std::endl;
 
     tokenizer<> tok(msg);
     tokenizer<>::iterator beg = tok.begin();
@@ -19,17 +18,16 @@ void World::getMessageFromServer(std::string msg, uintptr_t id) {
     string message = "";
 
     for(beg = ++beg; beg!=tok.end(); ++beg){
-        message += " " + *beg;
-    }
+            message += " " + *beg;
+        }
 
-    if(boost::iequals(cmd, "say")) {
-        cout << id << " says:" << message << endl;
-    } else if(boost::iequals(cmd, "yell")) {
+    if(boost::iequals(cmd, "yell")) {
         cout << id << " yells:" << message << endl;
     } else if(boost::iequals(cmd, "tell")) {
-        cout << id << " tells someone:" << message << endl;
-    } else {
-        cout << id << " entered an invalid command" << endl;
+        //replace 'someone' with 2nd users id once users are setup
+        cout << id << " tells: " << "(username) " << message << endl;
+    }  else {
+        cout << id << " says: " << cmd << message << endl;
     }
 
 }
