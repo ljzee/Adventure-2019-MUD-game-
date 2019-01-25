@@ -7,9 +7,9 @@
 #include "client.h"
 #include "ChatWindow.h"
 
-using networking::Server
-using networking::Connection
-using networking::Message
+using networking::Server;
+using networking::Connection;
+using networking::Message;
 
 /**
  *  @class Login
@@ -28,7 +28,7 @@ namespace user {
         /**
         *  Queries username, password, or NEW from the user. Constructs a message that the server will receive with this information.
         */
-        std::string promptLogin(const ChatWindow Window);
+        std::string promptLogin(ChatWindow& Window);
         bool validateCred(const std::string pwd);
 
     };
