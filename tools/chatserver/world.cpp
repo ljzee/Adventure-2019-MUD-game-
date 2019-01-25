@@ -12,7 +12,7 @@ using namespace boost;
 void World::getMessageFromServer(std::string msg, uintptr_t id) {
 
     if(msg == ""){
-        cout << " " << endl;
+        cout << id << " says: " << " " << endl;
     } else{
 
         tokenizer<> tok(msg);
