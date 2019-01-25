@@ -10,10 +10,11 @@
 #include "Server.h"
 
 /**
+ * User Class:
  *
- * A class to contain authentication information for an incoming connection.
- * To be used server side to keep track of connection authentication.
- *
+ * - maintains a single connections
+ * - owns an instance of avatar class (once User authenticates, avatar object is placed into the world)
+ * - holds state information of avatar(current room) for quick command proccessing
  *
  */
 
@@ -29,15 +30,24 @@ public:
 
     User(networking::Connection connection);
 
-    User(std::string username, std::string password, networking::Connection connection);
-
     ~User();
+
+    //Getters
+    const std::string& getUsername() const;
+
+    const std::string& getPassword() const;
+
+    const networking::Connection& getConnection();
 
     bool isAuthenticated();
 
-    void setAuthenticated();
+    //Setters
+    void setUsername(const std::string& username);
 
-    networking::Connection getConnection();
+    void setPassword(const std::string& password);
+
+    void setAuthenticated(bool b);
+
 
     bool operator==(networking::Connection other) const {
         return CurrentConnection.id == other.id;

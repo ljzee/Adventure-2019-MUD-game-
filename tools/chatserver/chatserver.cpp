@@ -9,6 +9,7 @@
 #include "Server.h"
 #include "World.h"
 #include "User.h"
+#include "UserManager.h"
 
 #include <fstream>
 #include <iostream>
@@ -24,21 +25,25 @@ using networking::Connection;
 using networking::Message;
 
 
-std::vector<Connection> clients;
+UserManager UsrMgr;
 
 void
 onConnect(Connection c) {
     std::cout << "New connection found: " << c.id << "\n";
-    clients.push_back(c);
-    User user{"User1", "Password1", c};
+
+    User user{c};
+    UsrMgr.addUser(user);
+    UsrMgr.printAllUsers();
 }
 
 
 void
 onDisconnect(Connection c) {
     std::cout << "Connection lost: " << c.id << "\n";
-    auto eraseBegin = std::remove(std::begin(clients), std::end(clients), c);
-    clients.erase(eraseBegin, std::end(clients));
+
+    UsrMgr.removeUser(c.id);
+    UsrMgr.printAllUsers();
+
 }
 
 
@@ -56,30 +61,21 @@ processMessages(Server &server,
         } else if (message.text == "shutdown") {
             std::cout << "Shutting down.\n";
             quit = true;
-        } else if (message.text == "!motd") {
-            std::cout << "User: " << message.connection.id << " requested the MOTD from the world\n";
-            result << world.getMotd() << "\n";
         } else if (boost::contains(message.text, "!NEW")) {
-            std::cout << "Connection: " << message.connection.id << " requests a new user account\n";
-            //call user creation with credentials following NEW
+            UsrMgr.Authenticate(message.connection.id, message.text);
+            UsrMgr.printAllUsers();
         } else if (boost::contains(message.text ,"!LOGIN")) {
-            std::cout << "Connection: " << message.connection.id << " attempted login\n";
+            UsrMgr.Authenticate(message.connection.id, message.text);
+            UsrMgr.printAllUsers();
+        } else if (boost::contains(message.text, "!LOGOUT")) {
+            UsrMgr.Logout(message.connection.id);
+            UsrMgr.printAllUsers();
         } else {
             world.getMessageFromServer(message.text, message.connection.id);
             result << message.connection.id << "> " << message.text << "\n";
         }
     }
     return result.str();
-}
-
-
-std::deque<Message>
-buildOutgoing(const std::string& log) {
-    std::deque<Message> outgoing;
-    for (auto client : clients) {
-        outgoing.push_back({client, log});
-    }
-    return outgoing;
 }
 
 
@@ -122,7 +118,7 @@ main(int argc, char* argv[]) {
 
         auto incoming = server.receive();
         auto log      = processMessages(server, world, incoming, done);
-        auto outgoing = buildOutgoing(log);
+        auto outgoing = UsrMgr.buildOutgoing(log);
         server.send(outgoing);
         sleep(1);
     }

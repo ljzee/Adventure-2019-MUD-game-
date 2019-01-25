@@ -1,6 +1,7 @@
 
 add_library(user
         src/User.cpp
+        src/UserManager.cpp
 )
 target_include_directories(user
         PUBLIC

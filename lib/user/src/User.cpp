@@ -14,29 +14,36 @@ User::User(networking::Connection connection)
     std::cout << "New user has been created" << std::endl;
 };
 
-User::User(std::string username, std::string password, networking::Connection connection)
-        : Username(username),
-          Password(password),
-          CurrentConnection(connection),
-          Authenticated(false),
-          Role(User::Unknown)
-{
-    std::cout << "New user has been created" << std::endl;
-};
-
 User::~User(){
     //std::cout << "User has been destroyed" << std::endl;
+}
+
+//Getters
+const std::string& User::getUsername() const {
+    return this->Username;
+}
+
+const std::string& User::getPassword() const {
+    return this->Password;
+}
+
+const networking::Connection& User::getConnection() {
+    return this->CurrentConnection;
 }
 
 bool User::isAuthenticated(){
     return this->Authenticated;
 }
 
-void User::setAuthenticated() {
-    this->Authenticated = true;
+//Setters
+void User::setUsername(const std::string &username) {
+    this->Username = username;
 }
 
+void User::setPassword(const std::string &password) {
+    this->Password = password;
+}
 
-networking::Connection User::getConnection() {
-    return this->CurrentConnection;
+void User::setAuthenticated(bool b) {
+    this->Authenticated = b;
 }
