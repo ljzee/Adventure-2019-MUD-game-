@@ -11,25 +11,30 @@ using namespace boost;
 
 void World::getMessageFromServer(std::string msg, uintptr_t id) {
 
-    tokenizer<> tok(msg);
-    tokenizer<>::iterator beg = tok.begin();
+    if(msg == ""){
+        cout << " " << endl;
+    } else{
 
-    string cmd = *beg;
-    string message = "";
+        tokenizer<> tok(msg);
+        tokenizer<>::iterator beg = tok.begin();
 
-    for(beg = ++beg; beg!=tok.end(); ++beg){
-            message += " " + *beg;
+        string cmd = *beg;
+        string message = "";
+
+        for(beg = ++beg; beg!=tok.end(); ++beg){
+                message += " " + *beg;
+            }
+
+        if(boost::iequals(cmd, "yell")) {
+            cout << id << " yells:" << message << endl;
+        } else if(boost::iequals(cmd, "tell")) {
+            //replace 'someone' with 2nd users id once users are setup
+            cout << id << " tells: " << "(username) " << message << endl;
+        } else {
+            cout << id << " says: " << cmd << message << endl;
         }
 
-    if(boost::iequals(cmd, "yell")) {
-        cout << id << " yells:" << message << endl;
-    } else if(boost::iequals(cmd, "tell")) {
-        //replace 'someone' with 2nd users id once users are setup
-        cout << id << " tells: " << "(username) " << message << endl;
-    }  else {
-        cout << id << " says: " << cmd << message << endl;
     }
-
 }
 
 std::string World::getMotd() {
