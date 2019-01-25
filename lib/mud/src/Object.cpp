@@ -2,7 +2,7 @@
 // Created by Andrea Renney on 2019-01-24.
 //
 
-#include "Object.h"
+#include "../include/Object.h"
 #include <vector>
 #include <string>
 

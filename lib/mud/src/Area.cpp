@@ -2,7 +2,7 @@
 // Created by Andrea Renney on 2019-01-24.
 //
 
-#include "Area.h"
+#include "../include/Area.h"
 #include <string>
 
 //The name field will need to be read in from the JSON file

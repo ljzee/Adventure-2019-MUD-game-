@@ -1,7 +1,7 @@
 
 add_executable(chatserver
-    chatserver.cpp
-    world.cpp
+        chatserver.cpp
+        world.cpp
 )
 
 set_target_properties(chatserver
