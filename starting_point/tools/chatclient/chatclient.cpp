@@ -33,6 +33,7 @@ main(int argc, char* argv[]) {
   };
 
   ChatWindow chatWindow(onTextEntry);
+  //call login prompts
   while (!done && !client.isDisconnected()) {
     try {
       client.update();
