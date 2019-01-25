@@ -6,12 +6,19 @@
 #define WORLD_H
 
 #include <iostream>
+#include <vector>
+#include <area.h>
+
+using namespace std;
 
 class World {
+private:
+    vector<Area> areas;
 
 public:
     void getMessageFromServer(std::string msg);
-    std::string getMotd();
+    void initializeDummyContents();
+    string getMotd();
     World();
 };
 

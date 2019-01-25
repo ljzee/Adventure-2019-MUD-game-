@@ -2,11 +2,14 @@
 add_library(mud
   src/room.cpp
   src/world.cpp
+  src/area.cpp
+  src/npc.cpp
+  src/object.cpp
 )
 
 find_package(Boost 1.68 COMPONENTS system REQUIRED)
 
-target_include_directories(networking
+target_include_directories(mud
   PUBLIC
     $<INSTALL_INTERFACE:include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

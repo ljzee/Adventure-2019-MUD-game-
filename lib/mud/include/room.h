@@ -1,7 +1,3 @@
-//
-// Created by Alex on 1/18/2019.
-//
-
 #ifndef ROOM_H
 #define ROOM_H
 
@@ -22,4 +18,5 @@ class Room {
 		int get_dummy_characters;*/
 };
 
+#endif
 //TODO: complete based on given json file

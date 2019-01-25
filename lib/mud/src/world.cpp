@@ -2,28 +2,35 @@
 // Created by Adrien on 1/17/2019.
 //
 
+#include <memory>
 #include <iostream>
+#include <vector>
+#include "world.h"
+#include "area.h"
 
 
-class World {
-
-public:
-    void getMessageFromServer(std::string msg);
-    std::string getMotd();
-    World();
-};
+using namespace std;
 
 void World::getMessageFromServer(std::string msg) {
-    std::cout << "This is in the World Class. From client-server: " << msg << std::endl;
+    cout << "This is in the World Class. From client-server: " << msg << endl;
 }
 
 std::string World::getMotd() {
-    std::cout << "The world sent a message to the user who requested the MOTD" << std::endl;
-    std::string motd = "Welcome to Babka's World. The world is currently on development.";
+    string motd = "Welcome to Babka's World. The world is currently on development. \nWorld contents at the server window.";
+    areas.at(0).getAreaInfo();
     return motd;
 }
 
 World::World() {
-    std::cout << "World created. The word is currently empty." << std::endl;
+    cout << "World created. Initializing Dummy Contents..." << endl;
+    initializeDummyContents();
+}
+
+void World::initializeDummyContents() {
+    Area newArea{};
+    newArea.initializeArea();
+    areas.push_back(newArea);
+
+    cout << "Dummies initialized" << endl;
 }
 
