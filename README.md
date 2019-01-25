@@ -1,21 +1,35 @@
-# adventure2019
+# Babka group CMPT373 Project
 
-To clone my branch:
+## Dependencies
 
-git clone git@csil-git1.cs.surrey.sfu.ca:373-19-1-babka/adventure2019.git
+This project requires:
 
-git checkout starting_point
+1. C++17 or newer
+2. Boost >= 1.66
+3. CMake >= 3.12
+4. NCurses (only tested with 6.1)
 
-To build with cmake:
+## Building with CMake
 
-Create an out-of-source directory at the same level as adventure 2019
+1. Clone the repository.
 
-cmake ../adventure2019/starting_point/
+        git clone https://csil-git1.cs.surrey.sfu.ca/373-19-1-babka/adventure2019
 
-make
+2. Create a new directory for building.
 
-bin/chatserver 4000 ../adventure2019/starting_point/webchat.html
+        mkdir build
 
-On a web browser:
+3. Change into the new directory.
 
-http://localhost:4000/index.html
+        cd build
+
+4. Run CMake with the path to the source.
+
+        cmake ../adventure2019
+
+5. Run make inside the build directory:
+
+        make
+
+For now you should see executable in build/bin directory.
+

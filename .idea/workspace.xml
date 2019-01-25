@@ -10,10 +10,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ddca042b-c084-43f7-878d-9342983d6e73" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/starting_point/lib/user/include/User.h" beforeDir="false" afterPath="$PROJECT_DIR$/starting_point/lib/user/include/User.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/starting_point/lib/user/src/User.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/starting_point/lib/user/src/User.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/starting_point/tools/chatserver/chatserver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/starting_point/tools/chatserver/chatserver.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mirkwood.json" beforeDir="false" afterPath="$PROJECT_DIR$/jsonFiles/mirkwood.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shire.json" beforeDir="false" afterPath="$PROJECT_DIR$/jsonFiles/shire.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/solace.json" beforeDir="false" afterPath="$PROJECT_DIR$/jsonFiles/solace.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/lib/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/lib/networking/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/networking/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/lib/networking/include/Client.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/networking/include/Client.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/lib/networking/include/Server.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/networking/include/Server.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/lib/networking/src/Client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lib/networking/src/Client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/lib/networking/src/Server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lib/networking/src/Server.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/lib/user/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/lib/user/include/Auth.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/include/Auth.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/lib/user/include/User.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/include/User.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/lib/user/src/Auth.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/src/Auth.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/lib/user/src/User.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/src/User.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/tools/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tools/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/tools/chatclient/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tools/chatclient/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/tools/chatclient/ChatWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tools/chatclient/ChatWindow.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/tools/chatclient/ChatWindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/tools/chatclient/ChatWindow.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/tools/chatclient/chatclient.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tools/chatclient/chatclient.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/tools/chatserver/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tools/chatserver/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/tools/chatserver/chatserver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tools/chatserver/chatserver.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/tools/chatserver/world.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tools/chatserver/world.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/tools/chatserver/world.h" beforeDir="false" afterPath="$PROJECT_DIR$/tools/chatserver/world.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starting_point/webchat.html" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,30 +52,46 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/starting_point/lib/user/include/User.h">
+        <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="55" column="29" selection-start-line="55" selection-start-column="29" selection-end-line="55" selection-end-column="29" />
+            <state relative-caret-position="245">
+              <caret line="34" selection-start-line="34" selection-end-line="34" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/starting_point/lib/user/src/User.cpp">
+        <entry file="file://$PROJECT_DIR$/lib/user/src/Auth.cpp">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/user/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="478">
-              <caret line="41" column="1" selection-start-line="41" selection-start-column="1" selection-end-line="41" selection-end-column="1" />
+            <state relative-caret-position="15">
+              <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/chatclient/ChatWindow.h">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/starting_point/tools/chatserver/chatserver.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="31" column="1" selection-start-line="31" selection-start-column="1" selection-end-line="31" selection-end-column="1" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/webchat.html">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -81,23 +124,35 @@
         <option value="$PROJECT_DIR$/starting_point/lib/user/src/User.cpp" />
         <option value="$PROJECT_DIR$/starting_point/lib/user/include/User.h" />
         <option value="$PROJECT_DIR$/starting_point/tools/chatserver/chatserver.cpp" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/lib/CMakeLists.txt" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1293" />
+    <option name="x" value="17" />
     <option name="y" value="23" />
-    <option name="width" value="1341" />
-    <option name="height" value="1013" />
+    <option name="width" value="1280" />
+    <option name="height" value="730" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="Scope" currentSubView="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
       <pane id="ProjectPane" />
-      <pane id="Scope" />
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="adventure2019" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -107,12 +162,14 @@
     <property name="settings.editor.selected.configurable" value="language.cpp.clangd" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/starting_point/lib/user" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/starting_point/lib/user/include" />
       <recent name="$PROJECT_DIR$/starting_point/lib/user/src" />
+      <recent name="$PROJECT_DIR$/starting_point/lib/user" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/lib" />
       <recent name="$PROJECT_DIR$/starting_point/lib/user" />
     </key>
   </component>
@@ -144,12 +201,12 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36020000" />
+    <option name="totallyTimeSpent" value="37035000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="732" extended-state="6" />
+    <frame x="307" y="66" width="1280" height="730" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24959612" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24959612" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -161,7 +218,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.36875" />
+      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.36990595" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -262,13 +319,6 @@
     <entry file="file://$PROJECT_DIR$/starting_point/tools/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/starting_point/lib/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/starting_point/lib/networking/include/Server.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="79">
@@ -313,10 +363,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/starting_point/tools/chatserver/chatserver.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="31" column="1" selection-start-line="31" selection-start-column="1" selection-end-line="31" selection-end-column="1" />
+        <state relative-caret-position="387">
+          <caret line="33" column="1" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/user/src/Auth.cpp">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/user/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/starting_point/lib/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/chatclient/ChatWindow.h">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webchat.html">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>
