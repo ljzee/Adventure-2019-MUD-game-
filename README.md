@@ -1,6 +1,9 @@
 # Babka group CMPT373 Project
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 812a7770526fe0b9e5f21d56e54ffc94e431ba59
 ## Dependencies
 
 This project requires:
@@ -31,5 +34,11 @@ This project requires:
 5. Run make inside the build directory:
 
         make
+<<<<<<< HEAD
         
 For now you should see executable in build/bin directory.
+=======
+
+For now you should see executable in build/bin directory.
+
+>>>>>>> 812a7770526fe0b9e5f21d56e54ffc94e431ba59
