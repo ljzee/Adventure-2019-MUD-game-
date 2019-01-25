@@ -61,9 +61,6 @@ processMessages(Server &server,
         } else if (message.text == "shutdown") {
             std::cout << "Shutting down.\n";
             quit = true;
-        } else if (boost::contains(message.text, "!NEW")) {
-            UsrMgr.Authenticate(message.connection.id, message.text);
-            UsrMgr.printAllUsers();
         } else if (boost::contains(message.text ,"!LOGIN")) {
             UsrMgr.Authenticate(message.connection.id, message.text);
             UsrMgr.printAllUsers();
