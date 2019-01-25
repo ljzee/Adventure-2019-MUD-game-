@@ -9,6 +9,14 @@
 #include <boost/algorithm/string.hpp>
 #include "Server.h"
 
+/**
+ *
+ * A class to contain authentication information for an incoming connection.
+ * To be used server side to keep track of connection authentication.
+ *
+ *
+ */
+
 class User {
 
 public:
@@ -19,9 +27,21 @@ public:
         WorldBuilder
     };
 
+    User(networking::Connection connection);
+
     User(std::string username, std::string password, networking::Connection connection);
 
+    ~User();
+
     bool isAuthenticated();
+
+    void setAuthenticated();
+
+    networking::Connection getConnection();
+
+    bool operator==(networking::Connection other) const {
+        return CurrentConnection.id == other.id;
+    }
 
 private:
 
@@ -32,6 +52,5 @@ private:
     Roles Role;
 
 };
-
 
 #endif //ADVENTURE2019_USER_H
