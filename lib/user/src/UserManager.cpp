@@ -3,6 +3,10 @@
 //
 
 #include "../include/UserManager.h"
+#include <boost/tokenizer.hpp>
+#include <boost/algorithm/string.hpp>
+
+using namespace boost;
 
 void UserManager::addUser(User &newUser) {
     Users.insert({newUser.getConnection().id, newUser});
@@ -22,12 +26,26 @@ User& UserManager::findUser(const uintptr_t &conId) {
 }
 
 void UserManager::Authenticate(const uintptr_t &conId, const std::string& userInfo) {
-
     auto user = Users.find(conId);
+    std::cout << "CALL AUTHENTICATE WITH MESSAGE: " << userInfo  << "\n";
+
+    tokenizer<> tok(userInfo);
+    tokenizer<>::iterator beg = tok.begin(); beg++;
+
+    std::string userName = *beg; beg++;
+
+    std::string pwd = *beg;
+    std::cout << userName << " " << pwd <<"\n";
+
     if(user != Users.end()){
+        // New User Behavior
+        if (user.getUsername() == ""){
+            user.setUsername(userName);
+            user.setPassword(pwd);
+        }
+        user->second
         user->second.setAuthenticated(true);
     }
-
 }
 
 void UserManager::Logout(const uintptr_t &conId) {

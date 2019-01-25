@@ -48,6 +48,8 @@ public:
 
     void setAuthenticated(bool b);
 
+    //Utility
+    void printUserMemberValues();
 
     bool operator==(networking::Connection other) const {
         return CurrentConnection.id == other.id;

@@ -34,7 +34,7 @@ main(int argc, char* argv[]) {
 
   ChatWindow chatWindow(onTextEntry);
   //call login prompts
-  chatWindow.displayText("Welcome aboard!");
+  chatWindow.displayText("Welcome aboard!\n");
   chatWindow.displayText("Login by typing !LOGIN <username> <password>");
   while (!done && !client.isDisconnected()) {
     try {

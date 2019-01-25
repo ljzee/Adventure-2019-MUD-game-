@@ -64,6 +64,7 @@ processMessages(Server &server,
         } else if (boost::contains(message.text ,"!LOGIN")) {
             UsrMgr.Authenticate(message.connection.id, message.text);
             UsrMgr.printAllUsers();
+            result << message.connection.id << "> " << message.text << "\n";
         } else if (boost::contains(message.text, "!LOGOUT")) {
             UsrMgr.Logout(message.connection.id);
             UsrMgr.printAllUsers();

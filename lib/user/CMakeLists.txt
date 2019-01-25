@@ -15,6 +15,7 @@ target_include_directories(user
 
 target_link_libraries(user
         networking
+        ${Boost_LIBRARIES}
 )
 
 set_target_properties(user
