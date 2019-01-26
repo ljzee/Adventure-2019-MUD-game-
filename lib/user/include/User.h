@@ -6,8 +6,10 @@
 #define USER_H
 
 #include <iostream>
+#include <sstream>
 #include <boost/algorithm/string.hpp>
 #include "Server.h"
+#include <deque>
 
 /**
  * User Class:
@@ -28,11 +30,13 @@ public:
         WorldBuilder
     };
 
+    ///Constructor
     User(networking::Connection connection);
 
+    ///Destructor
     ~User();
 
-    //Getters
+    ///Getters
     const std::string& getUsername() const;
 
     const std::string& getPassword() const;
@@ -41,19 +45,33 @@ public:
 
     bool isAuthenticated();
 
-    //Setters
+    ///Setters
     void setUsername(const std::string& username);
 
     void setPassword(const std::string& password);
 
     void setAuthenticated(bool b);
 
-    //Utility
+    ///User Message Container Operations
+    //deposits a message in the User's message container
+    void sendMessage(std::string& message);
+
+    //returns a concatenated string of all of User's messages
+    std::string getUserMessagesConcatenated();
+
+    //clears User's message container
+    void clearMessages();
+
+    //check if message container is empty
+    bool isMessageEmpty();
+
+    ///Utility
     void printUserMemberValues();
 
     bool operator==(networking::Connection other) const {
         return CurrentConnection.id == other.id;
     }
+
 
 private:
 
@@ -62,6 +80,8 @@ private:
     networking::Connection CurrentConnection;
     bool Authenticated;
     Roles Role;
+
+    std::deque<std::string> UserMessageDeque;
 
 };
 

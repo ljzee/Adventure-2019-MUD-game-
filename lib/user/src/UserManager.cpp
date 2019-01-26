@@ -9,14 +9,17 @@
 
 using namespace boost;
 
+//adds a new user
 void UserManager::addUser(User &newUser) {
     Users.insert({newUser.getConnection().id, newUser});
 }
 
+//remove a current user, on logout or disconnect
 void UserManager::removeUser(const uintptr_t &conId) {
     Users.erase(conId);
 }
 
+//find a user, returns a copy only
 User& UserManager::findUser(const uintptr_t &conId) {
 
     auto user = Users.find(conId);
@@ -26,6 +29,7 @@ User& UserManager::findUser(const uintptr_t &conId) {
 
 }
 
+//authenticate a user when user sends !LOGIN
 void UserManager::Authenticate(const uintptr_t &conId, const std::string& userInfo) {
     auto user = Users.find(conId);
     std::cout << "CALL: AUTHENTICATE WITH MESSAGE: " << userInfo  << "\n";
@@ -61,6 +65,7 @@ void UserManager::Authenticate(const uintptr_t &conId, const std::string& userIn
     }
 }
 
+//logout an authenticated user
 void UserManager::Logout(const uintptr_t &conId) {
     auto user = Users.find(conId);
     if(user != Users.end()){
@@ -68,13 +73,24 @@ void UserManager::Logout(const uintptr_t &conId) {
     }
 }
 
-std::deque<networking::Message> UserManager::buildOutgoing(const std::string& log) {
+//second message to a particular user
+void UserManager::sendMessage(const uintptr_t &conId, std::string message) {
+    auto user = Users.find(conId);
+    user->second.sendMessage(message);
+}
+
+//build a deque of all messages to be sent to each user
+std::deque<networking::Message> UserManager::buildOutgoing() {
     std::deque<networking::Message> outgoing;
-    for (auto user : Users) {
-        outgoing.push_back({user.second.getConnection(), log});
+    for (auto user=Users.begin(); user != Users.end(); user++) {
+        if(!user->second.isMessageEmpty()){
+            outgoing.push_back({user->second.getConnection(), user->second.getUserMessagesConcatenated()});
+            user->second.clearMessages();
+        }
     }
     return outgoing;
 }
+
 
 void UserManager::printAllUsers() {
     std::cout << "Connected Users: " << std::endl;

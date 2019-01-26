@@ -7,7 +7,7 @@
 
 
 #include "Server.h"
-#include "World.h"
+#include "world.h"
 #include "User.h"
 #include "UserManager.h"
 
@@ -47,13 +47,12 @@ onDisconnect(Connection c) {
 }
 
 
-std::string
+void
 processMessages(Server &server,
                 World &world,
                 const std::deque<Message> &incoming,
                 bool &quit) {
 
-    std::ostringstream result;
 
     for (auto& message : incoming) {
         if (message.text == "quit") {
@@ -64,17 +63,20 @@ processMessages(Server &server,
         } else if (boost::contains(message.text ,"!LOGIN")) {
             UsrMgr.Authenticate(message.connection.id, message.text);
             UsrMgr.printAllUsers();
-            result << message.connection.id << "> " << message.text << "\n";
+            UsrMgr.sendMessage(message.connection.id, std::string("You have successfully logged in!"));
+
+            //result << message.connection.id << "> " << message.text << "\n";
         } else if (boost::contains(message.text, "!LOGOUT")) {
             UsrMgr.Logout(message.connection.id);
             UsrMgr.printAllUsers();
+            UsrMgr.sendMessage(message.connection.id, std::string("You have successfully logged out."));
+
         } else {
             world.getMessageFromServer(message.text, message.connection.id);
-            auto uName = UsrMgr.findUser(message.connection.id).getUsername();
-            result << uName << "> " << message.text << "\n";
+            //auto uName = UsrMgr.findUser(message.connection.id).getUsername();
+            //result << uName << "> " << message.text << "\n";
         }
     }
-    return result.str();
 }
 
 
@@ -106,6 +108,7 @@ main(int argc, char* argv[]) {
     Server server{port, getHTTPMessage(argv[2]), onConnect, onDisconnect};
     World world{};
 
+
     while (!done) {
         try {
             server.update();
@@ -114,10 +117,9 @@ main(int argc, char* argv[]) {
                       << " " << e.what() << "\n\n";
             done = true;
         }
-
         auto incoming = server.receive();
-        auto log      = processMessages(server, world, incoming, done);
-        auto outgoing = UsrMgr.buildOutgoing(log);
+        processMessages(server, world, incoming, done);
+        auto outgoing = UsrMgr.buildOutgoing();
         server.send(outgoing);
         sleep(1);
     }

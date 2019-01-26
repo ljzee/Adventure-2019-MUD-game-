@@ -23,17 +23,26 @@
 class UserManager {
 public:
 
+    //adds a new user
     void addUser(User& newUser);
 
+    //remove a current user, on logout or disconnect
     void removeUser(const uintptr_t& conId);
 
+    //find a user, returns a copy only
     User& findUser(const uintptr_t& conId);
 
+    //authenticate a user when user sends !LOGIN
     void Authenticate(const uintptr_t& conId, const std::string& userInfo);
 
+    //logout an authenticated user
     void Logout(const uintptr_t& conId);
 
-    std::deque<networking::Message> buildOutgoing(const std::string& log);
+    //second message to a particular user
+    void sendMessage(const uintptr_t& conId, std::string message);
+
+    //build a deque of all messages to be sent to each user
+    std::deque<networking::Message> buildOutgoing();
 
     void printAllUsers(); //For Testing
 
