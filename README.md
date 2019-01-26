@@ -2,7 +2,6 @@
 
 <<<<<<< HEAD
 
-=======
 >>>>>>> 812a7770526fe0b9e5f21d56e54ffc94e431ba59
 ## Dependencies
 
@@ -15,30 +14,21 @@ This project requires:
 
 ## Building with CMake
 
-1. Clone the repository.
+git init
+git clone --single-branch --branch <branchname> https://csil-git1.cs.surrey.sfu.ca/373-19-1-babka/adventure2019
+mkdir networkbuild
+cd networkbuild
 
-        git clone https://csil-git1.cs.surrey.sfu.ca/373-19-1-babka/adventure2019
+OG:
+> cmake ../adventure2019
+> make
 
-2. Create a new directory for building.
+on CSIL:
+> cmake -DBOOST_ROOT=/usr/shared/CMPT/faculty/wsumner/base/ ../adventure2019
+> make
 
-        mkdir build
+bin/chatserver 4000 ../web-socket-networking/webchat.html
+URL:: http://localhost:4000/index.html
 
-3. Change into the new directory.
-
-        cd build
-
-4. Run CMake with the path to the source.
-
-        cmake ../adventure2019
-
-5. Run make inside the build directory:
-
-        make
-<<<<<<< HEAD
-        
-For now you should see executable in build/bin directory.
-=======
-
-For now you should see executable in build/bin directory.
-
->>>>>>> 812a7770526fe0b9e5f21d56e54ffc94e431ba59
+for multiple terminals:
+> bin/chatclient localhost 4000
