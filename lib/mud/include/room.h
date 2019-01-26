@@ -49,12 +49,12 @@ class Room {
 		Room();
 
 		// Getters
-		int get_dummy_objects const;
-		int get_dummy_characters const;
+		int get_dummy_objects() const;
+		int get_dummy_characters() const;
 		int getID() const;
 		std::string getName() const;
 
-		// Other Functions
+		// Member Functions
 		std::string outputDescString();
 		void resetRoom();
 };

@@ -46,15 +46,15 @@ Room::Room() {
 }
 
 // Getters
-int room::get_dummy_characters() const { return dummy_characters; }
+int Room::get_dummy_characters() const { return this->dummy_characters; }
 
-int room::get_dummy_objects() const { return dummy_objects; }
+int Room::get_dummy_objects() const { return this->dummy_objects; }
 
 int Room::getID() const { return this->ID; }
 
 std::string Room::getName() const { return this->name; }
 
-// Other functions
+// Member functions
 std::string Room::outputDescString() {
 
     std::string concatDesc = "";
@@ -67,7 +67,7 @@ std::string Room::outputDescString() {
 }
 
 /*
- void room::resetRoom() {
+ void Room::resetRoom() {
 	int arbitrary_limit = 100;
 	dummy_characters = rand() % arbitrary_limit;
 	dummy_objects = rand() % arbitrary_limit;
