@@ -39,11 +39,10 @@ void UserManager::Authenticate(const uintptr_t &conId, const std::string& userIn
 
     if(user != Users.end()){
         // New User Behavior
-        if (user.getUsername() == ""){
-            user.setUsername(userName);
-            user.setPassword(pwd);
+        if (user->second.getUsername() == "") {
+            user->second.setUsername(userName);
+            user->second.setPassword(pwd);
         }
-        user->second
         user->second.setAuthenticated(true);
     }
 }

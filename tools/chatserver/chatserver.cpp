@@ -70,7 +70,8 @@ processMessages(Server &server,
             UsrMgr.printAllUsers();
         } else {
             world.getMessageFromServer(message.text, message.connection.id);
-            result << message.connection.id << "> " << message.text << "\n";
+            auto uName = UsrMgr.findUser(message.connection.id).getUsername();
+            result << uName << "> " << message.text << "\n";
         }
     }
     return result.str();
