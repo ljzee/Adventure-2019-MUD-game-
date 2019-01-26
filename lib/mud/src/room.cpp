@@ -10,7 +10,7 @@
 #include <string>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
-
+#include "room.h"
 
 //Will be read in from JSON, so dummy values for now
 Room::Room() {

@@ -16,6 +16,8 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 struct extendDesc {
 	std::vector<string> keywords, desc;
 };
