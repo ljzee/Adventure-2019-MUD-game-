@@ -28,6 +28,7 @@ OG:
 
 on CSIL:
 > cmake -DBOOST_ROOT=/usr/shared/CMPT/faculty/wsumner/base/ ../adventure2019
+
 > make
 
 bin/chatserver 4000 ../web-socket-networking/webchat.html
