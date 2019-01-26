@@ -1,23 +1,32 @@
-#include <iostream>
-#include <vector>
+//
+// Modified by Andre on 1/25/2019.
+//
+
 #include "npc.h"
 
-using namespace std;
-
 Npc::Npc() {
-     id = 8800;
-     keywords.push_back("elf");
-     keywords.push_back("scout");
-     shortdesc = "a sylvian elf scout";
-     longdesc = "A Sylvan Elf scout is offended at your intrusion!";
-     description = "The Sylvan Elves are a good people, but centuries of subjection to the",
-             "violences and prejudices of other races have made them wary and very",
-             "hostile toward outsiders. However, if you're tough enough, perhaps he'll",
-             "back down. As natives of Mirkwood, they are virtually imposssible to see",
-             "if they don't want to be seen.";
+     this->id = 8800;
+     this->keywords.push_back("elf");
+     this->keywords.push_back("scout");
+     this->shortdesc = "a sylvian elf scout";
+     this->longdesc.push_back("A Sylvan Elf scout is offended at your intrusion!");
+     this->description.push_back("The Sylvan Elves are a good people, but centuries of subjection to the");
+     this->description.push_back("violences and prejudices of other races have made them wary and very");
+     this->description.push_back("hostile toward outsiders. However, if you're tough enough, perhaps he'll");
+     this->description.push_back("back down. As natives of Mirkwood, they are virtually imposssible to see");
+     this->description.push_back("if they don't want to be seen.");
 }
 
-string Npc::getNpcInfo() {
-     return to_string(id) + " " + longdesc + "\n";
+int Npc::getNpcId() const { return this->id; }
+
+string Npc::outputNpcInfo() {
+     std::string strId = to_string(this->id);
+
+     std::string concatDesc = "";
+     for (auto &portion : this->longdesc) {
+          concatDesc +=  portion;
+          concatDesc += "\n";
+     }
+     return strId + concatDesc;
 }
 

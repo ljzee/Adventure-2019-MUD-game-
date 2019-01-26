@@ -9,12 +9,15 @@ Area::Area() {
      this->name = "Mirkwood";
 }
 
+std::string getAreaName() const { return this->name; }
 
 void Area::initializeArea() {
      Npc newNpc{};
      NPCS.push_back(newNpc);
      Object newObj{};
      OBJECTS.push_back(newObj);
+     Room newRoom{};
+     ROOMS.push_back(newRoom);
 }
 
 void Area::getAreaInfo() {

@@ -25,7 +25,14 @@ Room::Room() {
     this->desc.push_back("actually inhabit this forest, in various parts and sometimes they are");
     this->desc.push_back("carefully hidden, away from the prying eyes of strangers.");
     this->desc.push_back("There is a sign tacked to a tree nearby.");
-    //    this->doors.push_back(Door object);
+
+    // dummy Door struct
+    Door daDoor;
+    daDoor.dir = "south";
+    daDoor.desc.push_back("You see the marketplace.");
+    daDoor.keywords.push_back("door");
+    daDoor.to = 10503
+    this->doors.push_back(daDoor);
 
     // dummy extendDesc struct
     extendDesc ed;
@@ -39,13 +46,13 @@ Room::Room() {
 }
 
 // Getters
-int Room::getID() const { return this->ID; }
-
-std::string Room::getName() const { return this->name; }
-
 int room::get_dummy_characters() const { return dummy_characters; }
 
 int room::get_dummy_objects() const { return dummy_objects; }
+
+int Room::getID() const { return this->ID; }
+
+std::string Room::getName() const { return this->name; }
 
 // Other functions
 std::string Room::outputDescString() {

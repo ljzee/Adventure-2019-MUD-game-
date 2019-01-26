@@ -15,10 +15,16 @@
 
 #include <string>
 #include <vector>
-#include "door.h" // include this header file for init of list of doors
 
 struct extendDesc {
 	std::vector<string> keywords, desc;
+};
+
+struct Door {
+	std::string dir;
+	std::vector<string> desc;
+	std::vector<string> keywords;
+	int to;
 };
 
 class Room {

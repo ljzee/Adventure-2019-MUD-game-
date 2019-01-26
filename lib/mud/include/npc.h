@@ -1,21 +1,28 @@
+//
+// Modified by Andre on 1/25/2019.
+//
+
 #ifndef NPC_H
 #define NPC_H
 
 #include <vector>
+#include <string>
 #include <iostream>
-
-using namespace std;
 
 class Npc {
 	private:
 		int id;
-		vector<string> keywords;
-		string shortdesc;
-		string longdesc;
-		string description;
+		std::vector<string> keywords;
+		std::string shortdesc;
+		std::vector<string> longdesc;
+		std::vector<string> description;
 	public:
 		Npc();
-		string getNpcInfo();
+
+		// Getters
+		int getNpcId() const;
+
+		std::string outputNpcInfo();
 };
 
 #endif

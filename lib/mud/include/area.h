@@ -1,3 +1,7 @@
+//
+// Modified by Andre on 1/25/2019.
+//
+
 #ifndef AREA_H
 #define AREA_H
 
@@ -6,8 +10,6 @@
 #include "npc.h"
 #include "room.h"
 #include "reset.h"
-
-//using namespace std;
 
 class Area {
 	private:
@@ -19,9 +21,14 @@ class Area {
 		std::vector<Reset> RESETS;
 		//list of SHOPS
 	public:
+		Area();
+
+		// Getters
+		std::string getAreaName() const;
+
+		// Other functions
+		void initializeArea();
         void getAreaInfo();
-        Area();
-        void initializeArea();
 };
 
 #endif
