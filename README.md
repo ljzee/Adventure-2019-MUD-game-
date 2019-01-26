@@ -15,8 +15,11 @@ This project requires:
 ## Building with CMake
 
 git init
+
 git clone --single-branch --branch <branchname> https://csil-git1.cs.surrey.sfu.ca/373-19-1-babka/adventure2019
+
 mkdir networkbuild
+
 cd networkbuild
 
 OG:
