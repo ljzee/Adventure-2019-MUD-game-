@@ -1,1 +1,2 @@
-add_subdirectory(world)
+add_subdirectory(chatserver)
+add_subdirectory(chatclient)
