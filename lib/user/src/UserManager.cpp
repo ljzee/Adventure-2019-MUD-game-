@@ -3,6 +3,7 @@
 //
 
 #include "../include/UserManager.h"
+#include <regex>
 #include <boost/tokenizer.hpp>
 #include <boost/algorithm/string.hpp>
 
@@ -27,17 +28,30 @@ User& UserManager::findUser(const uintptr_t &conId) {
 
 void UserManager::Authenticate(const uintptr_t &conId, const std::string& userInfo) {
     auto user = Users.find(conId);
-    std::cout << "CALL AUTHENTICATE WITH MESSAGE: " << userInfo  << "\n";
+    std::cout << "CALL: AUTHENTICATE WITH MESSAGE: " << userInfo  << "\n";
+    auto login_pattern = std::regex("!LOGIN [a-zA-Z0-9!@#$%^&*()_+=-]+ [[a-zA-Z0-9!@#$%^&*()_+=-]+");
 
-    tokenizer<> tok(userInfo);
-    tokenizer<>::iterator beg = tok.begin(); beg++;
+    if (!(std::regex_match(userInfo, login_pattern)) ){
+        std::cout << "Malformed authenticate call message.\n";
+        return;
+    }
+    std::string userName;
+    std::string pwd;
+    try {
+        boost::char_separator<char> sep{" "};
+        tokenizer<boost::char_separator<char>> tok(userInfo, sep);
+        tokenizer<boost::char_separator<char>>::iterator beg = tok.begin();
+        beg++;
 
-    std::string userName = *beg; beg++;
+        userName = *beg;
+        beg++;
 
-    std::string pwd = *beg;
-    std::cout << userName << " " << pwd <<"\n";
-
-    if(user != Users.end()){
+        pwd = *beg;
+        std::cout << userName << " " << pwd << "\n";
+    } catch (const std::exception& e){
+        std::cout << "Malformed authenticate call message.\n";
+    }
+    if(userName != "" && user != Users.end()){
         // New User Behavior
         if (user->second.getUsername() == "") {
             user->second.setUsername(userName);
