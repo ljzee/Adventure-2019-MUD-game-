@@ -30,15 +30,21 @@ public:
     void removeUser(const uintptr_t& conId);
 
     //find a user, returns a copy only
-    User& findUser(const uintptr_t& conId);
+    //User& findUser(const uintptr_t& conId);
 
     //authenticate a user when user sends !LOGIN
+    void simpleAuthenticate(const uintptr_t& conId, const std::string& userInfo);
+
+    //authenticate a user when user sends !LOGIN <username> <password>
     void Authenticate(const uintptr_t& conId, const std::string& userInfo);
+
+    //check if a particular connection is authenticated
+    bool isAuthenticated(const uintptr_t& conId);
 
     //logout an authenticated user
     void Logout(const uintptr_t& conId);
 
-    //second message to a particular user
+    //send message to a particular user
     void sendMessage(const uintptr_t& conId, std::string message);
 
     //build a deque of all messages to be sent to each user

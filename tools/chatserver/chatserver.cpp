@@ -7,7 +7,6 @@
 
 
 #include "Server.h"
-#include "world.h"
 #include "User.h"
 #include "UserManager.h"
 
@@ -34,6 +33,10 @@ onConnect(Connection c) {
     User user{c};
     UsrMgr.addUser(user);
     UsrMgr.printAllUsers();
+
+    //SEND MESSAGE TO A PARTICULAR CONNECTION LIKE THIS
+    UsrMgr.sendMessage(user.getConnection().id, "Welcome Aboard!");
+    UsrMgr.sendMessage(user.getConnection().id, "Login by typing !LOGIN <username> <password>");
 }
 
 
@@ -49,10 +52,8 @@ onDisconnect(Connection c) {
 
 void
 processMessages(Server &server,
-                World &world,
                 const std::deque<Message> &incoming,
                 bool &quit) {
-
 
     for (auto& message : incoming) {
         if (message.text == "quit") {
@@ -60,24 +61,25 @@ processMessages(Server &server,
         } else if (message.text == "shutdown") {
             std::cout << "Shutting down.\n";
             quit = true;
-        } else if (boost::contains(message.text ,"!LOGIN")) {
-            UsrMgr.Authenticate(message.connection.id, message.text);
-            UsrMgr.printAllUsers();
-            UsrMgr.sendMessage(message.connection.id, std::string("You have successfully logged in!"));
-
-            //result << message.connection.id << "> " << message.text << "\n";
-        } else if (boost::contains(message.text, "!LOGOUT")) {
-            UsrMgr.Logout(message.connection.id);
-            UsrMgr.printAllUsers();
-            UsrMgr.sendMessage(message.connection.id, std::string("You have successfully logged out."));
-
-        } else {
-            world.getMessageFromServer(message.text, message.connection.id);
-            //auto uName = UsrMgr.findUser(message.connection.id).getUsername();
-            //result << uName << "> " << message.text << "\n";
+        } else if (!UsrMgr.isAuthenticated(message.connection.id)) {
+            if (boost::contains(message.text ,"!LOGIN")) {
+                UsrMgr.simpleAuthenticate(message.connection.id, message.text);
+                UsrMgr.printAllUsers();
+                UsrMgr.sendMessage(message.connection.id, std::string("You have successfully logged in!"));
+            }
+        } else{
+            if (boost::contains(message.text, "!LOGOUT")) {
+                UsrMgr.Logout(message.connection.id);
+                UsrMgr.printAllUsers();
+                UsrMgr.sendMessage(message.connection.id, std::string("You have successfully logged out."));
+            }else{
+                //SEND USER COMMANDS TO WORLD OR COMMAND PROCESSOR HERE
+            }
         }
     }
+
 }
+
 
 
 std::string
@@ -106,7 +108,6 @@ main(int argc, char* argv[]) {
     bool done = false;
     unsigned short port = std::stoi(argv[1]);
     Server server{port, getHTTPMessage(argv[2]), onConnect, onDisconnect};
-    World world{};
 
 
     while (!done) {
@@ -118,7 +119,7 @@ main(int argc, char* argv[]) {
             done = true;
         }
         auto incoming = server.receive();
-        processMessages(server, world, incoming, done);
+        processMessages(server, incoming, done);
         auto outgoing = UsrMgr.buildOutgoing();
         server.send(outgoing);
         sleep(1);

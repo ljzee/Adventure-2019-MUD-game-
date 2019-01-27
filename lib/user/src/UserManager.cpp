@@ -20,6 +20,7 @@ void UserManager::removeUser(const uintptr_t &conId) {
 }
 
 //find a user, returns a copy only
+/*
 User& UserManager::findUser(const uintptr_t &conId) {
 
     auto user = Users.find(conId);
@@ -28,8 +29,15 @@ User& UserManager::findUser(const uintptr_t &conId) {
     }
 
 }
+*/
 
 //authenticate a user when user sends !LOGIN
+void UserManager::simpleAuthenticate(const uintptr_t &conId, const std::string &userInfo) {
+    auto user = Users.find(conId);
+    user->second.setAuthenticated(true);
+}
+
+//authenticate a user when user sends "!LOGIN <username> <password>
 void UserManager::Authenticate(const uintptr_t &conId, const std::string& userInfo) {
     auto user = Users.find(conId);
     std::cout << "CALL: AUTHENTICATE WITH MESSAGE: " << userInfo  << "\n";
@@ -65,15 +73,25 @@ void UserManager::Authenticate(const uintptr_t &conId, const std::string& userIn
     }
 }
 
+//check if a particular connection is authenticated
+bool UserManager::isAuthenticated(const uintptr_t &conId) {
+    auto user = Users.find(conId);
+    return user->second.isAuthenticated();
+}
+
 //logout an authenticated user
 void UserManager::Logout(const uintptr_t &conId) {
     auto user = Users.find(conId);
+    std::string emptyUsername = "";
+    std::string emptyPassword = "";
     if(user != Users.end()){
         user->second.setAuthenticated(false);
+        user->second.setUsername("");
+        user->second.setPassword("");
     }
 }
 
-//second message to a particular user
+//send message to a particular user
 void UserManager::sendMessage(const uintptr_t &conId, std::string message) {
     auto user = Users.find(conId);
     user->second.sendMessage(message);
