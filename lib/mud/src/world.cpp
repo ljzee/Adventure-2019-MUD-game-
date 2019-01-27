@@ -5,6 +5,7 @@
 #include <memory>
 #include <iostream>
 #include <vector>
+#include <string>
 #include "world.h"
 #include "area.h"
 
@@ -16,7 +17,7 @@ void World::getMessageFromServer(std::string msg) {
 }
 
 std::string World::getMotd() {
-    string motd = "Welcome to Babka's World. The world is currently on development. \nWorld contents at the server window.";
+    std::string motd = "Welcome to Babka's World. The world is currently on development. \nWorld contents at the server window.";
     areas.at(0).getAreaInfo();
     return motd;
 }

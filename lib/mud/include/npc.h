@@ -12,10 +12,10 @@
 class Npc {
 	private:
 		int id;
-		std::vector<string> keywords;
+		std::vector<std::string> keywords;
 		std::string shortdesc;
-		std::vector<string> longdesc;
-		std::vector<string> description;
+		std::vector<std::string> longdesc;
+		std::vector<std::string> description;
 	public:
 		Npc();
 

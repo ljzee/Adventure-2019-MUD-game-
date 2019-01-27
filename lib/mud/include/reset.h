@@ -16,7 +16,7 @@ class Reset {
 
 // Simplicity -> consider using a  struct maybe?
 // Then move struct into area.h?
-struct Reset {
+struct structReset {
 	std::string action;
 	int id;
 	int limit;

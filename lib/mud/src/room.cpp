@@ -31,7 +31,7 @@ Room::Room() {
     daDoor.dir = "south";
     daDoor.desc.push_back("You see the marketplace.");
     daDoor.keywords.push_back("door");
-    daDoor.to = 10503
+    daDoor.to = 10503;
     this->doors.push_back(daDoor);
 
     // dummy extendDesc struct

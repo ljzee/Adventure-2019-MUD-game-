@@ -25,7 +25,7 @@ int Object::getId() const { return this->id; }
 std::string Object::getShortDesc() const { return this->shortdesc; }
 
 std::string Object::getObjectInfo() {
-     std::string strId = to_string(this->id);
+     std::string strId = std::to_string(this->id);
 
      std::string concatDesc = "";
      for (auto &portion : this->longDesc) {

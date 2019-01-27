@@ -19,8 +19,8 @@ Npc::Npc() {
 
 int Npc::getNpcId() const { return this->id; }
 
-string Npc::outputNpcInfo() {
-     std::string strId = to_string(this->id);
+std::string Npc::outputNpcInfo() {
+     std::string strId = std::to_string(this->id);
 
      std::string concatDesc = "";
      for (auto &portion : this->longdesc) {

@@ -9,15 +9,15 @@
 #include <string>
 
 struct extra {
-	std::vector<string> keywords, desc;
+	std::vector<std::string> keywords, desc;
 };
 
 class Object {
 	private:
 		int id;
-		std::vector<string> keywords;
+		std::vector<std::string> keywords;
 		std::string shortdesc;
-		std::vector<string> longDesc;
+		std::vector<std::string> longDesc;
 		std::vector<extra> extras;
 	public:
 		Object();

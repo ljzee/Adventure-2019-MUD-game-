@@ -9,7 +9,7 @@ Area::Area() {
      this->name = "Mirkwood";
 }
 
-std::string getAreaName() const { return this->name; }
+std::string Area::getAreaName() const { return this->name; }
 
 void Area::initializeArea() {
      Npc newNpc{};
@@ -22,6 +22,6 @@ void Area::initializeArea() {
 
 void Area::getAreaInfo() {
      cout << "Area name: " << name <<
-               "\nNpc: " << NPCS.at(0).getNpcInfo() <<
-               "Object: " << OBJECTS.at(0).getObjectInfo() << endl;
+          "\nNpc: " << NPCS.at(0).outputNpcInfo() <<
+          "Object: " << OBJECTS.at(0).getObjectInfo() << endl;
 }
