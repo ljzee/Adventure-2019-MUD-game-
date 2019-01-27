@@ -11,13 +11,13 @@
   <component name="ChangeListManager">
     <list default="true" id="ddca042b-c084-43f7-878d-9342983d6e73" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/user/include/UserManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/include/UserManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/user/src/UserManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lib/user/src/UserManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/chatclient/chatclient.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tools/chatclient/chatclient.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/chatserver/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tools/chatserver/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/chatserver/chatserver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tools/chatserver/chatserver.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/chatserver/world.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/chatserver/world.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tools/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/chatclient/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tools/mudclient/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/chatclient/ChatWindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tools/mudclient/ChatWindow.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/chatclient/ChatWindow.h" beforeDir="false" afterPath="$PROJECT_DIR$/tools/mudclient/ChatWindow.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/chatclient/chatclient.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tools/mudclient/mudclient.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/chatserver/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tools/mudserver/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/chatserver/chatserver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tools/mudserver/mudserver.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,9 +28,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/mudserver/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tools/chatserver/CMakeLists.txt">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/tools/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="20" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -80,6 +93,9 @@
         <option value="$PROJECT_DIR$/lib/user/include/UserManager.h" />
         <option value="$PROJECT_DIR$/tools/chatserver/chatserver.cpp" />
         <option value="$PROJECT_DIR$/tools/chatserver/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/tools/mudclient/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/tools/mudserver/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/tools/CMakeLists.txt" />
       </list>
     </option>
   </component>
@@ -126,13 +142,13 @@
               <item name="adventure2019" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="tools" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="chatclient" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="mudclient" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
               <item name="adventure2019" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="tools" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="chatserver" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="mudserver" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -187,7 +203,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66243000" />
+    <option name="totallyTimeSpent" value="66656000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1431" y="23" width="1431" height="1010" extended-state="0" />
@@ -268,9 +284,6 @@
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/chatclient/ChatWindow.h">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/webchat.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -284,9 +297,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/user/include/UserManager.cpp" />
-    <entry file="file://$PROJECT_DIR$/tools/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/networking/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -307,13 +317,6 @@
     <entry file="file://$PROJECT_DIR$/tools/chatserver/world.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-170" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/chatserver/chatserver.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-33">
-          <caret line="36" column="45" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="45" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/networking/include/Server.h">
@@ -351,18 +354,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/chatclient/chatclient.cpp">
+    <entry file="file://$PROJECT_DIR$/tools/mudclient/mudclient.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="509">
           <caret line="34" column="37" selection-start-line="34" selection-start-column="37" selection-end-line="34" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/chatclient/CMakeLists.txt">
+    <entry file="file://$PROJECT_DIR$/tools/mudserver/mudserver.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1168">
+          <caret line="90" lean-forward="true" selection-start-line="90" selection-end-line="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/mudclient/ChatWindow.h">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/chatserver/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/tools/mudclient/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/mudserver/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="20" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>
