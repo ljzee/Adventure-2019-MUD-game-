@@ -34,56 +34,62 @@ User& UserManager::findUser(const networking::Connection& con) {
 //authenticate a user when user sends !LOGIN
 void UserManager::simpleAuthenticate(const networking::Connection& con, const std::string &userInfo) {
     auto user = Users.find(con.id);
-    user->second.setAuthenticated(true);
+    if(user != Users.end()) {
+        user->second.setAuthenticated(true);
+    }
 }
 
 //authenticate a user when user sends "!LOGIN <username> <password>
 void UserManager::Authenticate(const networking::Connection& con, const std::string& userInfo) {
     auto user = Users.find(con.id);
-    std::cout << "CALL: AUTHENTICATE WITH MESSAGE: " << userInfo  << "\n";
-    auto login_pattern = std::regex("!LOGIN [a-zA-Z0-9!@#$%^&*()_+=-]+ [[a-zA-Z0-9!@#$%^&*()_+=-]+");
+    if(user != Users.end()) {
+        std::cout << "CALL: AUTHENTICATE WITH MESSAGE: " << userInfo << "\n";
+        auto login_pattern = std::regex("!LOGIN [a-zA-Z0-9!@#$%^&*()_+=-]+ [[a-zA-Z0-9!@#$%^&*()_+=-]+");
 
-    if (!(std::regex_match(userInfo, login_pattern)) ){
-        std::cout << "Malformed authenticate call message.\n";
-        return;
-    }
-    std::string userName;
-    std::string pwd;
-    try {
-        boost::char_separator<char> sep{" "};
-        tokenizer<boost::char_separator<char>> tok(userInfo, sep);
-        tokenizer<boost::char_separator<char>>::iterator beg = tok.begin();
-        beg++;
-
-        userName = *beg;
-        beg++;
-
-        pwd = *beg;
-        std::cout << userName << " " << pwd << "\n";
-    } catch (const std::exception& e){
-        std::cout << "Malformed authenticate call message.\n";
-    }
-    if(userName != "" && user != Users.end()){
-        // New User Behavior
-        if (user->second.getUsername() == "") {
-            user->second.setUsername(userName);
-            user->second.setPassword(pwd);
+        if (!(std::regex_match(userInfo, login_pattern))) {
+            std::cout << "Malformed authenticate call message.\n";
+            return;
         }
-        user->second.setAuthenticated(true);
+        std::string userName;
+        std::string pwd;
+        try {
+            boost::char_separator<char> sep{" "};
+            tokenizer <boost::char_separator<char>> tok(userInfo, sep);
+            tokenizer < boost::char_separator < char >> ::iterator
+            beg = tok.begin();
+            beg++;
+
+            userName = *beg;
+            beg++;
+
+            pwd = *beg;
+            std::cout << userName << " " << pwd << "\n";
+        } catch (const std::exception &e) {
+            std::cout << "Malformed authenticate call message.\n";
+        }
+        if (userName != "" && user != Users.end()) {
+            // New User Behavior
+            if (user->second.getUsername() == "") {
+                user->second.setUsername(userName);
+                user->second.setPassword(pwd);
+            }
+            user->second.setAuthenticated(true);
+        }
     }
 }
 
 //check if a particular connection is authenticated
 bool UserManager::isAuthenticated(const networking::Connection& con) {
     auto user = Users.find(con.id);
-    return user->second.isAuthenticated();
+    if (user != Users.end()) {
+        return user->second.isAuthenticated();
+    }
+    return false; //will also return false if connection does not exist in UserManager
 }
 
 //logout an authenticated user
 void UserManager::Logout(const networking::Connection& con) {
     auto user = Users.find(con.id);
-    std::string emptyUsername = "";
-    std::string emptyPassword = "";
     if(user != Users.end()){
         user->second.setAuthenticated(false);
         user->second.setUsername("");
@@ -94,7 +100,9 @@ void UserManager::Logout(const networking::Connection& con) {
 //send message to a particular user
 void UserManager::sendMessage(const networking::Connection& con, std::string message) {
     auto user = Users.find(con.id);
-    user->second.sendMessage(message);
+    if(user != Users.end()) {
+        user->second.sendMessage(message);
+    }
 }
 
 //build a deque of all messages to be sent to each user
@@ -116,6 +124,8 @@ void UserManager::printAllUsers() {
         std::cout << user.second.getConnection().id
         << " username:"
         << user.second.getUsername()
+        << " password:"
+        << user.second.getPassword()
         << " authenticated:" << user.second.isAuthenticated()
         << std::endl;
 }
