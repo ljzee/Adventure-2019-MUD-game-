@@ -69,19 +69,19 @@ public:
     void printUserMemberValues();
 
     bool operator==(networking::Connection other) const {
-        return CurrentConnection.id == other.id;
+        return currentConnection.id == other.id;
     }
 
 
 private:
 
-    std::string Username;
-    std::string Password;
-    networking::Connection CurrentConnection;
-    bool Authenticated;
-    Roles Role;
+    std::string username;
+    std::string password;
+    networking::Connection currentConnection;
+    bool authenticated;
+    Roles role;
 
-    std::deque<std::string> UserMessageDeque;
+    std::deque<std::string> userMessageDeque;
 
 };
 

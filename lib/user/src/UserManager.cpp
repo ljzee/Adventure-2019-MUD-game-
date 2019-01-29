@@ -15,15 +15,15 @@ void UserManager::addUser(User &newUser) {
 }
 
 //remove a current user, on logout or disconnect
-void UserManager::removeUser(const uintptr_t &conId) {
-    Users.erase(conId);
+void UserManager::removeUser(const networking::Connection& con) {
+    Users.erase(con.id);
 }
 
 //find a user, returns a copy only
 /*
-User& UserManager::findUser(const uintptr_t &conId) {
+User& UserManager::findUser(const networking::Connection& con) {
 
-    auto user = Users.find(conId);
+    auto user = Users.find(con.id);
     if(user != Users.end()){
         return user->second;
     }
@@ -32,14 +32,14 @@ User& UserManager::findUser(const uintptr_t &conId) {
 */
 
 //authenticate a user when user sends !LOGIN
-void UserManager::simpleAuthenticate(const uintptr_t &conId, const std::string &userInfo) {
-    auto user = Users.find(conId);
+void UserManager::simpleAuthenticate(const networking::Connection& con, const std::string &userInfo) {
+    auto user = Users.find(con.id);
     user->second.setAuthenticated(true);
 }
 
 //authenticate a user when user sends "!LOGIN <username> <password>
-void UserManager::Authenticate(const uintptr_t &conId, const std::string& userInfo) {
-    auto user = Users.find(conId);
+void UserManager::Authenticate(const networking::Connection& con, const std::string& userInfo) {
+    auto user = Users.find(con.id);
     std::cout << "CALL: AUTHENTICATE WITH MESSAGE: " << userInfo  << "\n";
     auto login_pattern = std::regex("!LOGIN [a-zA-Z0-9!@#$%^&*()_+=-]+ [[a-zA-Z0-9!@#$%^&*()_+=-]+");
 
@@ -74,14 +74,14 @@ void UserManager::Authenticate(const uintptr_t &conId, const std::string& userIn
 }
 
 //check if a particular connection is authenticated
-bool UserManager::isAuthenticated(const uintptr_t &conId) {
-    auto user = Users.find(conId);
+bool UserManager::isAuthenticated(const networking::Connection& con) {
+    auto user = Users.find(con.id);
     return user->second.isAuthenticated();
 }
 
 //logout an authenticated user
-void UserManager::Logout(const uintptr_t &conId) {
-    auto user = Users.find(conId);
+void UserManager::Logout(const networking::Connection& con) {
+    auto user = Users.find(con.id);
     std::string emptyUsername = "";
     std::string emptyPassword = "";
     if(user != Users.end()){
@@ -92,8 +92,8 @@ void UserManager::Logout(const uintptr_t &conId) {
 }
 
 //send message to a particular user
-void UserManager::sendMessage(const uintptr_t &conId, std::string message) {
-    auto user = Users.find(conId);
+void UserManager::sendMessage(const networking::Connection& con, std::string message) {
+    auto user = Users.find(con.id);
     user->second.sendMessage(message);
 }
 

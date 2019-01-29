@@ -6,11 +6,11 @@
 
 ///Constructor
 User::User(networking::Connection connection)
-        : Username(""),
-          Password(""),
-          CurrentConnection(connection),
-          Authenticated(false),
-          Role(User::Unknown)
+        : username(""),
+          password(""),
+          currentConnection(connection),
+          authenticated(false),
+          role(User::Unknown)
 {
     std::cout << "New user has been created" << std::endl;
 };
@@ -22,38 +22,38 @@ User::~User(){
 
 ///Getters
 const std::string& User::getUsername() const {
-    return this->Username;
+    return this->username;
 }
 
 const std::string& User::getPassword() const {
-    return this->Password;
+    return this->password;
 }
 
 const networking::Connection& User::getConnection() {
-    return this->CurrentConnection;
+    return this->currentConnection;
 }
 
 bool User::isAuthenticated(){
-    return this->Authenticated;
+    return this->authenticated;
 }
 
 ///Setters
 void User::setUsername(const std::string &username) {
-    this->Username = username;
+    this->username = username;
 }
 
 void User::setPassword(const std::string &password) {
-    this->Password = password;
+    this->password = password;
 }
 
 void User::setAuthenticated(bool b) {
-    this->Authenticated = b;
+    this->authenticated = b;
 }
 
 ///User Message Container Operations
 //deposits a message in the User's message container
 void User::sendMessage(std::string &message) {
-    this->UserMessageDeque.push_back(message);
+    this->userMessageDeque.push_back(message);
 }
 
 //returns a concatenated string of all of User's messages
@@ -61,7 +61,7 @@ std::string User::getUserMessagesConcatenated() {
 
     std::ostringstream concatenatedMessage;
 
-    for (auto& message: UserMessageDeque){
+    for (auto& message: userMessageDeque){
         concatenatedMessage << message << "\n";
     }
 
@@ -71,10 +71,10 @@ std::string User::getUserMessagesConcatenated() {
 
 //clears User's message container
 void User::clearMessages() {
-    this->UserMessageDeque.clear();
+    this->userMessageDeque.clear();
 }
 
 //check if message container is empty
 bool User::isMessageEmpty() {
-    return this->UserMessageDeque.empty();
+    return this->userMessageDeque.empty();
 }

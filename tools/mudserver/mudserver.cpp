@@ -35,8 +35,8 @@ onConnect(Connection c) {
     UsrMgr.printAllUsers();
 
     //SEND MESSAGE TO A PARTICULAR CONNECTION LIKE THIS
-    UsrMgr.sendMessage(user.getConnection().id, "Welcome Aboard!");
-    UsrMgr.sendMessage(user.getConnection().id, "Login by typing !LOGIN <username> <password>");
+    UsrMgr.sendMessage(user.getConnection(), "Welcome Aboard!");
+    UsrMgr.sendMessage(user.getConnection(), "Login by typing !LOGIN <username> <password>");
 }
 
 
@@ -44,7 +44,7 @@ void
 onDisconnect(Connection c) {
     std::cout << "Connection lost: " << c.id << "\n";
 
-    UsrMgr.removeUser(c.id);
+    UsrMgr.removeUser(c);
     UsrMgr.printAllUsers();
 
 }
@@ -61,17 +61,17 @@ processMessages(Server &server,
         } else if (message.text == "shutdown") {
             std::cout << "Shutting down.\n";
             quit = true;
-        } else if (!UsrMgr.isAuthenticated(message.connection.id)) {
+        } else if (!UsrMgr.isAuthenticated(message.connection)) {
             if (boost::contains(message.text ,"!LOGIN")) {
-                UsrMgr.simpleAuthenticate(message.connection.id, message.text);
+                UsrMgr.simpleAuthenticate(message.connection, message.text);
                 UsrMgr.printAllUsers();
-                UsrMgr.sendMessage(message.connection.id, std::string("You have successfully logged in!"));
+                UsrMgr.sendMessage(message.connection, std::string("You have successfully logged in!"));
             }
         } else{
             if (boost::contains(message.text, "!LOGOUT")) {
-                UsrMgr.Logout(message.connection.id);
+                UsrMgr.Logout(message.connection);
                 UsrMgr.printAllUsers();
-                UsrMgr.sendMessage(message.connection.id, std::string("You have successfully logged out."));
+                UsrMgr.sendMessage(message.connection, std::string("You have successfully logged out."));
             }else{
                 //SEND USER COMMANDS TO WORLD OR COMMAND PROCESSOR HERE
             }
