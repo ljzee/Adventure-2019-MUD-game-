@@ -1,10 +1,8 @@
+add_executable(mudserver
+        mudserver.cpp
+        )
 
-add_executable(chatserver
-        chatserver.cpp
-        world.cpp
-)
-
-set_target_properties(chatserver
+set_target_properties(mudserver
                       PROPERTIES
                       LINKER_LANGUAGE CXX
                       CXX_STANDARD 17
@@ -13,12 +11,13 @@ set_target_properties(chatserver
 
 find_package(Threads REQUIRED)
 
-target_link_libraries(chatserver
+target_link_libraries(mudserver
   networking
   ${CMAKE_THREAD_LIBS_INIT}
+        user
 )
 
-install(TARGETS chatserver
+install(TARGETS mudserver
   RUNTIME DESTINATION bin
 )
 

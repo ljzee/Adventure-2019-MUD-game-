@@ -7,7 +7,8 @@
 
 
 #include "Server.h"
-#include "world.h"
+#include "User.h"
+#include "UserManager.h"
 
 #include <fstream>
 #include <iostream>
@@ -15,36 +16,44 @@
 #include <unistd.h>
 #include <vector>
 
+#include "boost/algorithm/string.hpp"
+
 
 using networking::Server;
 using networking::Connection;
 using networking::Message;
 
 
-std::vector<Connection> clients;
+UserManager UsrMgr;
 
 void
 onConnect(Connection c) {
     std::cout << "New connection found: " << c.id << "\n";
-    clients.push_back(c);
+
+    User user{c};
+    UsrMgr.addUser(user);
+    UsrMgr.printAllUsers();
+
+    //SEND MESSAGE TO A PARTICULAR CONNECTION LIKE THIS
+    UsrMgr.sendMessage(user.getConnection(), "Welcome Aboard!");
+    UsrMgr.sendMessage(user.getConnection(), "Login by typing !LOGIN <username> <password>");
 }
 
 
 void
 onDisconnect(Connection c) {
     std::cout << "Connection lost: " << c.id << "\n";
-    auto eraseBegin = std::remove(std::begin(clients), std::end(clients), c);
-    clients.erase(eraseBegin, std::end(clients));
+
+    UsrMgr.removeUser(c);
+    UsrMgr.printAllUsers();
+
 }
 
 
-std::string
+void
 processMessages(Server &server,
-                World &world,
                 const std::deque<Message> &incoming,
                 bool &quit) {
-
-    std::ostringstream result;
 
     for (auto& message : incoming) {
         if (message.text == "quit") {
@@ -52,26 +61,25 @@ processMessages(Server &server,
         } else if (message.text == "shutdown") {
             std::cout << "Shutting down.\n";
             quit = true;
-        } else if (message.text == "!motd") {
-            std::cout << "User: " << message.connection.id << " requested the MOTD from the world\n";
-            result << world.getMotd() << "\n";
-        } else {
-            world.getMessageFromServer(message.text, message.connection.id);
-            result << message.connection.id << "> " << message.text << "\n";
+        } else if (!UsrMgr.isAuthenticated(message.connection)) {
+            if (boost::contains(message.text ,"!LOGIN")) {
+                UsrMgr.simpleAuthenticate(message.connection, message.text);
+                UsrMgr.printAllUsers();
+                UsrMgr.sendMessage(message.connection, std::string("You have successfully logged in!"));
+            }
+        } else{
+            if (boost::contains(message.text, "!LOGOUT")) {
+                UsrMgr.Logout(message.connection);
+                UsrMgr.printAllUsers();
+                UsrMgr.sendMessage(message.connection, std::string("You have successfully logged out."));
+            }else{
+                //SEND USER COMMANDS TO WORLD OR COMMAND PROCESSOR HERE
+            }
         }
     }
-    return result.str();
+
 }
 
-
-std::deque<Message>
-buildOutgoing(const std::string& log) {
-    std::deque<Message> outgoing;
-    for (auto client : clients) {
-        outgoing.push_back({client, log});
-    }
-    return outgoing;
-}
 
 
 std::string
@@ -100,7 +108,7 @@ main(int argc, char* argv[]) {
     bool done = false;
     unsigned short port = std::stoi(argv[1]);
     Server server{port, getHTTPMessage(argv[2]), onConnect, onDisconnect};
-    World world{};
+
 
     while (!done) {
         try {
@@ -110,10 +118,9 @@ main(int argc, char* argv[]) {
                       << " " << e.what() << "\n\n";
             done = true;
         }
-
         auto incoming = server.receive();
-        auto log      = processMessages(server, world, incoming, done);
-        auto outgoing = buildOutgoing(log);
+        processMessages(server, incoming, done);
+        auto outgoing = UsrMgr.buildOutgoing();
         server.send(outgoing);
         sleep(1);
     }
