@@ -1,1 +1,3 @@
-add_subdirectory(world)
+add_subdirectory(mudserver)
+add_subdirectory(mudclient)
+
