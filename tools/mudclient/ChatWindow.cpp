@@ -8,10 +8,6 @@
 
 #include "ChatWindow.h"
 
-#include <string>
-#include <sstream>
-#include <iostream>
-
 #include <cassert>
 
 #include <form.h>
