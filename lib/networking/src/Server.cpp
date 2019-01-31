@@ -18,7 +18,6 @@ using networking::ServerImpl;
 using networking::ServerImplDeleter;
 
 
-
 namespace networking {
 
 
