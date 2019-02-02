@@ -7,23 +7,26 @@
 
 #include <vector>
 #include <string>
+#include <string_view>
+
+using namespace std;
 
 struct extra {
-	std::vector<std::string> keywords, desc;
+	vector<string> keywords, desc;
 };
 
 class Object {
 	private:
 		int id;
-		std::vector<std::string> keywords;
-		std::string shortdesc;
-		std::vector<std::string> longDesc;
-		std::vector<extra> extras;
+		vector<string> keywords;
+		string shortdesc;
+		vector<string> longDesc;
+		vector<extra> extras;
 	public:
-		Object();
+		Object(int id, vector<string> keywords, string_view shortdesc, vector<string> longdesc);
 		int getId() const;
-		std::string getShortDesc() const;
-		std::string getObjectInfo();
+		string getShortDesc() const;
+		string getObjectInfo();
 };
 
 #endif

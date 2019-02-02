@@ -9,7 +9,6 @@
 #include "world.h"
 #include "area.h"
 
-
 using namespace std;
 
 void World::getMessageFromServer(std::string msg) {
@@ -25,13 +24,14 @@ std::string World::getMotd() {
 World::World() {
     cout << "World created. Initializing Dummy Contents..." << endl;
     initializeDummyContents();
+
 }
 
 void World::initializeDummyContents() {
-    Area newArea{};
-    newArea.initializeArea();
-    areas.push_back(newArea);
+    //Area newArea{};
+    //newArea.initializeArea();
+    //areas.push_back(newArea);
 
-    cout << "Dummies initialized" << endl;
+    //cout << "Dummies initialized" << endl;
 }
 

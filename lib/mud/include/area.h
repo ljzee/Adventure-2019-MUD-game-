@@ -1,10 +1,11 @@
 //
-// Modified by Andre on 1/25/2019.
+// Modified by Adrien on 2/2/2019.
 //
 
 #ifndef AREA_H
 #define AREA_H
 
+#include <string_view>
 #include <vector>
 #include "object.h"
 #include "npc.h"
@@ -21,13 +22,13 @@ class Area {
 		std::vector<Reset> RESETS;
 		//list of SHOPS
 	public:
-		Area();
+		Area(string_view name);
 
 		// Getters
 		std::string getAreaName() const;
 
 		// Other functions
-		void initializeArea();
+		void initializeArea(vector<Npc> newNPCs, vector<Object> newObjects);
         void getAreaInfo();
 };
 

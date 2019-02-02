@@ -4,19 +4,18 @@
 
 #include "object.h"
 
-// These values should be read in from the JSON file so just dummy values for now
-Object::Object() {
-     this->id = 10500;
-     this->keywords.push_back("chamorro");
-     this->keywords.push_back("ringmail");
-     this->shortdesc = "chamorro ringmail";
-     this->longDesc.push_back("A bunch of rings sewn together with taotamoa bark is on the ground.");
 
-     // Extra dummy struct
+Object::Object(int id, vector<string> keywords, string_view shortdesc, vector<string> longDesc) {
+     this->id = id;
+     this->keywords = keywords;
+     this->shortdesc = shortdesc;
+     this->longDesc = longDesc;
+
+     /* Extra dummy struct
      extra ext;
      ext.keywords.push_back("ringmail");
      ext.desc.push_back("This armor is imported from the island of Guam.");
-     this->extras.push_back(ext);
+     this->extras.push_back(ext); */
 }
 
 // Getters
@@ -33,6 +32,6 @@ std::string Object::getObjectInfo() {
           concatDesc += "\n";
      }
 
-     return strId + " " + concatDesc + "\n";
+     return strId + " " + concatDesc;
 }
 

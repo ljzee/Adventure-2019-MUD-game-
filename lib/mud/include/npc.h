@@ -1,5 +1,5 @@
 //
-// Modified by Andre on 1/25/2019.
+// Modified by Adrien on 2/2/2019.
 //
 
 #ifndef NPC_H
@@ -8,21 +8,24 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <string_view>
+
+using namespace std;
 
 class Npc {
 	private:
 		int id;
-		std::vector<std::string> keywords;
-		std::string shortdesc;
-		std::vector<std::string> longdesc;
-		std::vector<std::string> description;
+		vector<string> keywords;
+		string shortdesc;
+		vector<string> longdesc;
+		vector<string> description;
 	public:
-		Npc();
+		Npc(int id, vector<string> keywords, string_view shortdesc, vector<string> longdesc, vector<string> description);
 
 		// Getters
 		int getNpcId() const;
 
-		std::string outputNpcInfo();
+		string outputNpcInfo();
 };
 
 #endif

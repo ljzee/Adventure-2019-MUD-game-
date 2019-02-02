@@ -4,7 +4,10 @@ add_library(mud
         src/area.cpp
         src/npc.cpp
         src/object.cpp
+        src/JSONParser.cpp
         )
+
+
 
 find_package(Boost 1.68 COMPONENTS system REQUIRED)
 
@@ -31,3 +34,4 @@ set_target_properties(mud
 install(TARGETS mud
         ARCHIVE DESTINATION lib
         )
+
