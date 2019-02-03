@@ -11,24 +11,19 @@ This project requires:
 
 ## Building with CMake
 
-git init
+> git init
 
-git clone --single-branch --branch <branchname> https://csil-git1.cs.surrey.sfu.ca/373-19-1-babka/adventure2019
+> git clone --single-branch --branch branchname https://csil-git1.cs.surrey.sfu.ca/373-19-1-babka/adventure2019
 
-mkdir networkbuild
+> mkdir build
 
-cd networkbuild
+> cd build
 
-OG:
 > cmake ../adventure2019
-> make
-
-on CSIL:
-> cmake -DBOOST_ROOT=/usr/shared/CMPT/faculty/wsumner/base/ ../adventure2019
 
 > make
 
-bin/chatserver 4000 ../web-socket-networking/webchat.html
+> bin/mudserver 4000 ../web-socket-networking/webchat.html
 
 URL:: http://localhost:4000/index.html
 
