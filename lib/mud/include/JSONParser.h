@@ -11,6 +11,7 @@
 #include "area.h"
 #include "npc.h"
 #include "object.h"
+#include "User.h"
 
 
 
@@ -22,6 +23,7 @@ public:
     Area generateArea();
     vector<Npc> generateNPCs(json& deserializedJson);
     vector<Object> generateObjects(json& deserializedJson);
+    std::unordered_map<int, User> parseUsers();
 };
 
 

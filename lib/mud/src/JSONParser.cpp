@@ -69,3 +69,30 @@ vector<Object> JSONParser::generateObjects(json& deserializedJson) {
 
     return objects;
 }
+
+std::unordered_map<int, User> JSONParser::parseUsers() {
+    std::unordered_map<int, User> userList;
+    int counter = 0; //temporary solution to int field of the map
+
+    ifstream file("userlist.json");
+
+    json deserializedJson;
+    file >> deserializedJson;
+    file.close();
+
+    for(auto& user : deserializedJson["USERS"]) {
+        std::string username = user["name"].get<string>();
+        std::string password = user["password"].get<string>();
+
+        User newUser{username, password};
+
+        userList.insert({counter++, newUser});
+
+    }
+
+    //for testing purposes only:
+    for(auto& u : userList) {
+        std::cout << u.first << " => " << u.second.getUsername() << "\t" << u.second.getPassword() << std::endl;
+    }
+    return userList;
+}
