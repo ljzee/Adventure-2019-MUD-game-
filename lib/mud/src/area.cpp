@@ -1,5 +1,5 @@
 //
-// Modified by Adrien on 2/2/2019.
+// Modified by Adrien on 2/5/2019.
 //
 
 #include <iostream>
@@ -22,15 +22,22 @@ void Area::initializeArea(vector<Npc> newNPCs, vector<Object> newObjects,
 }
 
 void Area::getAreaInfo() {
-     cout << "Area name: " << name << endl;
+    cout << "Area statistics. For testing if the JSON Parser is working" << endl;
 
-     cout << "\nNPC List: \n" << endl;
-     for(auto& npc : NPCS) {
-          cout << npc.outputNpcInfo() << endl;
-     }
+    cout << "Area name: " << name << endl;
 
-     cout << "\nObject List: \n" << endl;
-     for(auto& obj : OBJECTS) {
-          cout << obj.getObjectInfo() << endl;
-     }
+    cout << "\n# of NPCS: " << NPCS.size() << endl;
+
+    cout << "\n# of OBJECTS: " << OBJECTS.size() << endl;
+
+    cout << "\n# of ROOMS: " << ROOMS.size() << endl;
+
+    int totalRooms = 0;
+    for(auto& room : ROOMS) {
+        totalRooms += room.getNumDoors();
+    }
+    cout << "\t# of DOORS: " << totalRooms << endl;
+
+    cout << "\n# of RESETS: " << RESETS.size() << endl;
+
 }

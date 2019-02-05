@@ -29,6 +29,8 @@ public:
     vector<Npc> generateNPCs(json& deserializedJson);
     vector<Object> generateObjects(json& deserializedJson);
     vector<Room> generateRooms(json& deserializedJson);
+    vector<Door> generateDoors(json& deserializedJson);
+    vector<extendDesc> generateExtendedDescriptions(json& deserializedJson);
     vector<structReset> generateResets(json& deserializedJson);
     std::unordered_map<int, User> parseUsers();
 };

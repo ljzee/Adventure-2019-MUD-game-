@@ -57,6 +57,7 @@ class Room {
 
 		// Member Functions
 		string outputDescString();
+		int getNumDoors();
 		// void resetRoom();
 };
 

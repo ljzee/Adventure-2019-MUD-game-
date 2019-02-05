@@ -18,7 +18,7 @@ using namespace std;
 
 Area JSONParser::generateArea() {
 
-    ifstream file("shire.json");
+    ifstream file("mirkwood.json");
 
     json deserializedJson;
     file >> deserializedJson;
@@ -81,57 +81,57 @@ vector<Room> JSONParser::generateRooms(json& deserializedJson) {
     json deserializedRooms = deserializedJson["ROOMS"];
 
     for(auto& room : deserializedRooms) {
-        // Parsing room "description" information
-        json deserializedDesc = room["desc"];
-        vector<string> parsedDesc;
-        for(auto& str : deserializedDesc) {
-            parsedDesc.push_back(str.get<string>());
-        }
 
-        // Parsing door information
-        json deserializedDoor = room["doors"];
-        vector<Door> parsedDoor;
-        vector<string> doorDesc;
-        vector<string> doorKeywords;
-        Door daDoor = {"", doorDesc, doorKeywords, -1};
-        for(auto& door : deserializedDoor) {
-                daDoor.dir = door["dir"].get<string>();
-                for(auto& str : door["desc"]) {
-                    daDoor.desc.push_back(str.get<string>());
-                }
-                for(auto& word : door["keywords"]) {
-                    daDoor.keywords.push_back(word.get<string>());
-                }
-                daDoor.to = door["to"].get<int>();
-                parsedDoor.push_back(daDoor);
-        }
-
-        // Parsing extended description information
-        json deserializedExtendedDesc = room["extended_descriptions"];
-        vector<extendDesc> parsedExtendDesc;
-        extendDesc daExtendDesc = {vector<string>(), vector<string>()};
-        for(auto& extDesc : deserializedExtendedDesc) {
-            for(auto& word : extDesc["keywords"]) {
-                daExtendDesc.keywords.push_back(word.get<string>());
-            }
-            for(auto& str : extDesc["desc"]) {
-                daExtendDesc.desc.push_back(str.get<string>());
-            }
-            parsedExtendDesc.push_back(daExtendDesc);
-        }
+        vector<Door> doors = generateDoors(room);
+        vector<extendDesc> extendedDesc = generateExtendedDescriptions(room);
 
         rooms.push_back(Room{
                 room["id"].get<int>(),
                 room["name"].get<string>(),
-                parsedDesc, // room["desc"]
-                parsedDoor, // room["doors"]
-                parsedExtendDesc // room["extended_descriptions"]
+                room["desc"], // room["desc"]
+                doors, // room["doors"]
+                extendedDesc // room["extended_descriptions"]
         });
     }
 
     return rooms;
 }
 
+vector<Door> JSONParser::generateDoors(json& deserializedJson) {
+    vector<Door> doors;
+    json deserializedDoor = deserializedJson["doors"];
+
+    for(auto& door : deserializedDoor) {
+
+        doors.push_back(Door{
+                door["dir"].get<string>(),
+                door["desc"],
+                door["keywords"],
+                door["to"].get<int>()
+        });
+    }
+
+    return doors;
+}
+
+//Needs refactoring of how to properly assign the json values as a vector
+vector<extendDesc> JSONParser::generateExtendedDescriptions(json& deserializedJson) {
+    vector<extendDesc> extendedDesc;
+    extendDesc newExtendedDesc;
+    json deserializedExtendedDesc = deserializedJson["extended_descriptions"];
+
+    for(auto& extDesc : deserializedExtendedDesc) {
+        vector<string> keys = extDesc["keywords"];
+        vector<string> descriptions = extDesc["keywords"];
+
+        newExtendedDesc.keywords = keys;
+        newExtendedDesc.desc = descriptions;
+
+        extendedDesc.push_back(newExtendedDesc);
+    }
+
+    return extendedDesc;
+}
 
 vector<structReset> JSONParser::generateResets(json& deserializedJson) {
     vector<structReset> resets;
@@ -140,12 +140,19 @@ vector<structReset> JSONParser::generateResets(json& deserializedJson) {
     for (auto &reset : deserializedResets) {
         structReset parsedStructReset;
 
-        parsedStructReset.action = reset["action"].get<string>();
+        /*parsedStructReset.action = reset["action"].get<string>();
         parsedStructReset.id = reset["id"].get<int>();
         parsedStructReset.limit = reset["limit"].get<int>();
         parsedStructReset.room = reset["room"].get<int>();
         parsedStructReset.slot = reset["slot"].get<int>();
-        parsedStructReset.state = reset["state"].get<string>();
+        parsedStructReset.state = reset["state"].get<string>();*/
+
+        parsedStructReset.action = reset.value("action", "");
+        parsedStructReset.id = reset.value("id", -1);
+        parsedStructReset.limit = reset.value("limit", -1);
+        parsedStructReset.room = reset.value("room", -1);
+        parsedStructReset.slot = reset.value("slot", -1);
+        parsedStructReset.state = reset.value("state", "");
 
         resets.push_back(parsedStructReset);
     }

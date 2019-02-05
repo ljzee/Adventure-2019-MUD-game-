@@ -73,6 +73,10 @@ string Room::outputDescString() {
     return concatDesc;
 }
 
+int Room::getNumDoors() {
+    return doors.size();
+};
+
 /*
  void Room::resetRoom() {
 	int arbitrary_limit = 100;
