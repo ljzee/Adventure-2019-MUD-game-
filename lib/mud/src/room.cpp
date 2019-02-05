@@ -13,8 +13,14 @@
 #include "room.h"
 
 //Will be read in from JSON, so dummy values for now
-Room::Room() {
+Room::Room(int id, string name, vector<string> desc, vector<Door> doors, vector<extendDesc> extendDescs) {
+    this->id = id;
+    this->name = name;
+    this->desc = desc;
+    this->doors = doors;
+    this->extendDescs = extendDescs;
 
+    /*
     this->dummy_objects = 1;
     this->dummy_characters = 1;
     this->ID = 8800;
@@ -43,6 +49,7 @@ Room::Room() {
     ed.desc.push_back("");
     ed.desc.push_back("--Yaegar");
     this->extendDescs.push_back(ed);
+    */
 }
 
 // Getters
@@ -50,14 +57,14 @@ int Room::get_dummy_characters() const { return this->dummy_characters; }
 
 int Room::get_dummy_objects() const { return this->dummy_objects; }
 
-int Room::getID() const { return this->ID; }
+int Room::getID() const { return this->id; }
 
-std::string Room::getName() const { return this->name; }
+string Room::getName() const { return this->name; }
 
 // Member functions
-std::string Room::outputDescString() {
+string Room::outputDescString() {
 
-    std::string concatDesc = "";
+    string concatDesc = "";
     for (auto &portion : this->desc) {
         concatDesc +=  portion;
         concatDesc += "\n";

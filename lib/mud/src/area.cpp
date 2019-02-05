@@ -13,9 +13,12 @@ Area::Area(string_view name) {
 
 std::string Area::getAreaName() const { return this->name; }
 
-void Area::initializeArea(vector<Npc> newNPCs, vector<Object> newObjects) {
+void Area::initializeArea(vector<Npc> newNPCs, vector<Object> newObjects,
+                         vector<Room> newRooms, vector<structReset> newResets) {
     NPCS = move(newNPCs);
     OBJECTS = move(newObjects);
+    ROOMS = move(newRooms);
+    RESETS = move(newResets);
 }
 
 void Area::getAreaInfo() {

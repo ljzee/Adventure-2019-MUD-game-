@@ -19,7 +19,7 @@ class Area {
 		std::vector<Npc> NPCS;
 		std::vector<Object> OBJECTS;
 		std::vector<Room> ROOMS;
-		std::vector<Reset> RESETS;
+		std::vector<structReset> RESETS;
 		//list of SHOPS
 	public:
 		Area(string_view name);
@@ -28,7 +28,8 @@ class Area {
 		std::string getAreaName() const;
 
 		// Other functions
-		void initializeArea(vector<Npc> newNPCs, vector<Object> newObjects);
+		void initializeArea(vector<Npc> newNPCs, vector<Object> newObjects,
+				vector<Room> newRooms, vector<structReset> newResets);
         void getAreaInfo();
 };
 

@@ -16,16 +16,17 @@
 #include <string>
 #include <vector>
 
-using namespace std;
+using std::string;
+using std::vector;
 
 struct extendDesc {
-	std::vector<string> keywords, desc;
+	vector<string> keywords, desc;
 };
 
 struct Door {
-	std::string dir;
-	std::vector<string> desc;
-	std::vector<string> keywords;
+	string dir;
+	vector<string> desc;
+	vector<string> keywords;
 	int to;
 };
 
@@ -39,24 +40,24 @@ class Room {
 		// include POINTERS to other rooms; what kind of functions do we need?
 		// use an arbitrary new room
 
-		int ID;
-		std::string name;
-		std::vector<string> desc;
-		std::vector<Door> doors;
-		std::vector<extendDesc> extendDescs;
+		int id;
+		string name;
+		vector<string> desc;
+		vector<Door> doors;
+		vector<extendDesc> extendDescs;
 	public:
 		// Constructor
-		Room();
+		Room(int id, string name, vector<string> desc, vector<Door> doors, vector<extendDesc> extendDescs);
 
 		// Getters
 		int get_dummy_objects() const;
 		int get_dummy_characters() const;
 		int getID() const;
-		std::string getName() const;
+		string getName() const;
 
 		// Member Functions
-		std::string outputDescString();
-		void resetRoom();
+		string outputDescString();
+		// void resetRoom();
 };
 
 #endif
