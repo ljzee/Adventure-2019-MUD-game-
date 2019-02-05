@@ -2,6 +2,10 @@
 // Created by Adrien on 2/1/2019.
 //
 
+//
+// Modified by Andre on 2/4/2019.
+//
+
 #include <json.hpp>
 #include <iostream>
 #include <fstream>
@@ -147,4 +151,31 @@ vector<structReset> JSONParser::generateResets(json& deserializedJson) {
     }
 
     return resets;
+}
+
+std::unordered_map<int, User> JSONParser::parseUsers() {
+    std::unordered_map<int, User> userList;
+    int counter = 0; //temporary solution to int field of the map
+
+    ifstream file("userlist.json");
+
+    json deserializedJson;
+    file >> deserializedJson;
+    file.close();
+
+    for(auto& user : deserializedJson["USERS"]) {
+        std::string username = user["name"].get<string>();
+        std::string password = user["password"].get<string>();
+
+        User newUser{username, password};
+
+        userList.insert({counter++, newUser});
+
+    }
+
+    //for testing purposes only:
+    for(auto& u : userList) {
+        std::cout << u.first << " => " << u.second.getUsername() << "\t" << u.second.getPassword() << std::endl;
+    }
+    return userList;
 }

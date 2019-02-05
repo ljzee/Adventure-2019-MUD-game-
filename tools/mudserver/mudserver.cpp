@@ -100,9 +100,10 @@ getHTTPMessage(const char* htmlLocation) {
 
 int
 main(int argc, char* argv[]) {
+    std::unordered_map<int, User> userList;
 
     JSONParser j;
-    j.generateArea();
+    userList = j.parseUsers();
 
     if (argc < 3) {
         std::cerr << "Usage:\n  " << argv[0] << " <port> <html response>\n"

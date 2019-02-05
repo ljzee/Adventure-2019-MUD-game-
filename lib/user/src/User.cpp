@@ -15,6 +15,12 @@ User::User(networking::Connection connection)
     std::cout << "New user has been created" << std::endl;
 };
 
+///Constructor for JSON Parsing
+User::User(std::string username, std::string password) {
+    this->username = username;
+    this->password = password;
+}
+
 ///Destructor
 User::~User(){
     //std::cout << "User has been destroyed" << std::endl;

@@ -2,6 +2,9 @@
 // Created by Adrien on 2/1/2019.
 //
 
+// Modified by Andre on 2/4/2019.
+//
+
 #ifndef ADVENTURE_JSONPARSER_H
 #define ADVENTURE_JSONPARSER_H
 
@@ -13,6 +16,7 @@
 #include "object.h"
 #include "room.h"
 #include "reset.h"
+#include "User.h"
 
 
 
@@ -26,7 +30,7 @@ public:
     vector<Object> generateObjects(json& deserializedJson);
     vector<Room> generateRooms(json& deserializedJson);
     vector<structReset> generateResets(json& deserializedJson);
-
+    std::unordered_map<int, User> parseUsers();
 };
 
 
