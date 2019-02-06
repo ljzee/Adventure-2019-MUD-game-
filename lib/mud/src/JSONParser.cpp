@@ -1,11 +1,10 @@
 #include <json.hpp>
 #include <iostream>
 #include <fstream>
-#include <string>
 #include "JSONParser.h"
 
+using std::vector;
 using json = nlohmann::json;
-using namespace std;
 
 Area JSONParser::generateArea() {
     //put the JSON file to be read at the root directory of your build directory
@@ -15,7 +14,7 @@ Area JSONParser::generateArea() {
     file >> deserializedJson;
     file.close();
 
-    Area testArea{deserializedJson["AREA"]["name"].get<string>()};
+    Area testArea{deserializedJson["AREA"]["name"].get<std::string>()};
 
     testArea.initializeArea(
              generateNPCs(deserializedJson),
@@ -71,11 +70,11 @@ vector<Room> JSONParser::generateRooms(json& deserializedJson) {
 
     for(auto& room : deserializedRooms) {
         vector<Door> doors = generateDoors(room);
-        vector<extendDesc> extendedDesc = generateExtendedDescriptions(room);
+        vector<ExtendDesc> extendedDesc = generateExtendedDescriptions(room);
 
         rooms.push_back(Room{
                 room["id"].get<int>(),
-                room["name"].get<string>(),
+                room["name"].get<std::string>(),
                 room["desc"],
                 doors,
                 extendedDesc
@@ -91,7 +90,7 @@ vector<Door> JSONParser::generateDoors(json& deserializedJson) {
 
     for(auto& door : deserializedDoor) {
         doors.push_back(Door{
-                door["dir"].get<string>(),
+                door["dir"].get<std::string>(),
                 door["desc"],
                 door["keywords"],
                 door["to"].get<int>()
@@ -102,14 +101,14 @@ vector<Door> JSONParser::generateDoors(json& deserializedJson) {
 }
 
 //Needs refactoring of how to properly assign the json values as a vector
-vector<extendDesc> JSONParser::generateExtendedDescriptions(json& deserializedJson) {
-    vector<extendDesc> extendedDesc;
-    extendDesc newExtendedDesc;
+vector<ExtendDesc> JSONParser::generateExtendedDescriptions(json& deserializedJson) {
+    vector<ExtendDesc> extendedDesc;
+    ExtendDesc newExtendedDesc;
     json deserializedExtendedDesc = deserializedJson["extended_descriptions"];
 
     for(auto& extDesc : deserializedExtendedDesc) {
-        vector<string> keys = extDesc["keywords"];
-        vector<string> descriptions = extDesc["keywords"];
+        vector<std::string> keys = extDesc["keywords"];
+        vector<std::string> descriptions = extDesc["keywords"];
 
         newExtendedDesc.keywords = keys;
         newExtendedDesc.desc = descriptions;
@@ -120,12 +119,12 @@ vector<extendDesc> JSONParser::generateExtendedDescriptions(json& deserializedJs
     return extendedDesc;
 }
 
-vector<structReset> JSONParser::generateResets(json& deserializedJson) {
-    vector<structReset> resets;
+vector<StructReset> JSONParser::generateResets(json& deserializedJson) {
+    vector<StructReset> resets;
     json deserializedResets = deserializedJson["RESETS"];
 
     for (auto &reset : deserializedResets) {
-        structReset parsedStructReset;
+        StructReset parsedStructReset;
 
         parsedStructReset.action = reset.value("action", "");
         parsedStructReset.id = reset.value("id", -1);
@@ -153,8 +152,8 @@ std::unordered_map<int, User> JSONParser::parseUsers() {
     file.close();
 
     for(auto& user : deserializedJson["USERS"]) {
-        std::string username = user["name"].get<string>();
-        std::string password = user["password"].get<string>();
+        std::string username = user["name"].get<std::string>();
+        std::string password = user["password"].get<std::string>();
 
         User newUser{username, password};
 

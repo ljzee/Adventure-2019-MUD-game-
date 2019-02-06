@@ -3,6 +3,7 @@
 
 #include <json.hpp>
 #include <vector>
+#include <string>
 
 #include "area.h"
 #include "npc.h"
@@ -21,8 +22,8 @@ public:
     vector<Object> generateObjects(json& deserializedJson);
     vector<Room> generateRooms(json& deserializedJson);
     vector<Door> generateDoors(json& deserializedJson);
-    vector<extendDesc> generateExtendedDescriptions(json& deserializedJson);
-    vector<structReset> generateResets(json& deserializedJson);
+    vector<ExtendDesc> generateExtendedDescriptions(json& deserializedJson);
+    vector<StructReset> generateResets(json& deserializedJson);
     std::unordered_map<int, User> parseUsers();
 };
 

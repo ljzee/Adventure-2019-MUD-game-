@@ -1,20 +1,18 @@
 #ifndef ROOM_H
 #define ROOM_H
 
-#include <string>
 #include <vector>
 
-using std::string;
 using std::vector;
 
-struct extendDesc {
-	vector<string> keywords, desc;
+struct ExtendDesc {
+	vector<std::string> keywords, desc;
 };
 
 struct Door {
-	string dir;
-	vector<string> desc;
-	vector<string> keywords;
+	std::string dir;
+	vector<std::string> desc;
+	vector<std::string> keywords;
 	int to;
 };
 
@@ -29,25 +27,24 @@ class Room {
 		// use an arbitrary new room
 
 		int id;
-		string name;
-		vector<string> desc;
+		std::string name;
+		vector<std::string> desc;
 		vector<Door> doors;
-		vector<extendDesc> extendDescs;
+		vector<ExtendDesc> extendedDesc;
 	public:
 		// Constructor
-		Room(int id, string name, vector<string> desc, vector<Door> doors, vector<extendDesc> extendDescs);
+		Room(int id, std::string name, vector<std::string> desc, vector<Door> doors, vector<ExtendDesc> extendedDesc);
 
 		// Getters
 		int get_dummy_objects() const;
 		int get_dummy_characters() const;
 		int getID() const;
-		string getName() const;
+		std::string getName() const;
 
 		// Member Functions
-		string outputDescString();
+		std::string outputDescString();
 		int getNumDoors();
 		// void resetRoom();
 };
 
 #endif
-//TODO: complete based on given json file

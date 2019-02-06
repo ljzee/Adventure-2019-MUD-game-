@@ -1,7 +1,6 @@
 #ifndef AREA_H
 #define AREA_H
 
-#include <string_view>
 #include <vector>
 #include "object.h"
 #include "npc.h"
@@ -12,20 +11,20 @@ class Area {
 	private:
 		std::string name;
 		//list of HELPS
-		std::vector<Npc> NPCS;
-		std::vector<Object> OBJECTS;
-		std::vector<Room> ROOMS;
-		std::vector<structReset> RESETS;
+		std::vector<Npc> Npcs;
+		std::vector<Object> Objects;
+		std::vector<Room> Rooms;
+		std::vector<StructReset> Resets;
 		//list of SHOPS
 	public:
-		Area(string_view name);
+		Area(std::string name);
 
 		// Getters
 		std::string getAreaName() const;
 
 		// Other functions
-		void initializeArea(vector<Npc> newNPCs, vector<Object> newObjects,
-				vector<Room> newRooms, vector<structReset> newResets);
+		void initializeArea(vector<Npc> newNpcs, vector<Object> newObjects,
+				vector<Room> newRooms, vector<StructReset> newResets);
         void getAreaInfo();
 };
 

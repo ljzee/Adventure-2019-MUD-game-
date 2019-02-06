@@ -1,21 +1,19 @@
 #include "npc.h"
 
-using namespace std;
-
-Npc::Npc(int id, vector<string> keywords, string_view shortdesc, vector<string> longdesc, vector<string> description){
-     this->id = id;
-     this->keywords = keywords;
-     this->shortdesc = shortdesc;
-     this->longdesc = longdesc;
-     this->description = description;
+Npc::Npc(int id, vector<std::string> keywords, std::string shortDesc, vector<std::string> longDesc, vector<std::string> description) :
+     id(id),
+     keywords(std::move(keywords)),
+     shortdesc(shortdesc),
+     longdesc(std::move(longdesc)),
+     description(std::move(description)) {
 }
 
 int Npc::getNpcId() const { return this->id; }
 
-string Npc::outputNpcInfo() {
-     string strId = std::to_string(this->id);
+std::string Npc::outputNpcInfo() {
+     std::string strId = std::to_string(this->id);
 
-     string concatDesc = " ";
+     std::string concatDesc = " ";
      for (auto &portion : this->longdesc) {
           concatDesc +=  portion;
           concatDesc += "\n";

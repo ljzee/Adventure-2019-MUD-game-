@@ -1,16 +1,14 @@
 #include <iostream>
-#include <string>
 #include <stdlib.h> 
 #include <time.h>
 #include "room.h"
 
-
-Room::Room(int id, string name, vector<string> desc, vector<Door> doors, vector<extendDesc> extendDescs) {
-    this->id = id;
-    this->name = name;
-    this->desc = desc;
-    this->doors = doors;
-    this->extendDescs = extendDescs;
+Room::Room(int id, std::string name, vector<std::string> desc, vector<Door> doors, vector<ExtendDesc> extendedDesc) :
+    id(id),
+    name(name),
+    desc(std::move(desc)),
+    doors(std::move(doors)),
+    extendedDesc(std::move(extendedDesc)) {
 }
 
 // Getters
@@ -20,12 +18,12 @@ int Room::get_dummy_objects() const { return this->dummy_objects; }
 
 int Room::getID() const { return this->id; }
 
-string Room::getName() const { return this->name; }
+std::string Room::getName() const { return this->name; }
 
 // Member functions
-string Room::outputDescString() {
+std::string Room::outputDescString() {
 
-    string concatDesc = "";
+    std::string concatDesc = "";
     for (auto &portion : this->desc) {
         concatDesc +=  portion;
         concatDesc += "\n";
@@ -33,10 +31,6 @@ string Room::outputDescString() {
 
     return concatDesc;
 }
-
-int Room::getNumDoors() {
-    return doors.size();
-};
 
 /*
  void Room::resetRoom() {
