@@ -1,7 +1,3 @@
-//
-// Modified by Adrien on 2/5/2019.
-//
-
 #include <iostream>
 #include "area.h"
 
@@ -36,7 +32,7 @@ void Area::getAreaInfo() {
     for(auto& room : ROOMS) {
         totalRooms += room.getNumDoors();
     }
-    cout << "\t# of DOORS: " << totalRooms << endl;
+    cout << "\n# of DOORS: " << totalRooms << endl;
 
     cout << "\n# of RESETS: " << RESETS.size() << endl;
 

@@ -1,7 +1,3 @@
-//
-// Modified by Adrien on 2/2/2019.
-//
-
 #ifndef AREA_H
 #define AREA_H
 
@@ -34,4 +30,3 @@ class Area {
 };
 
 #endif
-//TODO: complete based on given json file

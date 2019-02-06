@@ -1,7 +1,3 @@
-//
-// Modified by Adrien on 2/2/2019.
-//
-
 #include "npc.h"
 
 using namespace std;

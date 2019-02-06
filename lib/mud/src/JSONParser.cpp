@@ -1,23 +1,14 @@
-//
-// Created by Adrien on 2/1/2019.
-//
-
-//
-// Modified by Andre on 2/4/2019.
-//
-
 #include <json.hpp>
 #include <iostream>
 #include <fstream>
 #include <string>
 #include "JSONParser.h"
 
-
 using json = nlohmann::json;
 using namespace std;
 
 Area JSONParser::generateArea() {
-
+    //put the JSON file to be read at the root directory of your build directory
     ifstream file("mirkwood.json");
 
     json deserializedJson;
@@ -31,7 +22,6 @@ Area JSONParser::generateArea() {
              generateObjects(deserializedJson),
              generateRooms(deserializedJson),
              generateResets(deserializedJson)
-             //other objects in here
             );
 
     testArea.getAreaInfo();
@@ -44,7 +34,6 @@ vector<Npc> JSONParser::generateNPCs(json& deserializedJson) {
     json deserializedNPCs = deserializedJson["NPCS"];
 
     for(auto& npc : deserializedNPCs) {
-
         npcs.push_back(Npc{
                 npc["id"].get<int>(),
                 npc["keywords"],
@@ -81,16 +70,15 @@ vector<Room> JSONParser::generateRooms(json& deserializedJson) {
     json deserializedRooms = deserializedJson["ROOMS"];
 
     for(auto& room : deserializedRooms) {
-
         vector<Door> doors = generateDoors(room);
         vector<extendDesc> extendedDesc = generateExtendedDescriptions(room);
 
         rooms.push_back(Room{
                 room["id"].get<int>(),
                 room["name"].get<string>(),
-                room["desc"], // room["desc"]
-                doors, // room["doors"]
-                extendedDesc // room["extended_descriptions"]
+                room["desc"],
+                doors,
+                extendedDesc
         });
     }
 
@@ -102,7 +90,6 @@ vector<Door> JSONParser::generateDoors(json& deserializedJson) {
     json deserializedDoor = deserializedJson["doors"];
 
     for(auto& door : deserializedDoor) {
-
         doors.push_back(Door{
                 door["dir"].get<string>(),
                 door["desc"],
@@ -140,19 +127,13 @@ vector<structReset> JSONParser::generateResets(json& deserializedJson) {
     for (auto &reset : deserializedResets) {
         structReset parsedStructReset;
 
-        /*parsedStructReset.action = reset["action"].get<string>();
-        parsedStructReset.id = reset["id"].get<int>();
-        parsedStructReset.limit = reset["limit"].get<int>();
-        parsedStructReset.room = reset["room"].get<int>();
-        parsedStructReset.slot = reset["slot"].get<int>();
-        parsedStructReset.state = reset["state"].get<string>();*/
-
         parsedStructReset.action = reset.value("action", "");
         parsedStructReset.id = reset.value("id", -1);
         parsedStructReset.limit = reset.value("limit", -1);
         parsedStructReset.room = reset.value("room", -1);
         parsedStructReset.slot = reset.value("slot", -1);
         parsedStructReset.state = reset.value("state", "");
+        //TODO: "" and -1 to be refactored to some default variable value
 
         resets.push_back(parsedStructReset);
     }
@@ -164,6 +145,7 @@ std::unordered_map<int, User> JSONParser::parseUsers() {
     std::unordered_map<int, User> userList;
     int counter = 0; //temporary solution to int field of the map
 
+    //put the JSON file to be read at the root directory of your build directory
     ifstream file("userlist.json");
 
     json deserializedJson;
@@ -180,9 +162,5 @@ std::unordered_map<int, User> JSONParser::parseUsers() {
 
     }
 
-    //for testing purposes only:
-    for(auto& u : userList) {
-        std::cout << u.first << " => " << u.second.getUsername() << "\t" << u.second.getPassword() << std::endl;
-    }
     return userList;
 }

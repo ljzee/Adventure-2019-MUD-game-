@@ -1,7 +1,3 @@
-//
-// Modified by Andre on 1/25/2019.
-//
-
 #ifndef OBJECT_H
 #define OBJECT_H
 

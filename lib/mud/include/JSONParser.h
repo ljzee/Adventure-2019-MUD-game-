@@ -1,10 +1,3 @@
-//
-// Created by Adrien on 2/1/2019.
-//
-
-// Modified by Andre on 2/4/2019.
-//
-
 #ifndef ADVENTURE_JSONPARSER_H
 #define ADVENTURE_JSONPARSER_H
 
@@ -17,8 +10,6 @@
 #include "room.h"
 #include "reset.h"
 #include "User.h"
-
-
 
 using json = nlohmann::json;
 using namespace std;

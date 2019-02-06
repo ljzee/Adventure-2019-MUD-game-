@@ -1,7 +1,3 @@
-//
-// Created by Adrien on 1/17/2019.
-//
-
 #ifndef WORLD_H
 #define WORLD_H
 

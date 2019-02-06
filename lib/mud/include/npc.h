@@ -1,7 +1,3 @@
-//
-// Modified by Adrien on 2/2/2019.
-//
-
 #ifndef NPC_H
 #define NPC_H
 

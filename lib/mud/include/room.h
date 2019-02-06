@@ -1,15 +1,3 @@
-//
-// Created by Alex on 1/18/2019.
-//
-
-//
-// Modified by Andrea on 1/24/2019.
-//
-
-//
-// Modified by Andre on 1/25/2019.
-//
-
 #ifndef ROOM_H
 #define ROOM_H
 
