@@ -1,27 +1,29 @@
 #include <iostream>
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
 #include "area.h"
 
-//using namespace std;
-
-Area::Area() {
-     this->name = "Mirkwood";
-}
+Area::Area(std::string name) : name(name) {}
 
 std::string Area::getAreaName() const { return this->name; }
 
-void Area::initializeArea() {
-     Npc newNpc{};
-     NPCS.push_back(newNpc);
-     Object newObj{};
-     OBJECTS.push_back(newObj);
-     Room newRoom{};
-     ROOMS.push_back(newRoom);
+void Area::initializeArea(vector<Npc> newNpcs, vector<Object> newObjects,
+                         vector<Room> newRooms, vector<StructReset> newResets) {
+
+    Npcs = std::move(newNpcs);
+    Objects = std::move(newObjects);
+    Rooms = std::move(newRooms);
+    Resets = std::move(newResets);
 }
 
 void Area::getAreaInfo() {
-     cout << "Area name: " << name <<
-          "\nNpc: " << NPCS.at(0).outputNpcInfo() <<
-          "Object: " << OBJECTS.at(0).getObjectInfo() << endl;
+    std::cout << "Area statistics. For testing if the JSON Parser is working" << std::endl;
+
+    std::cout << "Area name: " << name << std::endl;
+
+    std::cout << "\n# of NPCS: " << Npcs.size() << std::endl;
+
+    std::cout << "\n# of OBJECTS: " << Objects.size() << std::endl;
+
+    std::cout << "\n# of ROOMS: " << Rooms.size() << std::endl;
+
+    std::cout << "\n# of RESETS: " << Resets.size() << std::endl;
 }

@@ -1,7 +1,3 @@
-//
-// Modified by Andre on 1/25/2019.
-//
-
 #ifndef AREA_H
 #define AREA_H
 
@@ -15,21 +11,21 @@ class Area {
 	private:
 		std::string name;
 		//list of HELPS
-		std::vector<Npc> NPCS;
-		std::vector<Object> OBJECTS;
-		std::vector<Room> ROOMS;
-		std::vector<Reset> RESETS;
+		std::vector<Npc> Npcs;
+		std::vector<Object> Objects;
+		std::vector<Room> Rooms;
+		std::vector<StructReset> Resets;
 		//list of SHOPS
 	public:
-		Area();
+		Area(std::string name);
 
 		// Getters
 		std::string getAreaName() const;
 
 		// Other functions
-		void initializeArea();
+		void initializeArea(vector<Npc> newNpcs, vector<Object> newObjects,
+				vector<Room> newRooms, vector<StructReset> newResets);
         void getAreaInfo();
 };
 
 #endif
-//TODO: complete based on given json file
