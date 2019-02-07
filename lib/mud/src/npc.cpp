@@ -3,8 +3,8 @@
 Npc::Npc(int id, vector<std::string> keywords, std::string shortDesc, vector<std::string> longDesc, vector<std::string> description) :
      id(id),
      keywords(std::move(keywords)),
-     shortdesc(shortdesc),
-     longdesc(std::move(longdesc)),
+     shortdesc(shortDesc),
+     longdesc(std::move(longDesc)),
      description(std::move(description)) {
 }
 
