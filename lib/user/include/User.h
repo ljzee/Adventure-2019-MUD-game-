@@ -54,7 +54,7 @@ public:
 
     ///User Message Container Operations
     //deposits a message in the User's message container
-    void sendMessage(std::string& message);
+    void sendMessage(const std::string& message);
 
     //returns a concatenated string of all of User's messages
     std::string getUserMessagesConcatenated();

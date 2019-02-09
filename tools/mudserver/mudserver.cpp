@@ -22,9 +22,14 @@
 using networking::Server;
 using networking::Connection;
 using networking::Message;
+#include <regex>
 
 
 UserManager UsrMgr;
+const std::string LOGIN_REGEX = "!LOGIN [a-zA-Z0-9!@#$%^&*()_+=-]+ [[a-zA-Z0-9!@#$%^&*()_+=-]+";
+const std::string REGISTER_REGEX = "!REGISTER [a-zA-Z0-9!@#$%^&*()_+=-]+ [[a-zA-Z0-9!@#$%^&*()_+=-]+";
+
+
 
 void
 onConnect(Connection c) {
@@ -36,7 +41,8 @@ onConnect(Connection c) {
 
     //SEND MESSAGE TO A PARTICULAR CONNECTION LIKE THIS
     UsrMgr.sendMessage(user.getConnection(), "Welcome Aboard!");
-    UsrMgr.sendMessage(user.getConnection(), "Login by typing !LOGIN <username> <password>");
+    UsrMgr.sendMessage(user.getConnection(), "Login by typing !LOGIN <username> <password> or !REGISTER <username> <password>");
+
 }
 
 
@@ -56,20 +62,33 @@ processMessages(Server &server,
                 bool &quit) {
 
     for (auto& message : incoming) {
+        if (message.text.at(0) != '!') {
+            break;
+        }
+
         if (message.text == "quit") {
             server.disconnect(message.connection);
         } else if (message.text == "shutdown") {
             std::cout << "Shutting down.\n";
             quit = true;
-        } else if (!UsrMgr.isAuthenticated(message.connection)) {
-            if (boost::contains(message.text ,"!LOGIN")) {
-                UsrMgr.simpleAuthenticate(message.connection, message.text);
+        } else if (boost::contains(message.text ,"!REGISTER")) {
+            if (!(std::regex_match(message.text, std::regex(REGISTER_REGEX)))) {
+                UsrMgr.sendMessage(message.connection, "Malformed authenticate call message.\n");
+            } else {
+                UsrMgr.registerUser(message.connection, message.text.substr(10));
                 UsrMgr.printAllUsers();
-                UsrMgr.sendMessage(message.connection, std::string("You have successfully logged in!"));
             }
+        } else if (boost::contains(message.text, "!LOGIN")) {
+            if (!(std::regex_match(message.text, std::regex(LOGIN_REGEX)))) {
+                UsrMgr.sendMessage(message.connection, "Malformed authenticate call message.\n");
+            } else {
+                UsrMgr.authenticate(message.connection, message.text.substr(7));
+                UsrMgr.printAllUsers();
+            }
+
         } else{
             if (boost::contains(message.text, "!LOGOUT")) {
-                UsrMgr.Logout(message.connection);
+                UsrMgr.logout(message.connection);
                 UsrMgr.printAllUsers();
                 UsrMgr.sendMessage(message.connection, std::string("You have successfully logged out."));
             }else{

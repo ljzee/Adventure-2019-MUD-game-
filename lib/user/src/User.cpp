@@ -6,8 +6,8 @@
 
 ///Constructor
 User::User(networking::Connection connection)
-        : username(""),
-          password(""),
+        : username(),
+          password(),
           currentConnection(connection),
           authenticated(false),
           role(User::Unknown)
@@ -52,7 +52,7 @@ void User::setAuthenticated(bool b) {
 
 ///User Message Container Operations
 //deposits a message in the User's message container
-void User::sendMessage(std::string &message) {
+void User::sendMessage(const std::string &message) {
     this->userMessageDeque.push_back(message);
 }
 
