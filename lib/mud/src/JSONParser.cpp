@@ -155,7 +155,7 @@ std::unordered_map<int, User> JSONParser::parseUsers() {
         std::string username = user["name"].get<std::string>();
         std::string password = user["password"].get<std::string>();
 
-        User newUser{username, password};
+        User newUser{username};
 
         userList.insert({counter++, newUser});
 

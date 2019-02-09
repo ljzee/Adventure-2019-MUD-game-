@@ -192,7 +192,6 @@ HTTPSession::start() {
     (std::error_code ec, std::size_t bytes) {
       if (ec) {
         serverImpl.reportError("Error reading from HTTP stream.");
-
       } else if (boost::beast::websocket::is_upgrade(request)) {
         auto channel = std::make_shared<Channel>(std::move(socket), serverImpl);
         channel->start(request);

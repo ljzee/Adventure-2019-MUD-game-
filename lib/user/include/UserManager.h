@@ -10,6 +10,8 @@
 #include <iostream>
 #include <deque>
 #include "Server.h"
+#include <vector>
+#include "RegistrationManager.h"
 
 /**
  * UserManager Class:
@@ -20,8 +22,12 @@
  *
  */
 
+
+
 class UserManager {
 public:
+
+    UserManager();
 
     //adds a new user
     void addUser(User& newUser);
@@ -32,20 +38,21 @@ public:
     //find a user, returns a copy only
     //User& findUser(const networking::Connection& con);
 
-    //authenticate a user when user sends !LOGIN
-    void simpleAuthenticate(const networking::Connection& con, const std::string& userInfo);
 
     //authenticate a user when user sends !LOGIN <username> <password>
-    void Authenticate(const networking::Connection& con, const std::string& userInfo);
+    void authenticate(const networking::Connection &con, const std::string &userInfo);
+
+    void registerUser(const networking::Connection &con, const std::string& userInfo);
+
 
     //check if a particular connection is authenticated
     bool isAuthenticated(const networking::Connection& con);
 
     //logout an authenticated user
-    void Logout(const networking::Connection& con);
+    void logout(const networking::Connection &con);
 
     //send message to a particular user
-    void sendMessage(const networking::Connection& con, std::string message);
+    void sendMessage(const networking::Connection& con, const std::string& message);
 
     //build a deque of all messages to be sent to each user
     std::deque<networking::Message> buildOutgoing();
@@ -54,7 +61,8 @@ public:
 
 private:
 
-    std::unordered_map<int, User> Users;
+    std::unordered_map<int, User> connectedUsers;
+    std::unique_ptr<RegistrationManager> rManager;
 
 };
 

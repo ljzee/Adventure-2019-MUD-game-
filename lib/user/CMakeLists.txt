@@ -1,6 +1,7 @@
 # User
 add_library(user
         src/User.cpp
+        src/RegistrationManager.cpp
         src/UserManager.cpp
 )
 

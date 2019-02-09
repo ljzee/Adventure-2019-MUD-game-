@@ -1,7 +1,7 @@
 #ifndef ADVENTURE_JSONPARSER_H
 #define ADVENTURE_JSONPARSER_H
 
-#include <json.hpp>
+#include "json.hpp"
 #include <vector>
 #include <string>
 
