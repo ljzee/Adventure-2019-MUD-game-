@@ -11,6 +11,7 @@
 #include <deque>
 #include "Server.h"
 #include <vector>
+#include "RegistrationManager.h"
 
 /**
  * UserManager Class:
@@ -21,15 +22,12 @@
  *
  */
 
-enum LoginState {
-    CORRECT_LOGIN,
-    CORRECT_PASSWORD,
-    WRONG_LOGIN,
-    WRONG_PASSWORD
-};
+
 
 class UserManager {
 public:
+
+    UserManager();
 
     //adds a new user
     void addUser(User& newUser);
@@ -40,19 +38,12 @@ public:
     //find a user, returns a copy only
     //User& findUser(const networking::Connection& con);
 
-    //authenticate a user when user sends !LOGIN
-    void simpleAuthenticate(const networking::Connection& con, const std::string& userInfo);
 
     //authenticate a user when user sends !LOGIN <username> <password>
     void authenticate(const networking::Connection &con, const std::string &userInfo);
 
     void registerUser(const networking::Connection &con, const std::string& userInfo);
 
-    //check if user has registered before
-    std::pair<std::string, LoginState> checkRegistration(const std::string &username, const std::string &pwd);
-
-    //parse a string of credentials
-    std::vector<std::string> parseCredentials(const std::string& userInfo);
 
     //check if a particular connection is authenticated
     bool isAuthenticated(const networking::Connection& con);
@@ -71,9 +62,8 @@ public:
 private:
 
     std::unordered_map<int, User> connectedUsers;
-    std::unordered_map<std::string, std::string> registeredUsers;
+    std::unique_ptr<RegistrationManager> rManager;
 
-    static const std::string LOGIN_REGEX;
 };
 
 

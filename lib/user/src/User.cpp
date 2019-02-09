@@ -7,7 +7,6 @@
 ///Constructor
 User::User(networking::Connection connection)
         : username(),
-          password(),
           currentConnection(connection),
           authenticated(false),
           role(User::Unknown)
@@ -16,9 +15,8 @@ User::User(networking::Connection connection)
 };
 
 ///Constructor for JSON Parsing
-User::User(std::string username, std::string password) {
+User::User(std::string username) {
     this->username = username;
-    this->password = password;
 }
 
 ///Destructor
@@ -31,11 +29,8 @@ const std::string& User::getUsername() const {
     return this->username;
 }
 
-const std::string& User::getPassword() const {
-    return this->password;
-}
 
-const networking::Connection& User::getConnection() {
+const networking::Connection& User::getConnection() const{
     return this->currentConnection;
 }
 
@@ -48,9 +43,6 @@ void User::setUsername(const std::string &username) {
     this->username = username;
 }
 
-void User::setPassword(const std::string &password) {
-    this->password = password;
-}
 
 void User::setAuthenticated(bool b) {
     this->authenticated = b;
@@ -58,12 +50,12 @@ void User::setAuthenticated(bool b) {
 
 ///User Message Container Operations
 //deposits a message in the User's message container
-void User::sendMessage(const std::string &message) {
+void User::sendMessage (const std::string &message) {
     this->userMessageDeque.push_back(message);
 }
 
 //returns a concatenated string of all of User's messages
-std::string User::getUserMessagesConcatenated() {
+std::string User::getUserMessagesConcatenated() const{
 
     std::ostringstream concatenatedMessage;
 
@@ -81,6 +73,6 @@ void User::clearMessages() {
 }
 
 //check if message container is empty
-bool User::isMessageEmpty() {
+bool User::isMessageEmpty() const{
     return this->userMessageDeque.empty();
 }

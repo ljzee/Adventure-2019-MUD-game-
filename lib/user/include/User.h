@@ -32,7 +32,7 @@ public:
 
     ///Constructor
     User(networking::Connection connection);
-    User(std::string username, std::string password);
+    User(std::string username);
 
     ///Destructor
     ~User();
@@ -40,31 +40,28 @@ public:
     ///Getters
     const std::string& getUsername() const;
 
-    const std::string& getPassword() const;
-
-    const networking::Connection& getConnection();
+    const networking::Connection& getConnection() const;
 
     bool isAuthenticated();
 
     ///Setters
     void setUsername(const std::string& username);
 
-    void setPassword(const std::string& password);
 
     void setAuthenticated(bool b);
 
     ///User Message Container Operations
     //deposits a message in the User's message container
-    void sendMessage(const std::string& message);
+    void sendMessage (const std::string& message);
 
     //returns a concatenated string of all of User's messages
-    std::string getUserMessagesConcatenated();
+    std::string getUserMessagesConcatenated() const;
 
     //clears User's message container
     void clearMessages();
 
     //check if message container is empty
-    bool isMessageEmpty();
+    bool isMessageEmpty() const;
 
     ///Utility
     void printUserMemberValues();
@@ -77,11 +74,9 @@ public:
 private:
 
     std::string username;
-    std::string password;
     networking::Connection currentConnection;
     bool authenticated;
     Roles role;
-
     std::deque<std::string> userMessageDeque;
 
 };
