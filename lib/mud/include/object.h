@@ -1,26 +1,23 @@
-//
-// Modified by Andre on 1/25/2019.
-//
-
 #ifndef OBJECT_H
 #define OBJECT_H
 
 #include <vector>
 #include <string>
+using std::vector;
 
 struct extra {
-	std::vector<std::string> keywords, desc;
+	vector<std::string> keywords, desc;
 };
 
 class Object {
 	private:
 		int id;
-		std::vector<std::string> keywords;
-		std::string shortdesc;
-		std::vector<std::string> longDesc;
-		std::vector<extra> extras;
+		vector<std::string> keywords;
+		std::string shortDesc;
+		vector<std::string> longDesc;
+		vector<extra> extras;
 	public:
-		Object();
+		Object(int id, vector<std::string> keywords, std::string shortDesc, vector<std::string> longDesc);
 		int getId() const;
 		std::string getShortDesc() const;
 		std::string getObjectInfo();

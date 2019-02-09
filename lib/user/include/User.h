@@ -32,6 +32,7 @@ public:
 
     ///Constructor
     User(networking::Connection connection);
+    User(std::string username, std::string password);
 
     ///Destructor
     ~User();

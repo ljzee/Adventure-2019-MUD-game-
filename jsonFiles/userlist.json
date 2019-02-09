@@ -1,0 +1,19 @@
+{
+  "USERS": [
+    {
+      "name": "babka",
+      "password": "1234",
+      "avatars": []
+    },
+    {
+      "name": "john",
+      "password": "abcd",
+      "avatars": []
+    },
+    {
+      "name": "admin",
+      "password": "abcd1234",
+      "avatars": []
+    }
+    ]
+}

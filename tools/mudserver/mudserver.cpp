@@ -9,6 +9,7 @@
 #include "Server.h"
 #include "User.h"
 #include "UserManager.h"
+#include "JSONParser.h"
 
 #include <fstream>
 #include <iostream>
@@ -118,6 +119,10 @@ getHTTPMessage(const char* htmlLocation) {
 
 int
 main(int argc, char* argv[]) {
+    //Display the results of parsing the Area JSON file
+    JSONParser parser;
+    Area testArea = parser.generateArea();
+
     if (argc < 3) {
         std::cerr << "Usage:\n  " << argv[0] << " <port> <html response>\n"
                   << "  e.g. " << argv[0] << " 4002 ./webchat.html\n";

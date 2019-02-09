@@ -1,31 +1,18 @@
-//
-// Created by Alex on 1/18/2019.
-//
-
-//
-// Modified by Andrea on 1/24/2019.
-//
-
-//
-// Modified by Andre on 1/25/2019.
-//
-
 #ifndef ROOM_H
 #define ROOM_H
 
-#include <string>
 #include <vector>
 
-using namespace std;
+using std::vector;
 
-struct extendDesc {
-	std::vector<string> keywords, desc;
+struct ExtendDesc {
+	vector<std::string> keywords, desc;
 };
 
 struct Door {
 	std::string dir;
-	std::vector<string> desc;
-	std::vector<string> keywords;
+	vector<std::string> desc;
+	vector<std::string> keywords;
 	int to;
 };
 
@@ -39,14 +26,14 @@ class Room {
 		// include POINTERS to other rooms; what kind of functions do we need?
 		// use an arbitrary new room
 
-		int ID;
+		int id;
 		std::string name;
-		std::vector<string> desc;
-		std::vector<Door> doors;
-		std::vector<extendDesc> extendDescs;
+		vector<std::string> desc;
+		vector<Door> doors;
+		vector<ExtendDesc> extendedDesc;
 	public:
 		// Constructor
-		Room();
+		Room(int id, std::string name, vector<std::string> desc, vector<Door> doors, vector<ExtendDesc> extendedDesc);
 
 		// Getters
 		int get_dummy_objects() const;
@@ -56,8 +43,8 @@ class Room {
 
 		// Member Functions
 		std::string outputDescString();
-		void resetRoom();
+		int getNumDoors();
+		// void resetRoom();
 };
 
 #endif
-//TODO: complete based on given json file
