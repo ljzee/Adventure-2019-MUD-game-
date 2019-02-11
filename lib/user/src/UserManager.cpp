@@ -38,7 +38,7 @@ void UserManager::authenticate(const networking::Connection &con, const std::str
     // Call parser to parse credentials
     // std::pair<String, bool> validationResults = rManager->validateCredentials(username, password);
     // user->second.sendMessage(validationResults.first);
-    // user->setAuthenticated(validationResults.second);
+    user->second.setAuthenticated(true);
     // set username
 }
 
@@ -54,7 +54,8 @@ bool UserManager::isAuthenticated(const networking::Connection& con) {
 
 //logout an authenticated user
 void UserManager::logout(const networking::Connection &con) {
-    connectedUsers.erase(con.id);
+    auto user = connectedUsers.find(con.id);
+    user->second.setAuthenticated(false);
 }
 
 //send message to a particular user

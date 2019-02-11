@@ -5,6 +5,8 @@ add_library(mud
         src/npc.cpp
         src/object.cpp
         src/JSONParser.cpp
+        src/command.cpp
+        src/commander.cpp
         )
 
 

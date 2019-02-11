@@ -16,6 +16,7 @@ target_include_directories(user
 
 target_link_libraries(user
         networking
+        mud
         ${Boost_LIBRARIES}
 )
 

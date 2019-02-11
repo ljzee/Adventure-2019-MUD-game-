@@ -16,6 +16,8 @@
 #include <sstream>
 #include <unistd.h>
 #include <vector>
+#include "world.h"
+#include "commander.h"
 
 #include "boost/algorithm/string.hpp"
 
@@ -60,7 +62,9 @@ onDisconnect(Connection c) {
 void
 processMessages(Server &server,
                 const std::deque<Message> &incoming,
-                bool &quit) {
+                bool &quit,
+                World& world,
+                Commander& commander) {
 
     for (auto& message : incoming) {
         if (message.text.at(0) != '!') {
@@ -120,8 +124,8 @@ getHTTPMessage(const char* htmlLocation) {
 int
 main(int argc, char* argv[]) {
     //Display the results of parsing the Area JSON file
-    JSONParser parser;
-    Area testArea = parser.generateArea();
+    //JSONParser parser;
+    //Area testArea = parser.generateArea();
 
     if (argc < 3) {
         std::cerr << "Usage:\n  " << argv[0] << " <port> <html response>\n"
@@ -133,7 +137,11 @@ main(int argc, char* argv[]) {
     unsigned short port = std::stoi(argv[1]);
     Server server{port, getHTTPMessage(argv[2]), onConnect, onDisconnect};
 
-
+    World world{};
+    Commander commander{};
+    commander.initializeCommandTable();
+    //const std::string somecommand = "lol";
+    //commander.processCommand(5, somecommand, world);
     while (!done) {
         try {
             server.update();
@@ -143,7 +151,7 @@ main(int argc, char* argv[]) {
             done = true;
         }
         auto incoming = server.receive();
-        processMessages(server, incoming, done);
+        processMessages(server, incoming, done, world, commander);
         auto outgoing = UsrMgr.buildOutgoing();
         server.send(outgoing);
         sleep(1);
