@@ -7,19 +7,17 @@
 
 #include <unordered_map>
 #include "command.h"
-#include "commandSay.h"
+#include "commandDeclaration.h"
 #include "world.h"
 #include <memory>
 #include <boost/algorithm/string.hpp>
+#include "Server.h"
 
 class Commander {
 
 public:
-    void initializeCommandTable();
-    //if avatarId is still int, change to ID type if available
-    std::deque<std::pair<int, std::string>> processCommand(int avatarId, const std::string& command, World& world);
-private:
-    std::unordered_map<std::string, std::unique_ptr<Command>> commandTable;
+    static std::unique_ptr<Command> generateCommandObject(const networking::Message& userCommand);
+
 
 };
 

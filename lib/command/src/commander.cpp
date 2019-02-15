@@ -3,6 +3,7 @@
 //
 #include "commander.h"
 
+/*
 void Commander::initializeCommandTable() {
     commandTable.insert({"say", std::unique_ptr<Command>(new CommandSay("say", Command::Casual, true, 2, "say [message]"))});
 }
@@ -25,4 +26,16 @@ std::deque<std::pair<int, std::string>> Commander::processCommand(int avatarId, 
     return resultMessages;
 
 }
+*/
 
+std::unique_ptr<Command> Commander::generateCommandObject(const networking::Message &userCommand) {
+
+    std::string enteredCommand = userCommand.text;
+    boost::trim_if(enteredCommand, boost::is_any_of(" "));
+    auto commandWord = enteredCommand.substr(0, enteredCommand.find(' '));
+    if(commandWord == "say"){
+        return std::unique_ptr<Command>(new commands::CommandSay(userCommand.connection, enteredCommand));
+    }
+    return std::unique_ptr<Command>(new commands::CommandNotExist(userCommand.connection, enteredCommand));
+
+}

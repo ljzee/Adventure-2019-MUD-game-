@@ -4,17 +4,17 @@
 
 #include "command.h"
 
-Command::Command(const std::string &commandName,
-                 Command::Roles,
+Command::Command(Command::Roles roleRequired,
                  bool minigameCallable,
                  int minimumArguments,
-                 const std::string &commandFormat) : commandName(commandName),
-                                                     role(Roles::Casual),
-                                                     minigameCallable(minigameCallable),
-                                                     minimumArguments(minimumArguments),
-                                                     commandFormat(commandFormat)
-                                                     {}
+                 const std::string &commandFormat,
+                 const networking::Connection &caller,
+                 const std::string &enteredCommand) : role(roleRequired),
+                                                      minigameCallable(minigameCallable),
+                                                      minimumArguments(minimumArguments),
+                                                      commandFormat(commandFormat),
+                                                      caller(caller),
+                                                      enteredCommand(enteredCommand)
+                                                      {}
 
- Command::~Command() {
-
-}
+Command::~Command() {}

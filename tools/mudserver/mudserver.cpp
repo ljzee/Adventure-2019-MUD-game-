@@ -63,43 +63,44 @@ void
 processMessages(Server &server,
                 const std::deque<Message> &incoming,
                 bool &quit,
-                World& world,
-                Commander& commander) {
+                World& world) {
 
     for (auto& message : incoming) {
-        if (message.text.at(0) != '!') {
-            break;
-        }
 
         if (message.text == "quit") {
             server.disconnect(message.connection);
         } else if (message.text == "shutdown") {
             std::cout << "Shutting down.\n";
             quit = true;
-        } else if (boost::contains(message.text ,"!REGISTER")) {
-            if (!(std::regex_match(message.text, std::regex(REGISTER_REGEX)))) {
-                UsrMgr.sendMessage(message.connection, "Malformed authenticate call message.\n");
-            } else {
-                UsrMgr.registerUser(message.connection, message.text.substr(10));
-                UsrMgr.printAllUsers();
-            }
-        } else if (boost::contains(message.text, "!LOGIN")) {
-            if (!(std::regex_match(message.text, std::regex(LOGIN_REGEX)))) {
-                UsrMgr.sendMessage(message.connection, "Malformed authenticate call message.\n");
-            } else {
-                UsrMgr.authenticate(message.connection, message.text.substr(7));
-                UsrMgr.printAllUsers();
-            }
-
-        } else{
+        } else if (UsrMgr.isAuthenticated(message.connection)) {
             if (boost::contains(message.text, "!LOGOUT")) {
                 UsrMgr.logout(message.connection);
                 UsrMgr.printAllUsers();
                 UsrMgr.sendMessage(message.connection, std::string("You have successfully logged out."));
             }else{
-                //SEND USER COMMANDS TO WORLD OR COMMAND PROCESSOR HERE
+                auto commandObj = Commander::generateCommandObject(message);
+                commandObj->process(world);
+            }
+        } else{
+            if (boost::contains(message.text ,"!REGISTER")) {
+                if (!(std::regex_match(message.text, std::regex(REGISTER_REGEX)))) {
+                    UsrMgr.sendMessage(message.connection, "Malformed authenticate call message.\n");
+                } else {
+                    UsrMgr.registerUser(message.connection, message.text.substr(10));
+                    UsrMgr.printAllUsers();
+                }
+            } else if (boost::contains(message.text, "!LOGIN")) {
+                if (!(std::regex_match(message.text, std::regex(LOGIN_REGEX)))) {
+                    UsrMgr.sendMessage(message.connection, "Malformed authenticate call message.\n");
+                } else {
+                    UsrMgr.authenticate(message.connection, message.text.substr(7));
+                    UsrMgr.printAllUsers();
+                }
+            } else {
+                UsrMgr.sendMessage(message.connection, std::string("Login with !LOGIN or register with !REGISTER"));
             }
         }
+
     }
 
 }
@@ -138,10 +139,6 @@ main(int argc, char* argv[]) {
     Server server{port, getHTTPMessage(argv[2]), onConnect, onDisconnect};
 
     World world{};
-    Commander commander{};
-    commander.initializeCommandTable();
-    const std::string somecommand = "say";
-    commander.processCommand(5, somecommand, world);
     while (!done) {
         try {
             server.update();
@@ -151,7 +148,7 @@ main(int argc, char* argv[]) {
             done = true;
         }
         auto incoming = server.receive();
-        processMessages(server, incoming, done, world, commander);
+        processMessages(server, incoming, done, world);
         auto outgoing = UsrMgr.buildOutgoing();
         server.send(outgoing);
         sleep(1);

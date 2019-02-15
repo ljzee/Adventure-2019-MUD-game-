@@ -1,7 +1,7 @@
 add_library(command
   src/command.cpp
   src/commander.cpp
-  src/commandSay.cpp
+        src/commandDeclaration.cpp
 )
 
 find_package(Boost 1.68 COMPONENTS system REQUIRED)
@@ -18,6 +18,7 @@ target_include_directories(command
 target_link_libraries(command
   PRIVATE
     mud
+    networking
     ${Boost_LIBRARIES}
 )
 

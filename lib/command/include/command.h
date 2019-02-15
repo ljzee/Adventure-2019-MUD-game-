@@ -11,6 +11,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include "Server.h"
 
 
 struct Command {
@@ -21,19 +22,25 @@ struct Command {
         WorldBuilder
     };
 
-    std::string commandName;
+    //Command Specification
     Roles role;
     bool minigameCallable;
     int minimumArguments;
     std::string commandFormat;
 
-    Command(const std::string& commandName, Command::Roles, bool minigameCallable, int minimumArguments, const std::string& commandFormat);
+    //Execution arguments
+    networking::Connection caller;
+    std::string enteredCommand;
+
+
+
+    Command(Command::Roles, bool minigameCallable, int minimumArguments, const std::string& commandFormat, const networking::Connection &caller, const std::string& enteredCommand);
 
     virtual ~Command() = 0;
 
     //Override processCommand in subclass to have its own processing behaviour
     //if int is still present, replace with ID type if available
-    virtual std::deque<std::pair<int, std::string>> process(int avatarId, std::string &command, World &world) = 0;
+    virtual std::deque<std::pair<int, std::string>> process(World &world) = 0;
 
 };
 
