@@ -140,8 +140,8 @@ main(int argc, char* argv[]) {
     World world{};
     Commander commander{};
     commander.initializeCommandTable();
-    //const std::string somecommand = "lol";
-    //commander.processCommand(5, somecommand, world);
+    const std::string somecommand = "say";
+    commander.processCommand(5, somecommand, world);
     while (!done) {
         try {
             server.update();
