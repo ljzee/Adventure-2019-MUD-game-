@@ -8,7 +8,7 @@ Command::Command(Command::Roles roleRequired,
                  bool minigameCallable,
                  int minimumArguments,
                  const std::string &commandFormat,
-                 const networking::Connection &caller,
+                 int caller,
                  const std::string &enteredCommand) : role(roleRequired),
                                                       minigameCallable(minigameCallable),
                                                       minimumArguments(minimumArguments),
@@ -18,3 +18,21 @@ Command::Command(Command::Roles roleRequired,
                                                       {}
 
 Command::~Command() {}
+
+//testing
+/*
+void Command::print() {
+    std::cout << role
+              << " "
+              << minigameCallable
+              << " "
+              << minimumArguments
+              << " "
+              << commandFormat
+              << " "
+              << caller
+              << " "
+              << enteredCommand
+              << std::endl;
+}
+*/

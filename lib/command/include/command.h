@@ -13,6 +13,13 @@
 #include <iostream>
 #include "Server.h"
 
+/**
+ * Command Class:
+ *
+ * - base Command class, should not be instantiated
+ * - subclass for each command(related actions) to override processing behaviour
+ *
+ */
 
 struct Command {
 
@@ -23,24 +30,30 @@ struct Command {
     };
 
     //Command Specification
-    Roles role;
-    bool minigameCallable;
-    int minimumArguments;
-    std::string commandFormat;
+
+    Roles role;                     //what role can call this command
+    bool minigameCallable;          //can this command be callable within minigame
+    int minimumArguments;           //minimum number of arguments to call a command
+    std::string commandFormat;      //helper string for when minimum arguments not met
 
     //Execution arguments
-    networking::Connection caller;
-    std::string enteredCommand;
+
+    //replace int with avatarID type if available
+    int caller;                     //avatarId that the object relates to
+    std::string enteredCommand;     //command string that user entered and to be parsed
 
 
 
-    Command(Command::Roles, bool minigameCallable, int minimumArguments, const std::string& commandFormat, const networking::Connection &caller, const std::string& enteredCommand);
+    Command(Command::Roles, bool minigameCallable, int minimumArguments, const std::string& commandFormat, int caller, const std::string& enteredCommand);
 
     virtual ~Command() = 0;
 
-    //Override processCommand in subclass to have its own processing behaviour
+    //Override process in subclass to have its own processing behaviour
     //if int is still present, replace with ID type if available
     virtual std::deque<std::pair<int, std::string>> process(World &world) = 0;
+
+    //Testing
+    //void print();
 
 };
 

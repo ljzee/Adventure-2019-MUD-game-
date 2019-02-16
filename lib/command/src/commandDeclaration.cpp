@@ -6,9 +6,7 @@
 
 namespace commands {
 
-    CommandNotExist::CommandNotExist(const networking::Connection &caller,
-               const std::string &enteredCommand) : Command(Command::Casual, true, 2, "say [message]",
-                                                            caller, enteredCommand) {}
+    CommandNotExist::CommandNotExist(int caller, const std::string &enteredCommand) : Command(Command::Casual, true, 0, "No such command", caller, enteredCommand) {}
 
     CommandNotExist::~CommandNotExist() {}
 
@@ -21,9 +19,7 @@ namespace commands {
 
 
 
-    CommandSay::CommandSay(const networking::Connection &caller,
-                           const std::string &enteredCommand) : Command(Command::Casual, true, 2, "say [message]",
-                                                                        caller, enteredCommand) {}
+    CommandSay::CommandSay(int caller, const std::string &enteredCommand) : Command(Command::Casual, true, 2, "say [message]", caller, enteredCommand) {}
 
     CommandSay::~CommandSay() {}
 

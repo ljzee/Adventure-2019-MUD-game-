@@ -8,12 +8,17 @@
 #include "command.h"
 #include "Server.h"
 
+/**
+ *
+ * Contains the declaration of all command subclasses
+ *
+ */
 
 namespace commands {
 
     class CommandNotExist : public Command {
     public:
-        CommandNotExist(const networking::Connection &caller, const std::string &enteredCommand);
+        CommandNotExist(int caller, const std::string &enteredCommand);
 
         ~CommandNotExist();
 
@@ -24,7 +29,7 @@ namespace commands {
 
     class CommandSay : public Command {
     public:
-        CommandSay(const networking::Connection &caller, const std::string &enteredCommand);
+        CommandSay(int caller, const std::string &enteredCommand);
 
         ~CommandSay();
 

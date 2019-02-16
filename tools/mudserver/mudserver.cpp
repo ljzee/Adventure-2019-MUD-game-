@@ -63,7 +63,8 @@ void
 processMessages(Server &server,
                 const std::deque<Message> &incoming,
                 bool &quit,
-                World& world) {
+                World& world,
+                Commander& commander) {
 
     for (auto& message : incoming) {
 
@@ -78,8 +79,8 @@ processMessages(Server &server,
                 UsrMgr.printAllUsers();
                 UsrMgr.sendMessage(message.connection, std::string("You have successfully logged out."));
             }else{
-                auto commandObj = Commander::generateCommandObject(message);
-                commandObj->process(world);
+                int avatarId = 5;
+                commander.generateCommandObject(avatarId, message.text);
             }
         } else{
             if (boost::contains(message.text ,"!REGISTER")) {
@@ -139,6 +140,7 @@ main(int argc, char* argv[]) {
     Server server{port, getHTTPMessage(argv[2]), onConnect, onDisconnect};
 
     World world{};
+    Commander commander{};
     while (!done) {
         try {
             server.update();
@@ -148,7 +150,9 @@ main(int argc, char* argv[]) {
             done = true;
         }
         auto incoming = server.receive();
-        processMessages(server, incoming, done, world);
+        processMessages(server, incoming, done, world, commander);
+        commander.executeHeartbeat(world);
+        //world.update(UsrMgr);
         auto outgoing = UsrMgr.buildOutgoing();
         server.send(outgoing);
         sleep(1);

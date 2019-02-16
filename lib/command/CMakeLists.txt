@@ -19,6 +19,7 @@ target_link_libraries(command
   PRIVATE
     mud
     networking
+    user
     ${Boost_LIBRARIES}
 )
 

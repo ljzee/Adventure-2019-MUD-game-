@@ -3,39 +3,42 @@
 //
 #include "commander.h"
 
-/*
-void Commander::initializeCommandTable() {
-    commandTable.insert({"say", std::unique_ptr<Command>(new CommandSay("say", Command::Casual, true, 2, "say [message]"))});
-}
+///Methods called in mudserver
 
-
-
-std::deque<std::pair<int, std::string>> Commander::processCommand(int avatarId, const std::string &command,
-                                                                  World &world) {
-    std::deque<std::pair<int, std::string>> resultMessages;
-
-    std::string commandToProcess = command;
+//parses command string, creates a command object and stores it in bufferedCommands
+void Commander::generateCommandObject(int avatarId, const std::string &enteredCommand) {
+    std::string commandToProcess = enteredCommand;
     boost::trim_if(commandToProcess, boost::is_any_of(" "));
-    auto commandWord = commandToProcess.substr(0, commandToProcess.find(' '));
-
-    auto commandEntry = commandTable.find(std::string(commandWord));
-    if(commandEntry != commandTable.end()){
-        commandEntry->second->process(avatarId, commandToProcess, world);
-    }
-
-    return resultMessages;
-
-}
-*/
-
-std::unique_ptr<Command> Commander::generateCommandObject(const networking::Message &userCommand) {
-
-    std::string enteredCommand = userCommand.text;
-    boost::trim_if(enteredCommand, boost::is_any_of(" "));
     auto commandWord = enteredCommand.substr(0, enteredCommand.find(' '));
     if(commandWord == "say"){
-        return std::unique_ptr<Command>(new commands::CommandSay(userCommand.connection, enteredCommand));
+         addCommandToBuffer(std::move(std::unique_ptr<Command>(new commands::CommandSay(avatarId, enteredCommand))));
+    }else{
+        addCommandToBuffer(std::move(std::unique_ptr<Command>(new commands::CommandNotExist(avatarId, enteredCommand))));
     }
-    return std::unique_ptr<Command>(new commands::CommandNotExist(userCommand.connection, enteredCommand));
-
 }
+
+//executes the first command object for each avatarId's command queue
+void Commander::executeHeartbeat(World& world) {
+    //std::cout << "\nHeartbeat\n" << std::endl;
+    for(auto& commandDeque : bufferedCommands) {
+        if (!commandDeque.second.empty()) {
+            int avatarId = commandDeque.first;
+            commandDeque.second.front()->process(world);
+            commandDeque.second.pop_front();
+        }
+    }
+}
+
+//adds a command object to commandObjectQueue of the calling avatarId, new {avatarId, commandObjectQueue} pair is added if no entry exists
+void Commander::addCommandToBuffer(std::unique_ptr<Command> commandObj) {
+    auto avatarId = commandObj->caller;
+    auto avatarCommandDeque = bufferedCommands.find(avatarId);
+    if(avatarCommandDeque != bufferedCommands.end()){
+        avatarCommandDeque->second.push_back(std::move(commandObj));
+    }else{
+        std::deque<std::unique_ptr<Command>> newCommandDeque;
+        newCommandDeque.push_back(std::move(commandObj));
+        bufferedCommands.insert({avatarId, std::move(newCommandDeque)});
+    }
+}
+
