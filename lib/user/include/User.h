@@ -44,12 +44,14 @@ public:
 
     bool isAuthenticated();
 
+    int getActiveAvatarId();
+
     ///Setters
     void setUsername(const std::string& username);
 
-
     void setAuthenticated(bool b);
 
+    void setActiveAvatarId(int id);
     ///User Message Container Operations
     //deposits a message in the User's message container
     void sendMessage (const std::string& message);
@@ -78,7 +80,7 @@ private:
     bool authenticated;
     Roles role;
     std::deque<std::string> userMessageDeque;
-
+    int activeAvatarId;
 };
 
 #endif //ADVENTURE2019_USER_H

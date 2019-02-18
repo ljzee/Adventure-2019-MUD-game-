@@ -76,6 +76,20 @@ std::deque<networking::Message> UserManager::buildOutgoing() {
     return outgoing;
 }
 
+void UserManager::setUserActiveAvatarId(const networking::Connection &con, int id) {
+    auto user = connectedUsers.find(con.id);
+    if(user != connectedUsers.end()){
+        user->second.setActiveAvatarId(id);
+    }
+}
+
+int UserManager::getUserActiveAvatarId(const networking::Connection &con) {
+    auto user = connectedUsers.find(con.id);
+    if(user != connectedUsers.end()){
+        return user->second.getActiveAvatarId();
+    }
+    return -1;
+}
 
 void UserManager::printAllUsers() {
     std::cout << "Connected connectedUsers: " << std::endl;

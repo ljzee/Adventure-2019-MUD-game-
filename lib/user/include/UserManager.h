@@ -57,6 +57,10 @@ public:
     //build a deque of all messages to be sent to each user
     std::deque<networking::Message> buildOutgoing();
 
+    void setUserActiveAvatarId(const networking::Connection &con, int id);
+
+    int getUserActiveAvatarId(const networking::Connection &con);
+
     void printAllUsers(); //For Testing
 
 private:

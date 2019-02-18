@@ -32,6 +32,7 @@ UserManager UsrMgr;
 const std::string LOGIN_REGEX = "!LOGIN [a-zA-Z0-9!@#$%^&*()_+=-]+ [[a-zA-Z0-9!@#$%^&*()_+=-]+";
 const std::string REGISTER_REGEX = "!REGISTER [a-zA-Z0-9!@#$%^&*()_+=-]+ [[a-zA-Z0-9!@#$%^&*()_+=-]+";
 
+int globalId = 0; //TEMPORARILY FOR TESTING
 
 
 void
@@ -39,6 +40,9 @@ onConnect(Connection c) {
     std::cout << "New connection found: " << c.id << "\n";
 
     User user{c};
+    user.setActiveAvatarId(globalId);
+    globalId++;
+    std::cout << "activeAvatarId: " << user.getActiveAvatarId() << std::endl;
     UsrMgr.addUser(user);
     UsrMgr.printAllUsers();
 
@@ -78,9 +82,9 @@ processMessages(Server &server,
                 UsrMgr.logout(message.connection);
                 UsrMgr.printAllUsers();
                 UsrMgr.sendMessage(message.connection, std::string("You have successfully logged out."));
-            }else{
-                int avatarId = 5;
-                commander.generateCommandObject(avatarId, message.text);
+            }else if(UsrMgr.getUserActiveAvatarId(message.connection) != -1){
+
+                commander.generateCommandObject(UsrMgr.getUserActiveAvatarId(message.connection), message.text);
             }
         } else{
             if (boost::contains(message.text ,"!REGISTER")) {
