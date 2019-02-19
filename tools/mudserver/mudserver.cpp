@@ -25,6 +25,7 @@
 using networking::Server;
 using networking::Connection;
 using networking::Message;
+#include <regex>
 
 
 UserManager UsrMgr;
@@ -39,6 +40,8 @@ onConnect(Connection c) {
     std::cout << "New connection found: " << c.id << "\n";
 
     User user{c};
+    user.setActiveAvatarId(globalId);
+    globalId++;
     std::cout << "activeAvatarId: " << user.getActiveAvatarId() << std::endl;
     UsrMgr.addUser(user);
     UsrMgr.printAllUsers();
@@ -59,6 +62,12 @@ onDisconnect(Connection c) {
 
 }
 
+void
+unauthenticated(auto& message, Commander& commander);
+    // is LOGOUT? else it's a command
+void
+authenticatedMessages(auto& message, Commander& commander);
+    // is it a login or register command? does it have enough args?
 
 void
 processMessages(Server &server,
@@ -68,40 +77,20 @@ processMessages(Server &server,
                 Commander& commander) {
 
     for (auto& message : incoming) {
-
+        std::cout << message.text << endl; // stores in terminal
+        UsrMgr.sendMessage(message.connection, message.text); // stores on client
         if (message.text == "quit") {
             server.disconnect(message.connection);
         } else if (message.text == "shutdown") {
             std::cout << "Shutting down.\n";
             quit = true;
         } else if (UsrMgr.isAuthenticated(message.connection)) {
-            if (boost::contains(message.text, "!LOGOUT")) {
-                UsrMgr.logout(message.connection);
-                UsrMgr.printAllUsers();
-            }else if(UsrMgr.getUserActiveAvatarId(message.connection) != -1){
-
-                commander.generateCommandObject(UsrMgr.getUserActiveAvatarId(message.connection), message.text);
-            }
+            unauthenticated(message, commander);
         } else{
-            if (boost::contains(message.text ,"!REGISTER")) {
-                if(UsrMgr.registerUser(message.connection, message.text)){
-                    UsrMgr.setUserActiveAvatarId(message.connection, globalId);
-                    globalId++;
-                }
-            } else if (boost::contains(message.text, "!LOGIN")) {
-                if(UsrMgr.login(message.connection, message.text)){
-                    UsrMgr.setUserActiveAvatarId(message.connection, globalId);
-                    globalId++;
-                };
-            } else {
-                UsrMgr.sendMessage(message.connection, std::string("Login with !LOGIN or register with !REGISTER"));
-            }
+            authenticatedMessages(message, commander);
         }
-
     }
-
 }
-
 
 
 std::string
@@ -157,3 +146,31 @@ main(int argc, char* argv[]) {
     return 0;
 }
 
+
+void
+unauthenticated(auto& message, Commander& commander) {
+    // is LOGOUT? else it's a command
+    if (boost::contains(message.text, "!LOGOUT")) {
+        UsrMgr.logout(message.connection);
+        UsrMgr.printAllUsers();
+    }else if(UsrMgr.getUserActiveAvatarId(message.connection) != -1){
+        commander.generateCommandObject(UsrMgr.getUserActiveAvatarId(message.connection), message.text);
+    }
+}
+
+void
+authenticatedMessages(auto& message, Commander& commander) {
+    if (boost::contains(message.text ,"!REGISTER")) {
+        if(UsrMgr.registerUser(message.connection, message.text)){
+            UsrMgr.setUserActiveAvatarId(message.connection, globalId);
+            globalId++;
+        }
+    } else if (boost::contains(message.text, "!LOGIN")) {
+        if(UsrMgr.login(message.connection, message.text)){
+            UsrMgr.setUserActiveAvatarId(message.connection, globalId);
+            globalId++;
+        }
+    } else {
+        UsrMgr.sendMessage(message.connection, std::string("Login with !LOGIN <user> <pass> or register with !REGISTER <user> <pass>"));
+    }
+}
