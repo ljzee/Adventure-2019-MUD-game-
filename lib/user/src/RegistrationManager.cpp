@@ -16,22 +16,24 @@ std::vector<std::string> RegistrationManager::parseCredentials(const std::string
     return credentials;
 }
 
-std::string RegistrationManager::registerUser(const std::string& username, const std::string& pwd) {
+std::pair<std::string, bool> RegistrationManager::registerUser(const std::string& username, const std::string& pwd) {
     std::ostringstream os;
+    bool ifRegistered = false;
     LoginState registrationStatus = validateCredentials(username, "");
+
     if(registrationStatus == LoginState::WRONG_LOGIN) {
         // login is free, we can use it to register
         //TODO: hash the password and store password
         //TODO: call JsonParser to update user credentials file
         allCredentials.insert(std::make_pair(username, pwd));
-
-        os << "You've succesfully registered. Now you can login using your credentials.";
+        ifRegistered = true;
+        os << "You've successfully registered and logged in.";
     } else if(registrationStatus == LoginState::WRONG_PASSWORD) {
         os << "This username is already being used. Please, choose a different one.";
     } else {
         os << "Malformed register call message. Please type !REGISTER <username> <password>.";
     }
-    return os.str();
+    return std::make_pair(os.str(), ifRegistered);
 }
 
 std::pair<std::string, bool> RegistrationManager::validateUser(const std::string &username, const std::string &pwd) {
@@ -41,13 +43,13 @@ std::pair<std::string, bool> RegistrationManager::validateUser(const std::string
 
     switch (validationState) {
         case (LoginState::WRONG_LOGIN):
-            os << "No such user found. Please, register first!" << std::endl;
+            os << "Username or password is incorrect. Please try again.";
             break;
         case (LoginState::WRONG_PASSWORD):
-            os << "Your password is wrong. Try again." << std::endl;
+            os << "Username or password is incorrect. Please try again.";
             break;
         case (LoginState::CORRECT_PASSWORD):
-            os << "No such user found. Please, register first!" << std::endl;
+            os << "You've successfully logged in.";
             ifValidated = true;
         default:
             break;

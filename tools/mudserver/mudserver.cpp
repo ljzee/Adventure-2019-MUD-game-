@@ -25,7 +25,6 @@
 using networking::Server;
 using networking::Connection;
 using networking::Message;
-#include <regex>
 
 
 UserManager UsrMgr;
@@ -40,8 +39,6 @@ onConnect(Connection c) {
     std::cout << "New connection found: " << c.id << "\n";
 
     User user{c};
-    user.setActiveAvatarId(globalId);
-    globalId++;
     std::cout << "activeAvatarId: " << user.getActiveAvatarId() << std::endl;
     UsrMgr.addUser(user);
     UsrMgr.printAllUsers();
@@ -81,26 +78,21 @@ processMessages(Server &server,
             if (boost::contains(message.text, "!LOGOUT")) {
                 UsrMgr.logout(message.connection);
                 UsrMgr.printAllUsers();
-                UsrMgr.sendMessage(message.connection, std::string("You have successfully logged out."));
             }else if(UsrMgr.getUserActiveAvatarId(message.connection) != -1){
 
                 commander.generateCommandObject(UsrMgr.getUserActiveAvatarId(message.connection), message.text);
             }
         } else{
             if (boost::contains(message.text ,"!REGISTER")) {
-                if (!(std::regex_match(message.text, std::regex(REGISTER_REGEX)))) {
-                    UsrMgr.sendMessage(message.connection, "Malformed authenticate call message.\n");
-                } else {
-                    UsrMgr.registerUser(message.connection, message.text.substr(10));
-                    UsrMgr.printAllUsers();
+                if(UsrMgr.registerUser(message.connection, message.text)){
+                    UsrMgr.setUserActiveAvatarId(message.connection, globalId);
+                    globalId++;
                 }
             } else if (boost::contains(message.text, "!LOGIN")) {
-                if (!(std::regex_match(message.text, std::regex(LOGIN_REGEX)))) {
-                    UsrMgr.sendMessage(message.connection, "Malformed authenticate call message.\n");
-                } else {
-                    UsrMgr.authenticate(message.connection, message.text.substr(7));
-                    UsrMgr.printAllUsers();
-                }
+                if(UsrMgr.login(message.connection, message.text)){
+                    UsrMgr.setUserActiveAvatarId(message.connection, globalId);
+                    globalId++;
+                };
             } else {
                 UsrMgr.sendMessage(message.connection, std::string("Login with !LOGIN or register with !REGISTER"));
             }

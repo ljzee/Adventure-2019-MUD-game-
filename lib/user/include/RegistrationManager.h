@@ -27,7 +27,7 @@ public:
 
 
 
-    std::string registerUser(const std::string& username, const std::string& pwd);
+    std::pair<std::string, bool> registerUser(const std::string& username, const std::string& pwd);
 
     // will be called outside to validate credentials
     std::pair<std::string, bool> validateUser(const std::string& username, const std::string &pwd);

@@ -19,7 +19,7 @@ void Commander::generateCommandObject(int avatarId, const std::string &enteredCo
 
 //executes the first command object for each avatarId's command queue
 void Commander::executeHeartbeat(World& world) {
-    std::cout << "\nHeartbeat\n" << std::endl;
+    std::cout << std::string("\nHeartbeat") + "(" << this->heartbeatCount << ")" << std::endl;
     for(auto& commandDeque : bufferedCommands) {
         if (!commandDeque.second.empty()) {
             int avatarId = commandDeque.first;
@@ -27,6 +27,7 @@ void Commander::executeHeartbeat(World& world) {
             commandDeque.second.pop_front();
         }
     }
+    this->heartbeatCount++; //heartbeatCount used for testing
 }
 
 //adds a command object to commandObjectQueue of the calling avatarId, new {avatarId, commandObjectQueue} pair is added if no entry exists

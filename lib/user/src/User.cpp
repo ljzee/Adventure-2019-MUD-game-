@@ -9,7 +9,6 @@ User::User(networking::Connection connection)
         : username(),
           currentConnection(connection),
           authenticated(false),
-          role(User::Unknown),
           activeAvatarId(-1)
 {
     std::cout << "New user has been created" << std::endl;
@@ -55,6 +54,12 @@ void User::setAuthenticated(bool b) {
 
 void User::setActiveAvatarId(int id) {
     this->activeAvatarId = id;
+}
+
+void User::reset() {
+    this->username = "";
+    this->authenticated = false;
+    this->activeAvatarId = -1;
 }
 
 ///User Message Container Operations

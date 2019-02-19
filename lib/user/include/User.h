@@ -23,12 +23,6 @@
 class User {
 
 public:
-    enum Roles
-    {
-        Unknown = 0,
-        Casual,
-        WorldBuilder
-    };
 
     ///Constructor
     User(networking::Connection connection);
@@ -52,6 +46,9 @@ public:
     void setAuthenticated(bool b);
 
     void setActiveAvatarId(int id);
+
+    //resets member fields to null state, used in logout
+    void reset();
     ///User Message Container Operations
     //deposits a message in the User's message container
     void sendMessage (const std::string& message);
@@ -78,7 +75,6 @@ private:
     std::string username;
     networking::Connection currentConnection;
     bool authenticated;
-    Roles role;
     std::deque<std::string> userMessageDeque;
     int activeAvatarId;
 };

@@ -12,6 +12,7 @@
 #include "Server.h"
 #include <vector>
 #include "RegistrationManager.h"
+#include <regex>
 
 /**
  * UserManager Class:
@@ -40,16 +41,15 @@ public:
 
 
     //authenticate a user when user sends !LOGIN <username> <password>
-    void authenticate(const networking::Connection &con, const std::string &userInfo);
-
-    void registerUser(const networking::Connection &con, const std::string& userInfo);
-
-
-    //check if a particular connection is authenticated
-    bool isAuthenticated(const networking::Connection& con);
+    bool login(const networking::Connection &con, const std::string &userInfo);
 
     //logout an authenticated user
     void logout(const networking::Connection &con);
+
+    bool registerUser(const networking::Connection &con, const std::string& userInfo);
+
+    //check if a particular connection is authenticated
+    bool isAuthenticated(const networking::Connection& con);
 
     //send message to a particular user
     void sendMessage(const networking::Connection& con, const std::string& message);

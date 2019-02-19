@@ -10,7 +10,6 @@
 
 
 
-
 UserManager::UserManager(){
     this->rManager = std::make_unique<RegistrationManager>();
 }
@@ -25,21 +24,46 @@ void UserManager::removeUser(const networking::Connection& con) {
     connectedUsers.erase(con.id);
 }
 
-void UserManager::registerUser(const networking::Connection& con, const std::string& userInfo) {
-    // Call parser to parse credentials
-    // String message = rManager->registerUser(username, password);
-    // sendMessage(con, message);
-    // find user, set username
+//authenticate a user when user sends "!LOGIN <username> <password>
+bool UserManager::login(const networking::Connection &con, const std::string &userInfo) {
+    const std::string LOGIN_REGEX = "!LOGIN [a-zA-Z0-9!@#$%^&*()_+=-]+ [[a-zA-Z0-9!@#$%^&*()_+=-]+";
+
+    if (!(std::regex_match(userInfo, std::regex(LOGIN_REGEX)))) {
+        sendMessage(con, "Malformed authenticate call message.");
+        return false;
+    } else {
+        auto userCredentials = rManager->parseCredentials(userInfo);
+        auto loginResult = rManager->validateUser(userCredentials[1], userCredentials[2]);
+        auto user = connectedUsers.find(con.id);
+        user->second.setAuthenticated(loginResult.second);
+        user->second.setUsername(userCredentials[1]);
+        sendMessage(con, loginResult.first);
+        return loginResult.second;
+    }
 }
 
-//authenticate a user when user sends "!LOGIN <username> <password>
-void UserManager::authenticate(const networking::Connection &con, const std::string &userInfo) {
+//logout an authenticated user
+void UserManager::logout(const networking::Connection &con) {
     auto user = connectedUsers.find(con.id);
-    // Call parser to parse credentials
-    // std::pair<String, bool> validationResults = rManager->validateCredentials(username, password);
-    // user->second.sendMessage(validationResults.first);
-    user->second.setAuthenticated(true);
-    // set username
+    user->second.reset();
+    sendMessage(con, std::string("You have successfully logged out."));
+}
+
+bool UserManager::registerUser(const networking::Connection& con, const std::string& userInfo) {
+    const std::string REGISTER_REGEX = "!REGISTER [a-zA-Z0-9!@#$%^&*()_+=-]+ [[a-zA-Z0-9!@#$%^&*()_+=-]+";
+
+    if (!(std::regex_match(userInfo, std::regex(REGISTER_REGEX)))) {
+        sendMessage(con, "Malformed authenticate call message.");
+        return false;
+    } else {
+        auto userCredentials = rManager->parseCredentials(userInfo);
+        auto registerResult = rManager->registerUser(userCredentials[1], userCredentials[2]);
+        auto user = connectedUsers.find(con.id);
+        user->second.setAuthenticated(registerResult.second);
+        user->second.setUsername(userCredentials[1]);
+        sendMessage(con, registerResult.first);
+        return registerResult.second;
+    }
 }
 
 //check if a particular connection is authenticated
@@ -51,12 +75,6 @@ bool UserManager::isAuthenticated(const networking::Connection& con) {
     return false; //will also return false if connection does not exist in UserManager
 }
 
-
-//logout an authenticated user
-void UserManager::logout(const networking::Connection &con) {
-    auto user = connectedUsers.find(con.id);
-    user->second.setAuthenticated(false);
-}
 
 //send message to a particular user
 void UserManager::sendMessage(const networking::Connection& con, const std::string& message) {

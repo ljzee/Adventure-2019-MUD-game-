@@ -6,11 +6,11 @@
 #define PROJECT_COMMANDER_H
 
 #include <unordered_map>
-#include <memory>
-#include <boost/algorithm/string.hpp>
 #include "command.h"
 #include "commandDeclaration.h"
 #include "world.h"
+#include <memory>
+#include <boost/algorithm/string.hpp>
 #include "Server.h"
 
 /**
@@ -39,6 +39,8 @@ private:
     std::unordered_map<int, std::deque<std::unique_ptr<Command>> > bufferedCommands;
     //adds a command object to commandObjectQueue of the calling avatarId, new {avatarId, commandObjectQueue} pair is added if no entry exists
     void addCommandToBuffer(std::unique_ptr<Command> commandObj);
+
+    int heartbeatCount = 0; //used for testing
 
 };
 
