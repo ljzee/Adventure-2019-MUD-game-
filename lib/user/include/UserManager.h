@@ -39,6 +39,8 @@ public:
     //find a user, returns a copy only
     //User& findUser(const networking::Connection& con);
 
+    //parse a string of credentials
+    std::vector<std::string> parseCredentials(const std::string& userInfo);
 
     //authenticate a user when user sends !LOGIN <username> <password>
     bool login(const networking::Connection &con, const std::string &userInfo);
@@ -65,7 +67,8 @@ public:
 
 private:
 
-    std::unordered_map<int, User> connectedUsers;
+    std::unordered_map<uintptr_t, User> connectedUsers;
+    std::unordered_map<std::string, networking::Connection> activeUsernames;
     std::unique_ptr<RegistrationManager> rManager;
 
 };

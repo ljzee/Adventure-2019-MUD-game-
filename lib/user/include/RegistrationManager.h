@@ -32,11 +32,6 @@ public:
     // will be called outside to validate credentials
     std::pair<std::string, bool> validateUser(const std::string& username, const std::string &pwd);
 
-    //check if user has registered before
-
-    //parse a string of credentials
-    std::vector<std::string> parseCredentials(const std::string& userInfo);
-
 
     void printAllUsers(); //For Testing
 

@@ -10,12 +10,6 @@
 #include <vector>
 
 
-std::vector<std::string> RegistrationManager::parseCredentials(const std::string& userInfo) {
-    std::vector<std::string> credentials;
-    boost::split(credentials, userInfo, boost::is_any_of(" "));
-    return credentials;
-}
-
 std::pair<std::string, bool> RegistrationManager::registerUser(const std::string& username, const std::string& pwd) {
     std::ostringstream os;
     bool ifRegistered = false;

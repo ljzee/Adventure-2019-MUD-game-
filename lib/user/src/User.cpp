@@ -11,7 +11,7 @@ User::User(networking::Connection connection)
           authenticated(false),
           activeAvatarId(-1)
 {
-    std::cout << "New user has been created" << std::endl;
+    //std::cout << "New user has been created" << std::endl;
 };
 
 ///Constructor for JSON Parsing

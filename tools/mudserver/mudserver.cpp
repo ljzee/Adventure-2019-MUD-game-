@@ -42,7 +42,6 @@ onConnect(Connection c) {
     User user{c};
     user.setActiveAvatarId(globalId);
     globalId++;
-    std::cout << "activeAvatarId: " << user.getActiveAvatarId() << std::endl;
     UsrMgr.addUser(user);
     UsrMgr.printAllUsers();
 
@@ -63,10 +62,10 @@ onDisconnect(Connection c) {
 }
 
 void
-unauthenticated(auto& message, Commander& commander);
+unauthenticated(const Message& message, Commander& commander);
     // is LOGOUT? else it's a command
 void
-authenticatedMessages(auto& message, Commander& commander);
+authenticatedMessages(const Message& message, Commander& commander);
     // is it a login or register command? does it have enough args?
 
 void
@@ -148,7 +147,7 @@ main(int argc, char* argv[]) {
 
 
 void
-unauthenticated(auto& message, Commander& commander) {
+unauthenticated(const Message& message, Commander& commander) {
     // is LOGOUT? else it's a command
     if (boost::contains(message.text, "!LOGOUT")) {
         UsrMgr.logout(message.connection);
@@ -159,7 +158,7 @@ unauthenticated(auto& message, Commander& commander) {
 }
 
 void
-authenticatedMessages(auto& message, Commander& commander) {
+authenticatedMessages(const Message& message, Commander& commander) {
     if (boost::contains(message.text ,"!REGISTER")) {
         if(UsrMgr.registerUser(message.connection, message.text)){
             UsrMgr.setUserActiveAvatarId(message.connection, globalId);
