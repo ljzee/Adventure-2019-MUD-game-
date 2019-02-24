@@ -9,30 +9,35 @@
 void Commander::generateCommandObject(int avatarId, const std::string &enteredCommand) {
     std::string commandToProcess = enteredCommand;
     boost::trim_if(commandToProcess, boost::is_any_of(" "));
-    auto commandWord = enteredCommand.substr(0, enteredCommand.find(' '));
-    if(commandWord == "say"){
-         addCommandToBuffer(std::move(std::unique_ptr<Command>(new commands::CommandSay(avatarId, enteredCommand))));
-    }else{
-        addCommandToBuffer(std::move(std::unique_ptr<Command>(new commands::CommandNotExist(avatarId, enteredCommand))));
-    }
+    // check if the avatar is in a 'session' {combat mode, mini-game, etc.}
+    addCommandToBuffer(std::move(
+            std::unique_ptr<Command>(new Command(avatarId, enteredCommand))
+            ));
+//    auto commandWord = enteredCommand.substr(0, enteredCommand.find(' '));
+//    if(commandWord == "say"){
+//         addCommandToBuffer(std::move(std::unique_ptr<Command>(new commands::CommandSay(avatarId, enteredCommand))));
+//    }else{
+//        addCommandToBuffer(std::move(std::unique_ptr<Command>(new commands::CommandNotExist(avatarId, enteredCommand))));
+//    }
 }
 
 //executes the first command object for each avatarId's command queue
 void Commander::executeHeartbeat(World& world) {
     std::cout << std::string("\nHeartbeat") + "(" << this->heartbeatCount << ")" << std::endl;
-    for(auto& commandDeque : bufferedCommands) {
-        if (!commandDeque.second.empty()) {
-            int avatarId = commandDeque.first;
-            commandDeque.second.front()->process(world);
-            commandDeque.second.pop_front();
+    for(auto& commandDeque : bufferedCommands) { // for each avatar
+        if (!commandDeque.second.empty()) { // empty string?
+            int avatarId = commandDeque.first; // first 'key' is avatarID
+            commandDeque.second.front()->process(world); // process the first command obj in the list
+            commandDeque.second.pop_front(); // remove from list
         }
     }
+
     this->heartbeatCount++; //heartbeatCount used for testing
 }
 
 //adds a command object to commandObjectQueue of the calling avatarId, new {avatarId, commandObjectQueue} pair is added if no entry exists
 void Commander::addCommandToBuffer(std::unique_ptr<Command> commandObj) {
-    auto avatarId = commandObj->caller;
+    auto avatarId = commandObj->getCaller();
     auto avatarCommandDeque = bufferedCommands.find(avatarId);
     if(avatarCommandDeque != bufferedCommands.end()){
         avatarCommandDeque->second.push_back(std::move(commandObj));

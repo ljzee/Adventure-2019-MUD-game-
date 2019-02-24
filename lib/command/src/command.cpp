@@ -4,35 +4,22 @@
 
 #include "command.h"
 
-Command::Command(Command::Roles roleRequired,
-                 bool minigameCallable,
-                 int minimumArguments,
-                 const std::string &commandFormat,
-                 int caller,
-                 const std::string &enteredCommand) : role(roleRequired),
-                                                      minigameCallable(minigameCallable),
-                                                      minimumArguments(minimumArguments),
-                                                      commandFormat(commandFormat),
-                                                      caller(caller),
-                                                      enteredCommand(enteredCommand)
-                                                      {}
+Command::Command(int callerID, std::string enteredCommand) {
+    //split string
+    this->commandWord = "say";
+    this->enteredCommand = enteredCommand;
+    this->caller = callerID;
+}
 
 Command::~Command() {}
 
-//testing
-/*
-void Command::print() {
-    std::cout << role
-              << " "
-              << minigameCallable
-              << " "
-              << minimumArguments
-              << " "
-              << commandFormat
-              << " "
-              << caller
-              << " "
-              << enteredCommand
-              << std::endl;
+int Command::getCaller() {
+    return this->caller;
 }
-*/
+
+std::deque<std::pair<int, std::string>> Command::process(World &world) {
+    std::deque<std::pair<int, std::string>> resultMessages;
+    std::cout << "calling say" << std::endl;
+    // add pairs to resultMessages
+    return resultMessages; // empty deque
+}

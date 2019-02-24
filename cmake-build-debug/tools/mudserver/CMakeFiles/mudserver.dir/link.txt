@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/mudserver.dir/mudserver.cpp.o  -o ../../bin/mudserver -Wl,-rpath,/usr/local/lib: ../../lib/libnetworking.a -lpthread ../../lib/libuser.a ../../lib/libmud.a ../../lib/libcommand.a ../../lib/libuser.a ../../lib/libmud.a ../../lib/libcommand.a ../../lib/libnetworking.a /usr/local/lib/libboost_system.so 
