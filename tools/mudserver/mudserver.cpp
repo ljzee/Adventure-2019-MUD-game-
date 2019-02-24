@@ -34,7 +34,6 @@ const std::string REGISTER_REGEX = "!REGISTER [a-zA-Z0-9!@#$%^&*()_+=-]+ [[a-zA-
 
 int globalId = 0; //TEMPORARILY FOR TESTING
 
-
 void
 onConnect(Connection c) {
     std::cout << "New connection found: " << c.id << "\n";
@@ -135,7 +134,7 @@ main(int argc, char* argv[]) {
         }
         auto incoming = server.receive();
         processMessages(server, incoming, done, world, commander);
-        commander.executeHeartbeat(world);
+        commander.executeHeartbeat(world, UsrMgr);
         //world.update(UsrMgr);
         auto outgoing = UsrMgr.buildOutgoing();
         server.send(outgoing);
@@ -153,7 +152,7 @@ unauthenticated(const Message& message, Commander& commander) {
         UsrMgr.logout(message.connection);
         UsrMgr.printAllUsers();
     }else if(UsrMgr.getUserActiveAvatarId(message.connection) != -1){
-        commander.generateCommandObject(UsrMgr.getUserActiveAvatarId(message.connection), message.text);
+        commander.generateCommandObject(message.connection, UsrMgr.getUserActiveAvatarId(message.connection), message.text);
     }
 }
 

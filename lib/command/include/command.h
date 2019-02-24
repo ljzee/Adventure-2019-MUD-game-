@@ -26,11 +26,13 @@ private:
     std::string commandWord;
     std::string enteredCommand;
     int caller;
+    networking::Connection callerConnectionID;
 public:
-    Command(int callerID, std::string enteredCommand);
+    Command(const networking::Connection connectionID, int callerID, std::string enteredCommand);
     ~Command();
 
     int getCaller();
+    networking::Connection getConnectionID();
 
     std::deque<std::pair<int, std::string>> process(World &world);
 };
