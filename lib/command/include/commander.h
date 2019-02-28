@@ -26,15 +26,19 @@ class Commander {
 
 public:
 
+    ///Constructor
+    Commander(std::unique_ptr<World> world);
+
     ///Methods called in mudserver
 
     //parses command string, creates a command object and stores it in bufferedCommands
     void generateCommandObject(const networking::Connection connectionID, int avatarId, const std::string &enteredCommand);
     //executes the first command object for each avatarId's command queue
-    void executeHeartbeat(World& world, UserManager &UsrMgr);
+    void executeHeartbeat(UserManager &UsrMgr);
 
 private:
 
+    std::unique_ptr<World> world;
     int heartbeatCount = 0; //used for testing
     std::unordered_map<int, std::deque<std::unique_ptr<Command>> > bufferedCommands;//map stores {avatarId, commandObjectQueue} pairs
     //adds a command object to commandObjectQueue of the calling avatarId, new {avatarId, commandObjectQueue} pair is added if no entry exists

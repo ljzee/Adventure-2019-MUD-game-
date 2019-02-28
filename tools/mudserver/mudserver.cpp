@@ -29,8 +29,6 @@ using networking::Message;
 
 
 UserManager UsrMgr;
-const std::string LOGIN_REGEX = "!LOGIN [a-zA-Z0-9!@#$%^&*()_+=-]+ [[a-zA-Z0-9!@#$%^&*()_+=-]+";
-const std::string REGISTER_REGEX = "!REGISTER [a-zA-Z0-9!@#$%^&*()_+=-]+ [[a-zA-Z0-9!@#$%^&*()_+=-]+";
 
 int globalId = 0; //TEMPORARILY FOR TESTING
 
@@ -61,17 +59,16 @@ onDisconnect(Connection c) {
 }
 
 void
-unauthenticated(const Message& message, Commander& commander);
+processAuthenticatedMessages(const Message& message, Commander& commander);
     // is LOGOUT? else it's a command
 void
-authenticatedMessages(const Message& message, Commander& commander);
+processUnauthenticatedMessages(const Message& message, Commander& commander);
     // is it a login or register command? does it have enough args?
 
 void
 processMessages(Server &server,
                 const std::deque<Message> &incoming,
                 bool &quit,
-                World& world,
                 Commander& commander) {
 
     for (auto& message : incoming) {
@@ -83,9 +80,9 @@ processMessages(Server &server,
             std::cout << "Shutting down.\n";
             quit = true;
         } else if (UsrMgr.isAuthenticated(message.connection)) {
-            unauthenticated(message, commander);
+            processAuthenticatedMessages(message, commander);
         } else{
-            authenticatedMessages(message, commander);
+            processUnauthenticatedMessages(message, commander);
         }
     }
 }
@@ -122,8 +119,8 @@ main(int argc, char* argv[]) {
     unsigned short port = std::stoi(argv[1]);
     Server server{port, getHTTPMessage(argv[2]), onConnect, onDisconnect};
 
-    World world{};
-    Commander commander{};
+    std::unique_ptr<World> world = std::make_unique<World>();
+    Commander commander{std::move(world)};
     while (!done) {
         try {
             server.update();
@@ -133,8 +130,8 @@ main(int argc, char* argv[]) {
             done = true;
         }
         auto incoming = server.receive();
-        processMessages(server, incoming, done, world, commander);
-        commander.executeHeartbeat(world, UsrMgr);
+        processMessages(server, incoming, done, commander);
+        commander.executeHeartbeat(UsrMgr);
         //world.update(UsrMgr);
         auto outgoing = UsrMgr.buildOutgoing();
         server.send(outgoing);
@@ -146,7 +143,7 @@ main(int argc, char* argv[]) {
 
 
 void
-unauthenticated(const Message& message, Commander& commander) {
+processAuthenticatedMessages(const Message& message, Commander& commander) {
     // is LOGOUT? else it's a command
     if (boost::contains(message.text, "!LOGOUT")) {
         UsrMgr.logout(message.connection);
@@ -157,7 +154,7 @@ unauthenticated(const Message& message, Commander& commander) {
 }
 
 void
-authenticatedMessages(const Message& message, Commander& commander) {
+processUnauthenticatedMessages(const Message& message, Commander& commander) {
     if (boost::contains(message.text ,"!REGISTER")) {
         if(UsrMgr.registerUser(message.connection, message.text)){
             UsrMgr.setUserActiveAvatarId(message.connection, globalId);

@@ -3,6 +3,11 @@
 //
 #include "commander.h"
 
+///Constructor
+
+Commander::Commander(std::unique_ptr<World> world) : world(std::move(world))
+{}
+
 ///Methods called in mudserver
 
 //parses command string, creates a command object and stores it in bufferedCommands
@@ -16,13 +21,13 @@ void Commander::generateCommandObject(const networking::Connection connectionID,
 }
 
 //executes the first command object for each avatarId's command queue
-void Commander::executeHeartbeat(World& world, UserManager &UsrMgr) {
+void Commander::executeHeartbeat(UserManager &UsrMgr) {
     std::cout << std::string("\nHeartbeat") + "(" << this->heartbeatCount << ")" << std::endl;
     for(auto& commandDeque : bufferedCommands) { // for each avatar
         if (!commandDeque.second.empty()) { // empty string?
             int avatarId = commandDeque.first; // first 'key' is avatarID
             networking::Connection connectionID = commandDeque.second.front()->getConnectionID();
-            Commander::respondToClient(connectionID, UsrMgr, commandDeque.second.front()->process(world));// process the first command obj in the list
+            Commander::respondToClient(connectionID, UsrMgr, commandDeque.second.front()->process(*(this->world)));// process the first command obj in the list
             commandDeque.second.pop_front(); // remove from list
         }
     }
