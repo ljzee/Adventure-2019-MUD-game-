@@ -25,7 +25,7 @@ analyze:
      -checks='*,-fuchsia-*,-google-readability-todo,-llvm-*,
      -google-runtime-references,-misc-unused-parameters,
      -google-readability-namespace-comments,
-     -readability-else-after-return' $PWD > build/clang-tidy-results.txt
+     -readability-else-after-return' $PWD > clang-tidy-results.txt
   artifacts:
     expire_in: 1 hour
     paths:
