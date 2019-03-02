@@ -38,14 +38,14 @@ public:
 
     bool isAuthenticated();
 
-    int getActiveAvatarId();
+    bool getHasActiveAvatar();
 
     ///Setters
     void setUsername(const std::string& username);
 
     void setAuthenticated(bool b);
 
-    void setActiveAvatarId(int id);
+    void setHasActiveAvatar(bool b);
 
     //resets member fields to null state, used in logout
     void reset();
@@ -76,7 +76,7 @@ private:
     networking::Connection currentConnection;
     bool authenticated;
     std::deque<std::string> userMessageDeque;
-    int activeAvatarId;
+    bool hasActiveAvatar;
 };
 
 #endif //ADVENTURE2019_USER_H

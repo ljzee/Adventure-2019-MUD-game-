@@ -11,7 +11,7 @@ Commander::Commander(std::unique_ptr<World> world) : world(std::move(world))
 ///Methods called in mudserver
 
 //parses command string, creates a command object and stores it in bufferedCommands
-void Commander::generateCommandObject(const networking::Connection connection, int avatarId, const std::string &enteredCommand) {
+void Commander::generateCommandObject(const networking::Connection connection, const std::string &enteredCommand) {
 
     std::string commandToProcess = enteredCommand;
     boost::trim_if(commandToProcess, boost::is_any_of(" "));
@@ -39,19 +39,19 @@ void Commander::generateCommandObject(const networking::Connection connection, i
 void Commander::executeHeartbeat(UserManager &UsrMgr) {
     std::cout << std::string("\nHeartbeat") + "(" << this->heartbeatCount << ")" << std::endl;
 
-    for(auto& commandDeque : bufferedCommands) { // for each avatar
-        if (!commandDeque.second.empty()) { // empty string?
-            auto resultMessage = commandDeque.second.front()->process(*(this->world));
+    for(auto& commandDeque : bufferedCommands) {
+        if (!commandDeque.second.empty()) {
+            auto resultMessages = commandDeque.second.front()->process(*(this->world));
             commandDeque.second.pop_front();
 
-            UsrMgr.sendMessageQueue(resultMessage);
+            UsrMgr.sendMessageQueue(resultMessages);
         }
     }
 
-    this->heartbeatCount++; //heartbeatCount used for testing
+    this->heartbeatCount++;
 }
 
-//adds a command object to commandObjectQueue of the calling avatarId, new {avatarId, commandObjectQueue} pair is added if no entry exists
+//adds a command object to commandObjectQueue of the calling avatarId, new {connection, commandObjectQueue} pair is added if no entry exists
 void Commander::addCommandToBuffer(std::unique_ptr<Command> commandObj) {
     auto connectionId = commandObj->getCallerConnectionId();
     auto avatarCommandDeque = bufferedCommands.find(connectionId);
