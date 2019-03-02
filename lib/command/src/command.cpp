@@ -4,28 +4,35 @@
 
 #include "command.h"
 
-Command::Command(const networking::Connection connectionID, int callerID, std::string enteredCommand) {
-    //split string
-    this->commandWord = "say"; // change later
-    this->enteredCommand = enteredCommand;
-    this->caller = callerID;
-    this->callerConnectionID = connectionID;
+
+Command::Command(const networking::Connection connection,
+                 const std::string &commandWord,
+                 const std::string &enteredCommand) : commandWord(commandWord),
+                                                      enteredCommand(enteredCommand),
+                                                      callerConnection(connection)
+
+                 {}
+
+Command::~Command(){}
+
+uintptr_t Command::getCallerConnectionId() {
+    return this->callerConnection.id;
 }
 
-Command::~Command() {
-    cout << "destructing command object";
+//testing
+/*
+void Command::print() {
+    std::cout << role
+              << " "
+              << minigameCallable
+              << " "
+              << minimumArguments
+              << " "
+              << commandFormat
+              << " "
+              << caller
+              << " "
+              << enteredCommand
+              << std::endl;
 }
-
-int Command::getCaller() {
-    return this->caller;
-}
-networking::Connection Command::getConnectionID() {
-    return this->callerConnectionID;
-}
-
-std::deque<std::pair<int, std::string>> Command::process(World &world) {
-    std::deque<std::pair<int, std::string>> resultMessages;
-    std::cout << "calling say" << std::endl; //terminal update
-    // add pairs to resultMessages
-    return resultMessages; // empty deque
-}
+*/

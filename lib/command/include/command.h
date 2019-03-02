@@ -22,19 +22,16 @@
  */
 
 class Command {
-private:
+protected:
     std::string commandWord;
     std::string enteredCommand;
-    int caller;
-    networking::Connection callerConnectionID;
+    networking::Connection callerConnection;
 public:
-    Command(const networking::Connection connectionID, int callerID, std::string enteredCommand);
-    ~Command();
+    Command(const networking::Connection connection, const std::string& commandWord, const std::string& enteredCommand);
+    virtual ~Command() = 0;
 
-    int getCaller();
-    networking::Connection getConnectionID();
-
-    std::deque<std::pair<int, std::string>> process(World &world);
+    uintptr_t getCallerConnectionId();
+    virtual std::deque<std::pair<uintptr_t, std::string>> process(World &world) = 0;
 };
 
 

@@ -56,6 +56,8 @@ public:
     //send message to a particular user
     void sendMessage(const networking::Connection& con, const std::string& message);
 
+    void sendMessageQueue(const std::deque<std::pair<uintptr_t, std::string>>& messageQueue
+    );
     //build a deque of all messages to be sent to each user
     std::deque<networking::Message> buildOutgoing();
 

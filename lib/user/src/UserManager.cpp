@@ -103,7 +103,16 @@ bool UserManager::isAuthenticated(const networking::Connection& con) {
 //send message to a particular user
 void UserManager::sendMessage(const networking::Connection& con, const std::string& message) {
     auto user = connectedUsers.find(con.id);
-    user->second.sendMessage(message);
+    if(user != connectedUsers.end()) {
+        user->second.sendMessage(message);
+    }
+}
+
+void UserManager::sendMessageQueue(const std::deque<std::pair<uintptr_t, std::string>> &messageQueue) {
+    for(auto message : messageQueue){
+        networking::Connection con = {message.first};
+        sendMessage(con, message.second);
+    }
 }
 
 //build a deque of all messages to be sent to each user

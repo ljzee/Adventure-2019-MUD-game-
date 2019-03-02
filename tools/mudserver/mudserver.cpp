@@ -72,7 +72,7 @@ processMessages(Server &server,
                 Commander& commander) {
 
     for (auto& message : incoming) {
-        std::cout << message.text << endl; // stores in terminal
+        //std::cout << message.text << endl; // stores in terminal
         UsrMgr.sendMessage(message.connection, message.text); // stores on client
         if (message.text == "quit") {
             server.disconnect(message.connection);
