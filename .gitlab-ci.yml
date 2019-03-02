@@ -21,11 +21,7 @@ analyze:
     - cppcheck lib/* tools/* 2> build/cppcheck-results.txt
     - cd build
     - >-
-     /usr/lib/llvm-6.0/share/clang/run-clang-tidy.py
-     -checks='*,-fuchsia-*,-google-readability-todo,-llvm-*,
-     -google-runtime-references,-misc-unused-parameters,
-     -google-readability-namespace-comments,
-     -readability-else-after-return' $PWD > clang-tidy-results.txt
+     /usr/lib/llvm-6.0/share/clang/run-clang-tidy.py > clang-tidy-results.txt
   artifacts:
     expire_in: 1 hour
     paths:
