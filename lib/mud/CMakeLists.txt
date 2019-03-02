@@ -5,11 +5,11 @@ add_library(mud
         src/npc.cpp
         src/object.cpp
         src/JSONParser.cpp
-        )
+        src/AreaManager.cpp)
 
 
 
-find_package(Boost 1.68 COMPONENTS system REQUIRED)
+find_package(Boost 1.68 COMPONENTS system filesystem REQUIRED)
 
 target_include_directories(mud
         PUBLIC

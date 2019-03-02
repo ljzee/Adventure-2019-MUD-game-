@@ -20,12 +20,12 @@ class Area {
 		Area(std::string name);
 
 		// Getters
-		std::string getAreaName() const;
+		std::string getName() const;
 
 		// Other functions
 		void initializeArea(vector<Npc> newNpcs, vector<Object> newObjects,
 				vector<Room> newRooms, vector<StructReset> newResets);
-        void getAreaInfo();
+        void getInfo();
 };
 
 #endif

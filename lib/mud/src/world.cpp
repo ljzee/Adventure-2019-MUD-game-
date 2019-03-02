@@ -12,7 +12,7 @@ void World::getMessageFromServer(std::string msg) {
 
 std::string World::getMotd() {
     std::string motd = "Welcome to Babka's World. The world is currently on development. \nWorld contents at the server window.";
-    //areas.at(0).getAreaInfo();
+    //areas.at(0).getInfo();
     return motd;
 }
 

@@ -17,7 +17,7 @@ using namespace std;
 
 class JSONParser {
 public:
-    Area generateArea();
+    Area generateArea(const std::string& fileName);
     vector<Npc> generateNPCs(json& deserializedJson);
     vector<Object> generateObjects(json& deserializedJson);
     vector<Room> generateRooms(json& deserializedJson);

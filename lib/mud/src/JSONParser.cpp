@@ -6,9 +6,9 @@
 using std::vector;
 using json = nlohmann::json;
 
-Area JSONParser::generateArea() {
+Area JSONParser::generateArea(const std::string& fileName) {
     //put the JSON file to be read at the root directory of your build directory
-    ifstream file("mirkwood.json");
+    ifstream file(fileName);
 
     json deserializedJson;
     file >> deserializedJson;
@@ -23,7 +23,7 @@ Area JSONParser::generateArea() {
              generateResets(deserializedJson)
             );
 
-    testArea.getAreaInfo();
+    testArea.getInfo();
 
     return testArea;
 }
@@ -56,7 +56,7 @@ vector<Object> JSONParser::generateObjects(json& deserializedJson) {
                 obj["id"].get<int>(),
                 obj["keywords"],
                 obj["shortdesc"],
-                obj["longdesc"],
+                obj["longdesc"]
                 //TODO: how to handle the list of extras
         });
     }

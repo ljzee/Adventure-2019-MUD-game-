@@ -8,3 +8,13 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
 
 add_subdirectory(lib)
 add_subdirectory(tools)
+
+add_executable(test
+        main.cpp
+        )
+
+target_link_libraries(test
+        networking
+        user
+        mud)
+
