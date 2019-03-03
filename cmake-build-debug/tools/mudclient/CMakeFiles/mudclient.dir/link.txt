@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/mudclient.dir/mudclient.cpp.o CMakeFiles/mudclient.dir/ChatWindow.cpp.o  -o ../../bin/mudclient -Wl,-rpath,/usr/local/lib: ../../lib/libnetworking.a -lcurses /usr/lib/x86_64-linux-gnu/libform.so -lpthread /usr/local/lib/libboost_system.so 
