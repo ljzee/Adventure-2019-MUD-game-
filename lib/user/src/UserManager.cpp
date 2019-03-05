@@ -134,7 +134,7 @@ void UserManager::setHasActiveAvatar(const networking::Connection &con, bool b) 
     }
 }
 
-bool UserManager::checkHasActiveAvatar(const networking::Connection &con) {
+bool UserManager::ifHasActiveAvatar(const networking::Connection &con) {
     auto user = connectedUsers.find(con.id);
     if(user != connectedUsers.end()){
         return user->second.getHasActiveAvatar();

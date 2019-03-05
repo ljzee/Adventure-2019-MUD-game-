@@ -31,7 +31,7 @@ public:
     virtual ~Command() = 0;
 
     uintptr_t getCallerConnectionId();
-    virtual std::deque<std::pair<uintptr_t, std::string>> process(World &world) = 0;
+    virtual std::deque<std::pair<uintptr_t, std::string>> process(std::unique_ptr<World>& world) = 0;
 };
 
 

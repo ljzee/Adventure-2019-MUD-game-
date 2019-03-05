@@ -14,21 +14,21 @@ namespace commands {
 
     CommandNotExist::~CommandNotExist() {}
 
-    std::deque<std::pair<uintptr_t , std::string>> CommandNotExist::process(World &world) {
+    std::deque<std::pair<uintptr_t , std::string>> CommandNotExist::process(std::unique_ptr<World>& world) {
         std::deque<std::pair<uintptr_t, std::string>> resultMessages;
         std::cout << std::string("No such command: ") + this->commandWord << std::endl;
         return resultMessages;
     }
 
     ///Handles say, tell, yell
-    CommandCommunicate::CommandCommunicate(const networking::Connection connection,
+    Communicate::Communicate(const networking::Connection connection,
                                            const std::string &commandWord,
                                            const std::string &enteredCommand): Command(connection, commandWord, enteredCommand)
                                            {}
 
-    CommandCommunicate::~CommandCommunicate() {}
+    Communicate::~Communicate() {}
 
-    std::deque<std::pair<uintptr_t, std::string>> CommandCommunicate::process(World &world) {
+    std::deque<std::pair<uintptr_t, std::string>> Communicate::process(std::unique_ptr<World>& world) {
         std::deque<std::pair<uintptr_t, std::string>> resultMessages;
 
         if(this->commandWord == "say") {
@@ -50,14 +50,14 @@ namespace commands {
     }
 
     ///Handles north, south, east, west
-    CommandMove::CommandMove(const networking::Connection connection,
+    Move::Move(const networking::Connection connection,
                              const std::string &commandWord,
                              const std::string &enteredCommand) : Command(connection, commandWord, enteredCommand)
                              {}
 
-    CommandMove::~CommandMove(){}
+    Move::~Move(){}
 
-    std::deque<std::pair<uintptr_t , std::string>> CommandMove::process(World &world) {
+    std::deque<std::pair<uintptr_t , std::string>> Move::process(std::unique_ptr<World>& world) {
         std::deque<std::pair<uintptr_t, std::string>> resultMessages;
 
         std::cout << "calling " + commandWord;
@@ -66,14 +66,14 @@ namespace commands {
     }
 
     ///Handles look, examine
-    CommandLook::CommandLook(const networking::Connection connection,
+    Look::Look(const networking::Connection connection,
                              const std::string &commandWord,
                              const std::string &enteredCommand): Command(connection, commandWord, enteredCommand)
                              {}
 
-    CommandLook::~CommandLook() {}
+    Look::~Look() {}
 
-    std::deque<std::pair<uintptr_t , std::string>> CommandLook::process(World &world) {
+    std::deque<std::pair<uintptr_t , std::string>> Look::process(std::unique_ptr<World>& world) {
         std::deque<std::pair<uintptr_t, std::string>> resultMessages;
 
         if(this->commandWord == "look"){
@@ -97,7 +97,7 @@ namespace commands {
 
     CommandItem::~CommandItem(){}
 
-    std::deque<std::pair<uintptr_t , std::string>> CommandItem::process(World &world) {
+    std::deque<std::pair<uintptr_t , std::string>> CommandItem::process(std::unique_ptr<World>& world) {
         std::deque<std::pair<uintptr_t, std::string>> resultMessages;
 
         if(this->commandWord == "get"){
@@ -141,7 +141,7 @@ namespace commands {
 
     CommandCombat::~CommandCombat(){}
 
-    std::deque<std::pair<uintptr_t , std::string>> CommandCombat::process(World &world) {
+    std::deque<std::pair<uintptr_t , std::string>> CommandCombat::process(std::unique_ptr<World>& world) {
         std::deque<std::pair<uintptr_t, std::string>> resultMessages;
 
         if(this->commandWord == "attack"){
@@ -165,7 +165,7 @@ namespace commands {
 
     CommandSwap::~CommandSwap(){}
 
-    std::deque<std::pair<uintptr_t , std::string>> CommandSwap::process(World &world) {
+    std::deque<std::pair<uintptr_t , std::string>> CommandSwap::process(std::unique_ptr<World>& world) {
         std::deque<std::pair<uintptr_t, std::string>> resultMessages;
 
         if(this->commandWord == "swap"){

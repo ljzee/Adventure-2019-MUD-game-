@@ -32,7 +32,7 @@ public:
     ///Methods called in mudserver
 
     //parses command string, creates a command object and stores it in bufferedCommands
-    void generateCommandObject(const networking::Connection connectionId, const std::string &enteredCommand);
+    void createNewCommand(const networking::Connection connectionId, const std::string &enteredCommand);
     //executes the first command object for each connection's command queue
     void executeHeartbeat(UserManager &UsrMgr);
 

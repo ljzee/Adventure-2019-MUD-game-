@@ -23,39 +23,39 @@ namespace commands {
 
         ~CommandNotExist();
 
-        std::deque<std::pair<uintptr_t , std::string>> process(World &world);
+        std::deque<std::pair<uintptr_t , std::string>> process(std::unique_ptr<World>& world);
 
     };
 
     ///Handles say, tell, yell
-    class CommandCommunicate : public Command {
+    class Communicate : public Command {
     public:
-        CommandCommunicate(const networking::Connection connection, const std::string& commandWord, const std::string& enteredCommand);
+        Communicate(const networking::Connection connection, const std::string& commandWord, const std::string& enteredCommand);
 
-        ~CommandCommunicate();
+        ~Communicate();
 
-        std::deque<std::pair<uintptr_t , std::string>> process(World &world);
+        std::deque<std::pair<uintptr_t , std::string>> process(std::unique_ptr<World>& world);
 
     };
 
     ///Handles north, south, east, west
-    class CommandMove : public Command {
+    class Move : public Command {
     public:
-        CommandMove(const networking::Connection connection, const std::string& commandWord, const std::string& enteredCommand);
+        Move(const networking::Connection connection, const std::string& commandWord, const std::string& enteredCommand);
 
-        ~CommandMove();
+        ~Move();
 
-        std::deque<std::pair<uintptr_t , std::string>> process(World &world);
+        std::deque<std::pair<uintptr_t , std::string>> process(std::unique_ptr<World>& world);
     };
 
     ///Handles look, examine
-    class CommandLook : public Command {
+    class Look : public Command {
     public:
-        CommandLook(const networking::Connection connection, const std::string& commandWord, const std::string& enteredCommand);
+        Look(const networking::Connection connection, const std::string& commandWord, const std::string& enteredCommand);
 
-        ~CommandLook();
+        ~Look();
 
-        std::deque<std::pair<uintptr_t , std::string>> process(World &world);
+        std::deque<std::pair<uintptr_t , std::string>> process(std::unique_ptr<World>& world);
     };
 
     ///Handles get, put, drop, give, wear, remove
@@ -65,7 +65,7 @@ namespace commands {
 
         ~CommandItem();
 
-        std::deque<std::pair<uintptr_t , std::string>> process(World &world);
+        std::deque<std::pair<uintptr_t , std::string>> process(std::unique_ptr<World>& world);
     };
 
     ///Handles attack, kill
@@ -75,7 +75,7 @@ namespace commands {
 
         ~CommandCombat();
 
-        std::deque<std::pair<uintptr_t , std::string>> process(World &world);
+        std::deque<std::pair<uintptr_t , std::string>> process(std::unique_ptr<World>& world);
     };
 
     ///Handles swap
@@ -85,7 +85,7 @@ namespace commands {
 
         ~CommandSwap();
 
-        std::deque<std::pair<uintptr_t , std::string>> process(World &world);
+        std::deque<std::pair<uintptr_t , std::string>> process(std::unique_ptr<World>& world);
     };
 
 }

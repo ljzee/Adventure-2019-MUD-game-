@@ -141,11 +141,12 @@ processAuthenticatedMessages(const Message& message, Commander& commander) {
     if(boost::contains(message.text, "!LOGOUT")) {
         UsrMgr.logout(message.connection);
         UsrMgr.printAllUsers();
-    }else if(UsrMgr.checkHasActiveAvatar(message.connection)){
+    }else if(UsrMgr.ifHasActiveAvatar(message.connection)){
         if(boost::contains(message.text, "!SWITCH")){
+            //TODO: Implement the switch of characters while in game
             UsrMgr.setHasActiveAvatar(message.connection, false);
         }else {
-            commander.generateCommandObject(message.connection, message.text);
+            commander.createNewCommand(message.connection, message.text);
         }
     }else{
         if(boost::contains(message.text, "!SELECT")){

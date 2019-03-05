@@ -62,7 +62,7 @@ public:
 
     void setHasActiveAvatar(const networking::Connection &con, bool b);
 
-    bool checkHasActiveAvatar(const networking::Connection &con);
+    bool ifHasActiveAvatar(const networking::Connection &con);
 
     void printAllUsers(); //For Testing
 
