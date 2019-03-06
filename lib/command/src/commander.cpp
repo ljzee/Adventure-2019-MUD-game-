@@ -2,11 +2,44 @@
 // Created by Dev on 2019-02-09.
 //
 #include "commander.h"
-
+#include <boost/algorithm/string.hpp>
 ///Constructor
 
-Commander::Commander(std::unique_ptr<World> world) : world(std::move(world))
-{}
+
+
+Commander::Commander(std::unique_ptr<World> world) : world(std::move(world)) {
+    setUpFunctionMap();
+}
+
+void Commander::setUpFunctionMap() {
+    // Communication
+    commandMap["say"] = [&](networking::Connection id, std::string commandWord, std::string command) {return std::make_unique<commands::Communicate>(id, commandWord, command);};
+    commandMap["yell"] = commandMap["say"];
+    commandMap["tell"] = commandMap["say"];
+    // Moving
+    commandMap["north"] = [&](networking::Connection id, std::string commandWord, std::string command) {return std::make_unique<commands::Move>(id, commandWord, command);};
+    commandMap["south"] = commandMap["north"];
+    commandMap["east"] = commandMap["north"];
+    commandMap["west"] = commandMap["north"];
+    // Looking around
+    commandMap["look"] = [&](networking::Connection id, std::string commandWord, std::string command) {return std::make_unique<commands::Look>(id, commandWord, command);};
+    commandMap["examine"] = commandMap["look"];
+    // Item interaction
+    commandMap["get"] = [&](networking::Connection id, std::string commandWord, std::string command) {return std::make_unique<commands::CommandItem>(id, commandWord, command);};
+    commandMap["put"] = commandMap["get"];
+    commandMap["drop"] = commandMap["get"];
+    commandMap["give"] = commandMap["get"];
+    commandMap["wear"] = commandMap["get"];
+    commandMap["remove"] = commandMap["get"];
+    // Combat
+    commandMap["attack"] = [&](networking::Connection id, std::string commandWord, std::string command) {return std::make_unique<commands::CommandCombat>(id, commandWord, command);};
+    commandMap["kill"] = commandMap["attack"];
+    // Swap
+    commandMap["swap"] = [&](networking::Connection id, std::string commandWord, std::string command) {return std::make_unique<commands::CommandSwap>(id, commandWord, command);};
+    //
+    commandMap["notExist"] = [&](networking::Connection id, std::string commandWord, std::string command) {return std::make_unique<commands::CommandNotExist>(id, commandWord, command);};
+
+}
 
 ///Methods called in mudserver
 
@@ -16,31 +49,13 @@ void Commander::createNewCommand(const networking::Connection connectionId, cons
     std::string commandToProcess = enteredCommand;
     boost::trim_if(commandToProcess, boost::is_any_of(" "));
     auto commandWord = enteredCommand.substr(0, enteredCommand.find(' '));
-
-    // say
-
-    // check if the avatar is in a 'session' {combat mode, mini-game, etc.}
-    if((commandWord == "say") || (commandWord == "tell") || (commandWord == "yell")){
-        addCommandToBuffer(std::move(std::unique_ptr<Command>(new commands::Communicate(connectionId, commandWord, enteredCommand))));
-    }else if((commandWord == "north") || (commandWord == "south") || (commandWord == "east") || (commandWord == "west")){
-        addCommandToBuffer(std::move(std::unique_ptr<Command>(new commands::Move(connectionId, commandWord, enteredCommand))));
-    }else if((commandWord == "look") || (commandWord == "examine")){
-        addCommandToBuffer(std::move(std::unique_ptr<Command>(new commands::Look(connectionId, commandWord, enteredCommand))));
-    }else if((commandWord == "get") || (commandWord == "put") || (commandWord == "drop") || (commandWord == "give") || (commandWord == "wear") || (commandWord == "remove")){
-        addCommandToBuffer(std::move(std::unique_ptr<Command>(new commands::CommandItem(connectionId, commandWord, enteredCommand))));
-    }else if((commandWord == "attack") || (commandWord == "kill")){
-        addCommandToBuffer(std::move(std::unique_ptr<Command>(new commands::CommandCombat(connectionId, commandWord, enteredCommand))));
-    }else if((commandWord == "swap")){
-        addCommandToBuffer(std::move(std::unique_ptr<Command>(new commands::CommandSwap(connectionId, commandWord, enteredCommand))));
-    }else{
-        addCommandToBuffer(std::move(std::unique_ptr<Command>(new commands::CommandNotExist(connectionId, commandWord, enteredCommand))));
+    auto command = commandMap.find(commandWord);
+    if(command != commandMap.end()) {
+        addCommandToBuffer(command->second(connectionId, commandWord, enteredCommand));
     }
-
-    
-
-
-
-
+    else {
+        addCommandToBuffer(commandMap["notExist"](connectionId, commandWord, enteredCommand));
+    }
 }
 
 //executes the first command object for each avatarId's command queue
@@ -60,14 +75,14 @@ void Commander::executeHeartbeat(UserManager &UsrMgr) {
 }
 
 //adds a command object to commandObjectQueue of the calling avatarId, new {connection, commandObjectQueue} pair is added if no entry exists
-void Commander::addCommandToBuffer(std::unique_ptr<Command> commandObj) {
-    auto connectionId = commandObj->getCallerConnectionId();
+void Commander::addCommandToBuffer(std::unique_ptr<Command> command) {
+    auto connectionId = command->getCallerConnectionId();
     auto avatarCommandDeque = bufferedCommands.find(connectionId);
     if(avatarCommandDeque != bufferedCommands.end()){
-        avatarCommandDeque->second.push_back(std::move(commandObj));
+        avatarCommandDeque->second.push_back(std::move(command));
     }else{
         std::deque<std::unique_ptr<Command>> newCommandDeque;
-        newCommandDeque.push_back(std::move(commandObj));
+        newCommandDeque.push_back(std::move(command));
         bufferedCommands.insert({connectionId, std::move(newCommandDeque)});
     }
 

@@ -44,6 +44,8 @@ private:
 
     void addCommandToBuffer(std::unique_ptr<Command> commandObj);
     void respondToClient(networking::Connection conn, UserManager &UsrMgr, std::deque<std::pair<int, std::string>> messages);
+    std::unordered_map<std::string, std::function<std::unique_ptr<Command>(networking::Connection, std::string, std::string)>> commandMap;
+    void setUpFunctionMap();
 
 };
 
