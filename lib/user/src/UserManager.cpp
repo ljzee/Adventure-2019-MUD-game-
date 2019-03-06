@@ -22,6 +22,7 @@ void UserManager::addUser(User &newUser) {
 
 //remove a current user, on logout or disconnect
 void UserManager::removeUser(const networking::Connection& con) {
+    logout(con);
     connectedUsers.erase(con.id);
 }
 

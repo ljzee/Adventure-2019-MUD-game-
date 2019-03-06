@@ -17,7 +17,7 @@
 #include <unistd.h>
 #include <vector>
 #include "world.h"
-#include "commander.h"
+#include "Commander.h"
 
 #include "boost/algorithm/string.hpp"
 
@@ -155,8 +155,8 @@ processAuthenticatedMessages(const Message& message, Commander& commander) {
             UsrMgr.sendMessage(message.connection, "You've selected a character");
         }else if(boost::contains(message.text, "!NEW")){
             std::cout << "calling !NEW" << std::endl;
-            UsrMgr.setHasActiveAvatar(message.connection, true);
-            UsrMgr.sendMessage(message.connection, "You've created a new character");
+            //UsrMgr.setHasActiveAvatar(message.connection, true);
+            UsrMgr.sendMessage(message.connection, "You've created a new character! Now call !SELECT [avatar_name] to choose a character.");
         }else{
             UsrMgr.sendMessage(message.connection, "To select an existing avatar: !SELECT [avatar_name]\nTo create a new avatar: !NEW [avatar_name]\nYour avatars: Swordmaster101, thievingBoss, swedishfish");
         }

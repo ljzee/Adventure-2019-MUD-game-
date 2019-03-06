@@ -2,7 +2,7 @@
 // Created by Dev on 2019-02-09.
 //
 
-#include "command.h"
+#include "Command.h"
 
 
 Command::Command(const networking::Connection connection,
@@ -13,7 +13,9 @@ Command::Command(const networking::Connection connection,
 
                  {}
 
-Command::~Command(){}
+Command::~Command(){
+    
+}
 
 uintptr_t Command::getCallerConnectionId() {
     return this->callerConnection.id;

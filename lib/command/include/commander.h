@@ -6,12 +6,11 @@
 #define PROJECT_COMMANDER_H
 
 #include <unordered_map>
-#include "command.h"
-#include "commandDeclaration.h"
+#include "Command.h"
 #include "world.h"
+#include "Server.h"
 #include <memory>
 #include <boost/algorithm/string.hpp>
-#include "Server.h"
 
 /**
  * Commander Class:
@@ -44,6 +43,8 @@ private:
 
     void addCommandToBuffer(std::unique_ptr<Command> commandObj);
     void respondToClient(networking::Connection conn, UserManager &UsrMgr, std::deque<std::pair<int, std::string>> messages);
+    std::unordered_map<std::string, std::function<std::unique_ptr<Command>(networking::Connection, std::string, std::string)>> commandMap;
+    void setUpFunctionMap();
 
 };
 
