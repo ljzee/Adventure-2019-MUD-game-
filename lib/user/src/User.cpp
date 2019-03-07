@@ -9,9 +9,9 @@ User::User(networking::Connection connection)
         : username(),
           currentConnection(connection),
           authenticated(false),
-          role(User::Unknown)
+          hasActiveAvatar(false)
 {
-    std::cout << "New user has been created" << std::endl;
+    //std::cout << "New user has been created" << std::endl;
 };
 
 ///Constructor for JSON Parsing
@@ -38,6 +38,10 @@ bool User::isAuthenticated(){
     return this->authenticated;
 }
 
+bool User::getHasActiveAvatar() {
+    return this->hasActiveAvatar;
+}
+
 ///Setters
 void User::setUsername(const std::string &username) {
     this->username = username;
@@ -46,6 +50,16 @@ void User::setUsername(const std::string &username) {
 
 void User::setAuthenticated(bool b) {
     this->authenticated = b;
+}
+
+void User::setHasActiveAvatar(bool b) {
+    this->hasActiveAvatar = b;
+}
+
+void User::reset() {
+    this->username = "";
+    this->authenticated = false;
+    this->hasActiveAvatar = false;
 }
 
 ///User Message Container Operations

@@ -16,6 +16,7 @@ target_link_libraries(mudserver
   ${CMAKE_THREAD_LIBS_INIT}
         user
         mud
+        command
 )
 
 install(TARGETS mudserver
