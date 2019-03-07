@@ -110,8 +110,8 @@ vector<ExtendDesc> JSONParser::generateExtendedDescriptions(json& deserializedJs
         vector<std::string> keys = extDesc["keywords"];
         vector<std::string> descriptions = extDesc["keywords"];
 
-        newExtendedDesc.keywords = keys;
-        newExtendedDesc.desc = descriptions;
+        //newExtendedDesc.keywords = keys;
+        //newExtendedDesc.desc = descriptions;
 
         extendedDesc.push_back(newExtendedDesc);
     }

@@ -5,21 +5,52 @@
 #include <iostream>
 #include <string>
 
+#include "clonable.h"
+
 using std::vector;
 
-class Npc {
+struct Location {
+    std::string areaName;
+    int roomId;
+
+    bool
+    operator==(Location other) const {
+        return ((areaName == other.areaName)&&(roomId == other.roomId));
+    }
+};
+
+class Npc : public Clonable{
+
+    enum Type{
+        npc = 0, avatar
+    };
+
 	private:
 		int id;
 		vector<std::string> keywords;
 		std::string shortdesc;
-		vector<std::string> longdesc;
-		vector<std::string> description;
+		std::string longdesc;
+		std::string description;
+		Type npcType;
+		int health;
+		Location currentLocation;
+		bool isSwapped;
+
+
 	public:
-		Npc(int id, vector<std::string> keywords, std::string shortDesc, vector<std::string> longDesc, vector<std::string> description);
+
+        ///Constructors
+		Npc(int id, vector<std::string> keywords, std::string shortDesc, std::string longDesc, std::string description); //npc constructor
+        Npc(int id, std::string avatarName); //avatar constructor
+
+        ~Npc();
 
 		// Getters
 		int getNpcId() const;
+		Type getNpcType() const;
+		bool getIsSwapped()const;
 
+        std::unique_ptr<Clonable> clone() override;
 		std::string outputNpcInfo();
 };
 
