@@ -23,7 +23,7 @@ This project requires:
 
 > make
 
-> bin/mudserver 4000 ../web-socket-networking/webchat.html
+> bin/mudserver 4000 ../adventure2019/webchat.html
 
 URL:: http://localhost:4000/index.html
 
