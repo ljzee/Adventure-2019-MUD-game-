@@ -1,7 +1,6 @@
 // 
 // Created by Dev on 2019-02-09.
 //
-<<<<<<< HEAD
 #include "Commander.h"
 #include "Combat.h"
 #include "Communicate.h"
@@ -54,11 +53,11 @@ void Commander::setUpFunctionMap() {
     std::for_each(swapKeywords.begin(), swapKeywords.end(), [this](const std::string& c) {
         commandMap.emplace(c, [&](networking::Connection id, std::string commandWord, std::string command) {return std::make_unique<commands::CommandSwap>(id, commandWord, command);});
     });
+}
 
 
 //parses command string, creates a command object and stores it in bufferedCommands
 void Commander::createNewCommand(const networking::Connection connectionId, const std::string &enteredCommand) {
-
     
     std::string commandToProcess = enteredCommand;
     boost::trim_if(commandToProcess, boost::is_any_of(" "));
