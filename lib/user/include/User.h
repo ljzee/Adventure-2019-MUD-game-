@@ -23,12 +23,6 @@
 class User {
 
 public:
-    enum Roles
-    {
-        Unknown = 0,
-        Casual,
-        WorldBuilder
-    };
 
     ///Constructor
     User(networking::Connection connection);
@@ -44,12 +38,17 @@ public:
 
     bool isAuthenticated();
 
+    bool getHasActiveAvatar();
+
     ///Setters
     void setUsername(const std::string& username);
 
-
     void setAuthenticated(bool b);
 
+    void setHasActiveAvatar(bool b);
+
+    //resets member fields to null state, used in logout
+    void reset();
     ///User Message Container Operations
     //deposits a message in the User's message container
     void sendMessage (const std::string& message);
@@ -76,9 +75,8 @@ private:
     std::string username;
     networking::Connection currentConnection;
     bool authenticated;
-    Roles role;
     std::deque<std::string> userMessageDeque;
-
+    bool hasActiveAvatar;
 };
 
 #endif //ADVENTURE2019_USER_H

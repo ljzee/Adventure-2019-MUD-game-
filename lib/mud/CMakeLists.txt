@@ -22,6 +22,7 @@ target_include_directories(mud
 
 target_link_libraries(mud
         PRIVATE
+        command
         user
         ${Boost_LIBRARIES}
         )
