@@ -14,10 +14,10 @@ class Object {
 		int id;
 		vector<std::string> keywords;
 		std::string shortDesc;
-		vector<std::string> longDesc;
+		std::string longDesc;
 		vector<extra> extras;
 	public:
-		Object(int id, vector<std::string> keywords, std::string shortDesc, vector<std::string> longDesc);
+		Object(int id, vector<std::string> keywords, std::string shortDesc, std::string longDesc);
 		int getId() const;
 		std::string getShortDesc() const;
 		std::string getObjectInfo();

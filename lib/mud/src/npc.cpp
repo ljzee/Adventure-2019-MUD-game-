@@ -40,11 +40,11 @@ std::unique_ptr<Clonable> Npc::clone() {
 std::string Npc::outputNpcInfo() {
      std::string strId = std::to_string(this->id);
 
-     std::string concatDesc = " ";
-     for (auto &portion : this->longdesc) {
-          concatDesc +=  portion;
-          concatDesc += "\n";
+     std::string concatKeywords = "";
+     for (auto &portion : this->keywords) {
+          concatKeywords +=  portion + " ";
      }
-     return strId + concatDesc;
+
+     return strId + "\n" + concatKeywords + "\n" + longdesc + "\n" + description + "\n";
 }
 

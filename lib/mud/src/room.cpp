@@ -29,6 +29,9 @@ std::string Room::outputDescString() {
     return concatDesc;
 }
 
+std::string Room::getRoomInfo() {
+    return std::to_string(this->id) + "\n" + name + "\n" + desc + "\n";
+}
 /*
  void Room::resetRoom() {
 	int arbitrary_limit = 100;

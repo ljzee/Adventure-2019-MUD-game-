@@ -6,7 +6,7 @@
 using std::vector;
 using json = nlohmann::json;
 
-Area JSONParser::generateArea() {
+void JSONParser::generateArea() {
     //put the JSON file to be read at the root directory of your build directory
     ifstream file("mirkwood.json");
 
@@ -14,74 +14,78 @@ Area JSONParser::generateArea() {
     file >> deserializedJson;
     file.close();
 
-    Area testArea{deserializedJson["AREA"]["name"].get<std::string>()};
+    //Area testArea{deserializedJson["AREA"]["name"].get<std::string>()};
+    //testArea.getAreaInfo();
 
-    testArea.initializeArea(
-             generateNPCs(deserializedJson),
-             generateObjects(deserializedJson),
-             generateRooms(deserializedJson),
-             generateResets(deserializedJson)
-            );
-
-    testArea.getAreaInfo();
-
-    return testArea;
+    generateNPCs(deserializedJson);
+    generateObjects(deserializedJson);
+    generateRooms(deserializedJson);
+    //printMap();
 }
 
-vector<Npc> JSONParser::generateNPCs(json& deserializedJson) {
-    vector<Npc> npcs;
+void JSONParser::generateNPCs(json& deserializedJson) {
     json deserializedNPCs = deserializedJson["NPCS"];
 
-    for(auto& npc : deserializedNPCs) {
-        npcs.push_back(Npc{
-                npc["id"].get<int>(),
-                npc["keywords"],
-                npc["shortdesc"],
-                npc["longdesc"],
-                npc["description"]
-        });
-    }
+    std::unique_ptr<Npc> npcObject;
+    int id;
 
-    return npcs;
+    for(auto& npc : deserializedNPCs) {
+        id = npc["id"].get<int>();
+
+        npcObject = std::make_unique<Npc>(
+                id,
+                npc["keywords"],
+                npc["shortdesc"].get<std::string>(),
+                vectorToString(npc["longdesc"]),
+                vectorToString(npc["description"])
+                );
+
+        npcContainer.insert(std::pair<int, std::unique_ptr<Npc>>(id, std::move(npcObject)));
+    }
 }
 
 //TODO: Do we need to refactor this? It's similar with generateNPCs
-vector<Object> JSONParser::generateObjects(json& deserializedJson) {
-    vector<Object> objects;
+void JSONParser::generateObjects(json& deserializedJson) {
     json deserializedObjects = deserializedJson["OBJECTS"];
 
+    std::unique_ptr<Object> object;
+    int id;
+
     for(auto& obj : deserializedObjects) {
+        id = obj["id"].get<int>();
 
-        objects.push_back(Object{
-                obj["id"].get<int>(),
+        object = std::make_unique<Object>(
+                id,
                 obj["keywords"],
-                obj["shortdesc"],
-                obj["longdesc"],
-                //TODO: how to handle the list of extras
-        });
-    }
+                obj["shortdesc"].get<std::string>(),
+                vectorToString(obj["longdesc"])
+                );
 
-    return objects;
+        objectContainer.insert(std::pair<int, std::unique_ptr<Object>>(id, std::move(object)));
+    }
 }
 
-vector<Room> JSONParser::generateRooms(json& deserializedJson) {
-    vector<Room> rooms;
+void JSONParser::generateRooms(json& deserializedJson) {
     json deserializedRooms = deserializedJson["ROOMS"];
+
+    std::unique_ptr<Room> roomObject;
+    int id;
 
     for(auto& room : deserializedRooms) {
         vector<Door> doors = generateDoors(room);
         vector<ExtendDesc> extendedDesc = generateExtendedDescriptions(room);
+        id = room["id"].get<int>();
 
-        rooms.push_back(Room{
-                room["id"].get<int>(),
+        roomObject = std::make_unique<Room>(
+                id,
                 room["name"].get<std::string>(),
-                room["desc"],
+                vectorToString(room["desc"]),
                 doors,
                 extendedDesc
-        });
-    }
+                );
 
-    return rooms;
+        roomContainer.insert(std::pair<int, std::unique_ptr<Room>>(id, std::move(roomObject)));
+    }
 }
 
 vector<Door> JSONParser::generateDoors(json& deserializedJson) {
@@ -91,7 +95,7 @@ vector<Door> JSONParser::generateDoors(json& deserializedJson) {
     for(auto& door : deserializedDoor) {
         doors.push_back(Door{
                 door["dir"].get<std::string>(),
-                door["desc"],
+                vectorToString(door["desc"]),
                 door["keywords"],
                 door["to"].get<int>()
         });
@@ -162,4 +166,33 @@ std::unordered_map<int, User> JSONParser::parseUsers() {
     }
 
     return userList;
+}
+
+std::string JSONParser::vectorToString(std::vector<std::string> vector) {
+    std::string result;
+
+    for(auto str : vector) {
+        result += str + " ";
+    }
+
+    return result;
+}
+
+//For testing purposes only just so you can see the list of npcs/objects in the map -Adrien
+void JSONParser::printMap() {
+    for(auto const& [key, val] : roomContainer) {
+        std::cout << "map key:" << key << "\n" << "map value: \n" << val->getRoomInfo() << std::endl;
+    }
+}
+
+std::map<int, std::unique_ptr<Npc>>& JSONParser::getNpcs() {
+    return npcContainer;
+}
+
+std::map<int, std::unique_ptr<Object>>& JSONParser::getObjects() {
+    return objectContainer;
+}
+
+std::map<int, std::unique_ptr<Room>>& JSONParser::getRooms() {
+    return roomContainer;
 }

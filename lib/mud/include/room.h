@@ -35,8 +35,9 @@ class Room {
 
 		// Member Functions
 		std::string outputDescString();
-		int getNumDoors();
 		// void resetRoom();
+
+		std::string getRoomInfo();
 };
 
 #endif
