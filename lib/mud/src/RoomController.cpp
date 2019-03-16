@@ -8,7 +8,7 @@
 
 using namespace boost::filesystem;
 
-AreaManager::AreaManager(const std::string& pathToJSONFolder) {
+RoomController::RoomController(const std::string& pathToJSONFolder) {
     JSONParser json;
     if(is_directory(pathToJSONFolder)) {
         std::cout << "Debug info. Check area population" << std::endl;

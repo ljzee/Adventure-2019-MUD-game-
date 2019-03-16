@@ -6,7 +6,7 @@
 #include <string>
 
 #include "area.h"
-#include "npc.h"
+#include "Character.h"
 #include "object.h"
 #include "room.h"
 #include "reset.h"
@@ -18,7 +18,7 @@ using namespace std;
 class JSONParser {
 public:
     Area generateArea(const std::string& fileName);
-    vector<Npc> generateNPCs(json& deserializedJson);
+    vector<Character> generateNPCs(json& deserializedJson);
     vector<Object> generateObjects(json& deserializedJson);
     vector<Room> generateRooms(json& deserializedJson);
     vector<Door> generateDoors(json& deserializedJson);

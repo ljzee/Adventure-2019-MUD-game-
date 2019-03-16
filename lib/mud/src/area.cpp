@@ -5,7 +5,7 @@ Area::Area(std::string name) : name(name) {}
 
 std::string Area::getName() const { return this->name; }
 
-void Area::initializeArea(vector<Npc> newNpcs, vector<Object> newObjects,
+void Area::initializeArea(vector<Character> newNpcs, vector<Object> newObjects,
                          vector<Room> newRooms, vector<StructReset> newResets) {
 
     Npcs = std::move(newNpcs);

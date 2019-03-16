@@ -28,12 +28,12 @@ Area JSONParser::generateArea(const std::string& fileName) {
     return testArea;
 }
 
-vector<Npc> JSONParser::generateNPCs(json& deserializedJson) {
-    vector<Npc> npcs;
+vector<Character> JSONParser::generateNPCs(json& deserializedJson) {
+    vector<Character> npcs;
     json deserializedNPCs = deserializedJson["NPCS"];
 
     for(auto& npc : deserializedNPCs) {
-        npcs.push_back(Npc{
+        npcs.push_back(Character{
                 npc["id"].get<int>(),
                 npc["keywords"],
                 npc["shortdesc"],

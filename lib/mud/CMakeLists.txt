@@ -2,10 +2,10 @@ add_library(mud
         src/room.cpp
         src/world.cpp
         src/area.cpp
-        src/npc.cpp
+        src/Character.cpp
         src/object.cpp
         src/JSONParser.cpp
-        src/AreaManager.cpp)
+        src/RoomController.cpp)
 
 
 

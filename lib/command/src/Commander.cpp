@@ -16,10 +16,6 @@ using namespace commands;
 using networking::Message;
 
 
-// Commander::Commander() {
-//     setUpFunctionMap();
-// }
-
 std::unordered_map<std::string, std::function<std::unique_ptr<Command>(networking::Connection, std::string, std::string)>> Commander::commandMap = [](){
 
     std::unordered_map<std::string, std::function<std::unique_ptr<Command>(networking::Connection, std::string, std::string)>> map;
