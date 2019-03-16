@@ -6,9 +6,11 @@
 using std::vector;
 using json = nlohmann::json;
 
+
 void JSONParser::generateArea() {
+
     //put the JSON file to be read at the root directory of your build directory
-    ifstream file("mirkwood.json");
+    ifstream file(fileName);
 
     json deserializedJson;
     file >> deserializedJson;
@@ -16,6 +18,7 @@ void JSONParser::generateArea() {
 
     //Area testArea{deserializedJson["AREA"]["name"].get<std::string>()};
     //testArea.getAreaInfo();
+
 
     generateNPCs(deserializedJson);
     generateObjects(deserializedJson);
@@ -38,7 +41,7 @@ void JSONParser::generateNPCs(json& deserializedJson) {
                 npc["shortdesc"].get<std::string>(),
                 vectorToString(npc["longdesc"]),
                 vectorToString(npc["description"])
-                );
+        );
 
         npcContainer.insert(std::pair<int, std::unique_ptr<Npc>>(id, std::move(npcObject)));
     }

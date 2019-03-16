@@ -1,5 +1,5 @@
-#ifndef NPC_H
-#define NPC_H
+#ifndef CHARACTER_H
+#define CHARACTER_H
 
 #include <vector>
 #include <iostream>
@@ -19,19 +19,20 @@ struct Location {
     }
 };
 
-class Npc : public Clonable{
+class Character : public Clonable{
 
     enum Type{
-        npc = 0, avatar
+        nonplayer = 0, player
     };
 
+class Character {
 	private:
 		int id;
 		vector<std::string> keywords;
 		std::string shortdesc;
 		std::string longdesc;
 		std::string description;
-		Type npcType;
+		Type characterType;
 		int health;
 		Location currentLocation;
 		bool isSwapped;
@@ -40,18 +41,18 @@ class Npc : public Clonable{
 	public:
 
         ///Constructors
-		Npc(int id, vector<std::string> keywords, std::string shortDesc, std::string longDesc, std::string description); //npc constructor
-        Npc(int id, std::string avatarName); //avatar constructor
+		Character(int id, vector<std::string> keywords, std::string shortDesc, std::string longDesc, std::string description); //npc constructor
+        Character(int id, std::string avatarName); //avatar constructor
 
-        ~Npc();
+        ~Character();
 
 		// Getters
-		int getNpcId() const;
-		Type getNpcType() const;
+		int getCharacterId() const;
+		Type getCharacterType() const;
 		bool getIsSwapped()const;
 
         std::unique_ptr<Clonable> clone() override;
-		std::string outputNpcInfo();
+		std::string outputCharacterInfo();
 };
 
 #endif

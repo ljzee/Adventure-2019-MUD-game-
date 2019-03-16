@@ -3,9 +3,9 @@
 #include "Command.h"
 
 namespace commands {
+    STRING_ENUM(ItemCommands, GET, PUT, DROP, GIVE, WEAR, REMOVE);
     class CommandItem : public Command {
     public:
-        static const std::vector<std::string> values;
         CommandItem(const networking::Connection connection, const std::string& commandWord, const std::string& enteredCommand);
 
         ~CommandItem();

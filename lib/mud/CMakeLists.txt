@@ -2,16 +2,16 @@ add_library(mud
         src/room.cpp
         src/world.cpp
         src/area.cpp
-        src/npc.cpp
+        src/Character.cpp
         src/object.cpp
         src/JSONParser.cpp
         src/clonable.cpp
         src/areaManager.cpp
-        )
+        src/RoomController.cpp)
 
 
 
-find_package(Boost 1.68 COMPONENTS system REQUIRED)
+find_package(Boost 1.68 COMPONENTS system filesystem REQUIRED)
 
 target_include_directories(mud
         PUBLIC

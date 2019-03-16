@@ -1,7 +1,6 @@
 #include "CommandNotExist.h"
 
 namespace commands {
-    std::vector<std::string> const CommandNotExist::values = boost::assign::list_of("notExist");
     CommandNotExist::CommandNotExist(const networking::Connection connection,
                                      const std::string &commandWord,
                                      const std::string &enteredCommand): Command(connection, commandWord, enteredCommand)

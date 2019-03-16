@@ -6,7 +6,7 @@
 #include <string>
 
 #include "area.h"
-#include "npc.h"
+#include "Character.h"
 #include "object.h"
 #include "room.h"
 #include "reset.h"

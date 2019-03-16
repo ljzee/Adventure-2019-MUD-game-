@@ -1,43 +1,44 @@
-#include "npc.h"
+#include "Character.h"
 
-Npc::Npc(int id, vector<std::string> keywords, std::string shortDesc, std::string longDesc, std::string description) :
+
+Character::Character(int id, vector<std::string> keywords, std::string shortDesc, std::string longDesc, std::string description) :
      id(id),
      keywords(std::move(keywords)),
      shortdesc(shortDesc),
      longdesc(longDesc),
      description(description),
-     npcType(Npc::npc),
+     characterType(Character::nonplayer),
      health(100),
      currentLocation(),
      isSwapped(false){
 }
 
-Npc::Npc(int id, std::string avatarName) :
+Character::Character(int id, std::string avatarName) :
      id(id),
      keywords(),
      shortdesc(avatarName),
      longdesc(""),
      description(""),
-     npcType(Npc::avatar),
+     characterType(Character::player),
      health(100),
      currentLocation(),
      isSwapped(false){
           this->keywords.push_back(this->shortdesc);
 }
 
-Npc::~Npc(){}
+Character::~Character(){}
 
-int Npc::getNpcId() const { return this->id; }
+int Character::getCharacterId() const { return this->id; }
 
-Npc::Type Npc::getNpcType() const { return this->npcType; }
+Character::Type Character::getCharacterType() const { return this->npcType; }
 
-bool Npc::getIsSwapped() const {return this->isSwapped; }
+bool Character::getIsSwapped() const {return this->isSwapped; }
 
-std::unique_ptr<Clonable> Npc::clone() {
-     return std::make_unique<Npc>(*this);
+std::unique_ptr<Clonable> Character::clone() {
+     return std::make_unique<Character>(*this);
 }
 
-std::string Npc::outputNpcInfo() {
+std::string Character::outputCharacterInfo() {
      std::string strId = std::to_string(this->id);
 
      std::string concatKeywords = "";
