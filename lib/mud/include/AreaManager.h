@@ -14,6 +14,7 @@ class AreaManager {
 
 public:
     AreaManager(const std::string& pathToJSON);
+    
 
 private:
 

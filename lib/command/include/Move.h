@@ -3,6 +3,7 @@
 #include "Command.h"
 
 namespace commands {
+    STRING_ENUM(MoveCommands, NORTH, SOUTH, EAST, WEST);
     class Move : public Command {
     public:
         static const std::vector<std::string> values;

@@ -3,9 +3,12 @@
 #include "Command.h"
 
 namespace commands {
+
+STRING_ENUM(CombatCommands, ATTACK, KILL);
+
 class CommandCombat : public Command {
     public:
-        static const std::vector<std::string> values;
+        
         CommandCombat(const networking::Connection connection, const std::string& commandWord, const std::string& enteredCommand);
 
         ~CommandCombat();

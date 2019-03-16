@@ -29,6 +29,23 @@ using networking::Message;
 
 UserManager UsrMgr;
 
+
+struct CommandQueue {
+    std::unordered_map<uintptr_t, std::deque<std::unique_ptr<Command>>> bufferedCommands;
+    int heartBeatCount = 0;
+    void addCommand(const Message& message, std::unique_ptr<Command> cmd) {
+        auto connectionId = message.connection.id;
+        auto avatarCommandDeque = bufferedCommands.find(message.connection.id);
+        if(avatarCommandDeque != bufferedCommands.end()){
+            avatarCommandDeque->second.push_back(std::move(cmd));
+        }else{
+            std::deque<std::unique_ptr<Command>> newCommandDeque;
+            newCommandDeque.push_back(std::move(cmd));
+            bufferedCommands.insert({connectionId, std::move(newCommandDeque)});
+        }
+    }
+} cmdQueue;
+
 void
 onConnect(Connection c) {
     std::cout << "New connection found: " << c.id << "\n";
@@ -52,18 +69,55 @@ onDisconnect(Connection c) {
 
 }
 
+
 void
-processAuthenticatedMessages(const Message& message, Commander& commander);
+processAuthenticatedMessages(const Message& message) {
     // is LOGOUT? else it's a command
+    if(boost::contains(message.text, "!LOGOUT")) {
+        UsrMgr.logout(message.connection);
+        UsrMgr.printAllUsers();
+    }else if(UsrMgr.ifHasActiveAvatar(message.connection)){
+        if(boost::contains(message.text, "!SWITCH")){
+            //TODO: Implement the switch of characters while in game
+            UsrMgr.setHasActiveAvatar(message.connection, false);
+        }else {
+            cmdQueue.addCommand(message, std::move(Commander::createNewCommand(message)));
+        }
+    }else{
+        if(boost::contains(message.text, "!SELECT")){
+            std::cout << "calling !SELECT" << std::endl;
+            UsrMgr.setHasActiveAvatar(message.connection, true);
+            UsrMgr.sendMessage(message.connection, "You've selected a character");
+        }else if(boost::contains(message.text, "!NEW")){
+            std::cout << "calling !NEW" << std::endl;
+            //UsrMgr.setHasActiveAvatar(message.connection, true);
+            UsrMgr.sendMessage(message.connection, "You've created a new character! Now call !SELECT [avatar_name] to choose a character.");
+        }else{
+            UsrMgr.sendMessage(message.connection, "To select an existing avatar: !SELECT [avatar_name]\nTo create a new avatar: !NEW [avatar_name]\nYour avatars: Swordmaster101, thievingBoss, swedishfish");
+        }
+    }
+}
+
 void
-processUnauthenticatedMessages(const Message& message, Commander& commander);
-    // is it a login or register command? does it have enough args?
+processUnauthenticatedMessages(const Message& message) {
+    if (boost::contains(message.text ,"!REGISTER")) {
+        if(UsrMgr.registerUser(message.connection, message.text)){
+            UsrMgr.sendMessage(message.connection, "To select an existing avatar: !SELECT [avatar_name]\nTo create a new avatar: !NEW [avatar_name]\nYour avatars: Swordmaster101, thievingBoss, swedishfish");
+        }
+    } else if (boost::contains(message.text, "!LOGIN")) {
+        if(UsrMgr.login(message.connection, message.text)){
+            UsrMgr.sendMessage(message.connection, "To select an existing avatar: !SELECT [avatar_name]\nTo create a new avatar: !NEW [avatar_name]\nYour avatars: Swordmaster101, thievingBoss, swedishfish");
+        }
+    } else {
+        UsrMgr.sendMessage(message.connection, std::string("Login with !LOGIN <user> <pass> or register with !REGISTER <user> <pass>"));
+    }
+}
+
 
 void
 processMessages(Server &server,
                 const std::deque<Message> &incoming,
-                bool &quit,
-                Commander& commander) {
+                bool &quit) {
 
     for (auto& message : incoming) {
         //std::cout << message.text << endl; // stores in terminal
@@ -74,9 +128,9 @@ processMessages(Server &server,
             std::cout << "Shutting down.\n";
             quit = true;
         } else if (UsrMgr.isAuthenticated(message.connection)) {
-            processAuthenticatedMessages(message, commander);
-        } else{
-            processUnauthenticatedMessages(message, commander);
+            processAuthenticatedMessages(message);
+        } else {
+            processUnauthenticatedMessages(message);
         }
     }
 }
@@ -96,6 +150,17 @@ getHTTPMessage(const char* htmlLocation) {
     }
 }
 
+void executeHeartbeat(std::unique_ptr<World>& world) {
+    std::cout << std::string("\nHeartbeat") + "(" << cmdQueue.heartBeatCount++ << ")" << std::endl;
+
+    for(auto& [_, queue] : cmdQueue.bufferedCommands) {
+        if (!queue.empty()) {
+            auto resultMessages = queue.front()->process(world);
+            queue.pop_front();
+            UsrMgr.sendMessageQueue(resultMessages);
+        }
+    }
+}
 
 int
 main(int argc, char* argv[]) {
@@ -114,7 +179,6 @@ main(int argc, char* argv[]) {
     Server server{port, getHTTPMessage(argv[2]), onConnect, onDisconnect};
 
     std::unique_ptr<World> world = std::make_unique<World>();
-    Commander commander{std::move(world)};
     while (!done) {
         try {
             server.update();
@@ -124,8 +188,8 @@ main(int argc, char* argv[]) {
             done = true;
         }
         auto incoming = server.receive();
-        processMessages(server, incoming, done, commander);
-        commander.executeHeartbeat(UsrMgr);
+        processMessages(server, incoming, done);
+        executeHeartbeat(world);
         auto outgoing = UsrMgr.buildOutgoing();
         server.send(outgoing);
         sleep(1);
@@ -134,46 +198,3 @@ main(int argc, char* argv[]) {
     return 0;
 }
 
-
-void
-processAuthenticatedMessages(const Message& message, Commander& commander) {
-    // is LOGOUT? else it's a command
-    if(boost::contains(message.text, "!LOGOUT")) {
-        UsrMgr.logout(message.connection);
-        UsrMgr.printAllUsers();
-    }else if(UsrMgr.ifHasActiveAvatar(message.connection)){
-        if(boost::contains(message.text, "!SWITCH")){
-            //TODO: Implement the switch of characters while in game
-            UsrMgr.setHasActiveAvatar(message.connection, false);
-        }else {
-            commander.createNewCommand(message.connection, message.text);
-        }
-    }else{
-        if(boost::contains(message.text, "!SELECT")){
-            std::cout << "calling !SELECT" << std::endl;
-            UsrMgr.setHasActiveAvatar(message.connection, true);
-            UsrMgr.sendMessage(message.connection, "You've selected a character");
-        }else if(boost::contains(message.text, "!NEW")){
-            std::cout << "calling !NEW" << std::endl;
-            //UsrMgr.setHasActiveAvatar(message.connection, true);
-            UsrMgr.sendMessage(message.connection, "You've created a new character! Now call !SELECT [avatar_name] to choose a character.");
-        }else{
-            UsrMgr.sendMessage(message.connection, "To select an existing avatar: !SELECT [avatar_name]\nTo create a new avatar: !NEW [avatar_name]\nYour avatars: Swordmaster101, thievingBoss, swedishfish");
-        }
-    }
-}
-
-void
-processUnauthenticatedMessages(const Message& message, Commander& commander) {
-    if (boost::contains(message.text ,"!REGISTER")) {
-        if(UsrMgr.registerUser(message.connection, message.text)){
-            UsrMgr.sendMessage(message.connection, "To select an existing avatar: !SELECT [avatar_name]\nTo create a new avatar: !NEW [avatar_name]\nYour avatars: Swordmaster101, thievingBoss, swedishfish");
-        }
-    } else if (boost::contains(message.text, "!LOGIN")) {
-        if(UsrMgr.login(message.connection, message.text)){
-            UsrMgr.sendMessage(message.connection, "To select an existing avatar: !SELECT [avatar_name]\nTo create a new avatar: !NEW [avatar_name]\nYour avatars: Swordmaster101, thievingBoss, swedishfish");
-        }
-    } else {
-        UsrMgr.sendMessage(message.connection, std::string("Login with !LOGIN <user> <pass> or register with !REGISTER <user> <pass>"));
-    }
-}

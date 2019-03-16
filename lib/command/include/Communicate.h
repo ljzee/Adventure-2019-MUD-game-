@@ -3,6 +3,7 @@
 #include "Command.h"
 
 namespace commands {
+    STRING_ENUM(CommCommands, SAY, YELL, TELL);
     class Communicate : public Command {
     public:
         static const std::vector<std::string> values;

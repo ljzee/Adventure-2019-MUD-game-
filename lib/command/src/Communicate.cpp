@@ -1,7 +1,6 @@
 #include "Communicate.h"
 
 namespace commands {
-    std::vector<std::string> const Communicate::values = boost::assign::list_of("say")("tell")("yell");
      ///Handles say, tell, yell
         Communicate::Communicate(const networking::Connection connection,
                                            const std::string &commandWord,
