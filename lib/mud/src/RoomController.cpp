@@ -8,6 +8,7 @@
 
 using namespace boost::filesystem;
 
+/*
 RoomController::RoomController(const std::string& pathToJSONFolder) {
     JSONParser json;
     if(is_directory(pathToJSONFolder)) {
@@ -19,3 +20,4 @@ RoomController::RoomController(const std::string& pathToJSONFolder) {
         }
     }
 }
+*/

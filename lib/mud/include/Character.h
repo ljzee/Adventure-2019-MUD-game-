@@ -25,7 +25,6 @@ class Character : public Clonable{
         nonplayer = 0, player
     };
 
-class Character {
 	private:
 		int id;
 		vector<std::string> keywords;

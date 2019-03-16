@@ -17,12 +17,12 @@ using namespace std;
 
 class JSONParser {
 private:
-    std::map<int, std::unique_ptr<Npc>> npcContainer;
+    std::map<int, std::unique_ptr<Character>> characterContainer;
     std::map<int, std::unique_ptr<Object>> objectContainer;
     std::map<int, std::unique_ptr<Room>> roomContainer;
 public:
     void generateArea();
-    void generateNPCs(json& deserializedJson);
+    void generateCharacters(json& deserializedJson);
     void generateObjects(json& deserializedJson);
     void generateRooms(json& deserializedJson);
     vector<Door> generateDoors(json& deserializedJson);
@@ -31,7 +31,7 @@ public:
     std::unordered_map<int, User> parseUsers();
     std::string vectorToString(std::vector<std::string> vector);
     void printMap();
-    std::map<int, std::unique_ptr<Npc>>& getNpcs();
+    std::map<int, std::unique_ptr<Character>>& getCharacters();
     std::map<int, std::unique_ptr<Object>>& getObjects();
     std::map<int, std::unique_ptr<Room>>& getRooms();
 };

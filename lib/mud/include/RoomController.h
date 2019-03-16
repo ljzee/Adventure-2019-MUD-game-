@@ -8,13 +8,14 @@
 
 #include <iostream>
 #include <unordered_map>
-#include "area.h"
+#include "room.h"
 
 
 class RoomController {
 
 public:
-    RoomController(const std::string& pathToJSON);
+    //RoomController(const std::string& pathToJSON);
+    RoomController(std::unordered_map<int, std::unique_ptr<Room>>);
     // remove section
     bool removeRoom(int id);
     bool removeDoorFromRoom(int doorID, int roomID);
@@ -36,8 +37,6 @@ public:
 private:
 
     std::unordered_map<int, Room> rooms;
-
-    std::unordered_map<std::string, Area> areas;
 };
 
 

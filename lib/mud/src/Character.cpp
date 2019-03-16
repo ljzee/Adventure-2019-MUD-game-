@@ -30,7 +30,7 @@ Character::~Character(){}
 
 int Character::getCharacterId() const { return this->id; }
 
-Character::Type Character::getCharacterType() const { return this->npcType; }
+Character::Type Character::getCharacterType() const { return this->characterType; }
 
 bool Character::getIsSwapped() const {return this->isSwapped; }
 

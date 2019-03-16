@@ -10,7 +10,7 @@ using json = nlohmann::json;
 void JSONParser::generateArea() {
 
     //put the JSON file to be read at the root directory of your build directory
-    ifstream file(fileName);
+    ifstream file("mirkwood.json");
 
     json deserializedJson;
     file >> deserializedJson;
@@ -20,30 +20,30 @@ void JSONParser::generateArea() {
     //testArea.getAreaInfo();
 
 
-    generateNPCs(deserializedJson);
+    generateCharacters(deserializedJson);
     generateObjects(deserializedJson);
     generateRooms(deserializedJson);
     //printMap();
 }
 
-void JSONParser::generateNPCs(json& deserializedJson) {
-    json deserializedNPCs = deserializedJson["NPCS"];
+void JSONParser::generateCharacters(json& deserializedJson) {
+    json deserializedCharacters = deserializedJson["NPCS"];
 
-    std::unique_ptr<Npc> npcObject;
+    std::unique_ptr<Character> characterObject;
     int id;
 
-    for(auto& npc : deserializedNPCs) {
-        id = npc["id"].get<int>();
+    for(auto& character : deserializedCharacters) {
+        id = character["id"].get<int>();
 
-        npcObject = std::make_unique<Npc>(
+        characterObject = std::make_unique<Character>(
                 id,
-                npc["keywords"],
-                npc["shortdesc"].get<std::string>(),
-                vectorToString(npc["longdesc"]),
-                vectorToString(npc["description"])
+                character["keywords"],
+                character["shortdesc"].get<std::string>(),
+                vectorToString(character["longdesc"]),
+                vectorToString(character["description"])
         );
 
-        npcContainer.insert(std::pair<int, std::unique_ptr<Npc>>(id, std::move(npcObject)));
+        characterContainer.insert(std::pair<int, std::unique_ptr<Character>>(id, std::move(characterObject)));
     }
 }
 
@@ -188,8 +188,8 @@ void JSONParser::printMap() {
     }
 }
 
-std::map<int, std::unique_ptr<Npc>>& JSONParser::getNpcs() {
-    return npcContainer;
+std::map<int, std::unique_ptr<Character>>& JSONParser::getCharacters() {
+    return characterContainer;
 }
 
 std::map<int, std::unique_ptr<Object>>& JSONParser::getObjects() {
