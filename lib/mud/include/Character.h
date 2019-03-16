@@ -7,7 +7,7 @@
 
 using std::vector;
 
-class Npc {
+class Character {
 	private:
 		int id;
 		vector<std::string> keywords;
@@ -15,7 +15,7 @@ class Npc {
 		vector<std::string> longdesc;
 		vector<std::string> description;
 	public:
-		Npc(int id, vector<std::string> keywords, std::string shortDesc, vector<std::string> longDesc, vector<std::string> description);
+		Character(int id, vector<std::string> keywords, std::string shortDesc, vector<std::string> longDesc, vector<std::string> description);
 
 		// Getters
 		int getNpcId() const;

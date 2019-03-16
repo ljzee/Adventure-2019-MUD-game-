@@ -2,9 +2,9 @@
 #include "Command.h"
 
 namespace commands {
+    STRING_ENUM(NotExistCommands, NOTEXIST);
     class CommandNotExist : public Command {
     public:
-        static const std::vector<std::string> values;
         CommandNotExist(const networking::Connection connection, const std::string& commandWord, const std::string& enteredCommand);
 
         ~CommandNotExist();

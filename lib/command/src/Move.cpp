@@ -1,7 +1,6 @@
 #include "Move.h"
 
 namespace commands {
-    std::vector<std::string> const Move::values = boost::assign::list_of("north")("south")("east")("west");
     Move::Move(const networking::Connection connection,
                              const std::string &commandWord,
                              const std::string &enteredCommand) : Command(connection, commandWord, enteredCommand)

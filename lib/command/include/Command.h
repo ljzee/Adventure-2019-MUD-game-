@@ -13,6 +13,7 @@
 #include "boost/assign/list_of.hpp"
 #include "world.h"
 #include "Server.h"
+#include "string_enum.h"
 
 /**
  * Command Class:

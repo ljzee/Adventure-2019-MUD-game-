@@ -1,6 +1,6 @@
-#include "npc.h"
+#include "Character.h"
 
-Npc::Npc(int id, vector<std::string> keywords, std::string shortDesc, vector<std::string> longDesc, vector<std::string> description) :
+Character::Character(int id, vector<std::string> keywords, std::string shortDesc, vector<std::string> longDesc, vector<std::string> description) :
      id(id),
      keywords(std::move(keywords)),
      shortdesc(shortDesc),
@@ -8,9 +8,9 @@ Npc::Npc(int id, vector<std::string> keywords, std::string shortDesc, vector<std
      description(std::move(description)) {
 }
 
-int Npc::getNpcId() const { return this->id; }
+int Character::getNpcId() const { return this->id; }
 
-std::string Npc::outputNpcInfo() {
+std::string Character::outputNpcInfo() {
      std::string strId = std::to_string(this->id);
 
      std::string concatDesc = " ";
