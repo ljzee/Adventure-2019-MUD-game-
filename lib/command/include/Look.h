@@ -7,7 +7,6 @@ namespace commands {
     STRING_ENUM(LookCommands, LOOK, EXAMINE);
     class Look : public Command {
         public:
-        static const std::vector<std::string> values;
         Look(const networking::Connection connection, const std::string& commandWord, const std::string& enteredCommand);
 
         ~Look();

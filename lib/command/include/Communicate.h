@@ -6,7 +6,6 @@ namespace commands {
     STRING_ENUM(CommCommands, SAY, YELL, TELL);
     class Communicate : public Command {
     public:
-        static const std::vector<std::string> values;
         Communicate(const networking::Connection connection, const std::string& commandWord, const std::string& enteredCommand);
 
         ~Communicate();
