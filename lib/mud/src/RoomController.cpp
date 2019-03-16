@@ -3,7 +3,7 @@
 //
 
 #include <boost/filesystem.hpp>
-#include "AreaManager.h"
+#include "RoomController.h"
 #include "JSONParser.h"
 
 using namespace boost::filesystem;
