@@ -2,6 +2,7 @@
 #define ROOM_H
 
 #include <vector>
+#include <algorithm>
 
 using std::vector;
 

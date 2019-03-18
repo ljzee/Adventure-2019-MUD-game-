@@ -6,7 +6,6 @@
 #include <memory>
 #include <boost/bimap.hpp>
 #include <vector>
-#include <algorithm>
 #include "RoomController.h"
 #include "CharacterController.h"
 #include "AssociationController.h"
