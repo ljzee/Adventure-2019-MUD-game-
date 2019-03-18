@@ -6,31 +6,43 @@
 #include <memory>
 #include <boost/bimap.hpp>
 #include <vector>
-#include "Character.h"
-#include "room.h"
-#include "object.h"
+#include "RoomController.h"
+#include "CharacterController.h"
+#include "AssociationController.h"
+#include "Server.h"
 
 class World {
-private:
-
-    std::set<std::string> userCharacterNames;                                          //keeps track of unusable avatar names
-
-    std::unordered_map<int, std::unique_ptr<Character>> characterLookupTable;          //used for resets, clone an entry
-    std::unordered_map<int, std::unique_ptr<Object>> objectLookupTable;                //used for resets
-
-    std::unordered_map<int, std::unique_ptr<Room>> rooms;                              //rooms from all areas are stored in a single container
-
-    std::unordered_map<int, std::unique_ptr<Character>> activeCharacterStore;          //stores all active npcs + avatars
-    boost::bimap<uintptr_t, int> connectionCharacterAssociation;                       //associates a connection with an avatar/npc
-
 
 public:
+    enum CharacterCreationStatus {
+        name_taken = 0, creation_success = 1
+    };
 
-    World();
+    World(std::unique_ptr<RoomController> roomController,
+          std::unique_ptr<CharacterController> characterController,
+          std::unique_ptr<AssociationController> associationController);
 
-    bool checkUniqueAvatarname(std::string avatarName);
-    void addActiveCharacter(std::string avatarName);
-    void associateCharacter(uintptr_t, int);
+    ///Character creation methods
+    std::pair<enum CharacterCreationStatus, int> createCharacter(networking::Connection connection, const std::string& name);
+    std::string placeNewCharacter(networking::Connection connection);
+
+    ///Cleanup methods on logout or disconnect
+    void removeAssociation(networking::Connection connection);
+
+    std::string getRoomCharactersDescription(int roomId);
+    std::string getRoomEntitiesDescription(int roomId);
+
+    int getCharacterLocation(networking::Connection connection);
+
+    bool hasDoor(int roomId, const std::string& doorName);
+    int getDoorTargetRoomId(int roomId, const std::string& doorName);
+    bool moveCharacter(int from, int to, networking::Connection connection);
+
+private:
+
+   std::unique_ptr<RoomController> roomController;
+   std::unique_ptr<CharacterController> characterController;
+   std::unique_ptr<AssociationController> associationController;
 
 };
 

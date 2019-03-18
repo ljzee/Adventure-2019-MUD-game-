@@ -17,27 +17,41 @@ struct Door {
 };
 
 class Room {
-	private:
+public:
+	// Constructor
+	Room(int id, std::string name, std::string desc, vector<Door> doors, vector<ExtendDesc> extendedDesc);
 
-		int id;
-		std::string name;
-		std::string desc;
-		vector<Door> doors;
-		vector<ExtendDesc> extendedDesc;
+	// Getters
+	int getId() const;
+	std::string getName() const;
+	std::string getDesc() const;
+	std::vector<Door> getDoors() const;
+	// Member Functions
+	std::string getRoomInfo() const;
+	// void resetRoom();
 
-	public:
-		// Constructor
-		Room(int id, std::string name, std::string desc, vector<Door> doors, vector<ExtendDesc> extendedDesc);
 
-		// Getters
-		int getID() const;
-		std::string getName() const;
+	void addCharacter(int characterId);
+	void removeCharacter(int characterId);
+	std::vector<int> getAllCharactersInRoom();
 
-		// Member Functions
-		std::string outputDescString();
-		// void resetRoom();
+	void addNpc(int characterId);
+	void removeNpc(int characterId);
 
-		std::string getRoomInfo();
+	bool hasDoor(const std::string& doorName);
+	int getDoorId(const std::string& doorName);
+
+private:
+
+	int id;
+	std::string name;
+	std::string desc;
+	vector<Door> doors;
+	vector<ExtendDesc> extendedDesc;
+
+	vector<int> npcs;
+	vector<int> characters;
+
 };
 
 #endif

@@ -6,7 +6,9 @@ add_library(mud
         src/object.cpp
         src/JSONParser.cpp
         src/clonable.cpp
-        src/RoomController.cpp)
+        src/RoomController.cpp
+        src/CharacterController.cpp
+        src/AssociationController.cpp)
 
 
 

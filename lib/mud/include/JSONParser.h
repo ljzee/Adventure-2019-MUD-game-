@@ -17,9 +17,9 @@ using namespace std;
 
 class JSONParser {
 private:
-    std::map<int, std::unique_ptr<Character>> characterContainer;
-    std::map<int, std::unique_ptr<Object>> objectContainer;
-    std::map<int, std::unique_ptr<Room>> roomContainer;
+    std::unordered_map<int, std::unique_ptr<Character>> characterContainer;
+    std::unordered_map<int, std::unique_ptr<Object>> objectContainer;
+    std::unordered_map<int, std::unique_ptr<Room>> roomContainer;
 public:
     void generateArea();
     void generateCharacters(json& deserializedJson);
@@ -31,9 +31,9 @@ public:
     std::unordered_map<int, User> parseUsers();
     std::string vectorToString(std::vector<std::string> vector);
     void printMap();
-    std::map<int, std::unique_ptr<Character>>& getCharacters();
-    std::map<int, std::unique_ptr<Object>>& getObjects();
-    std::map<int, std::unique_ptr<Room>>& getRooms();
+    std::unordered_map<int, std::unique_ptr<Character>> getCharacters();
+    std::unordered_map<int, std::unique_ptr<Object>> getObjects();
+    std::unordered_map<int, std::unique_ptr<Room>> getRooms();
 };
 
 

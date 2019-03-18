@@ -9,7 +9,7 @@ Character::Character(int id, vector<std::string> keywords, std::string shortDesc
      description(description),
      characterType(Character::nonplayer),
      health(100),
-     currentLocation(),
+     currentLocation(-1),
      isSwapped(false){
 }
 
@@ -21,18 +21,24 @@ Character::Character(int id, std::string avatarName) :
      description(""),
      characterType(Character::player),
      health(100),
-     currentLocation(),
+     currentLocation(-1),
      isSwapped(false){
           this->keywords.push_back(this->shortdesc);
 }
 
 Character::~Character(){}
 
-int Character::getCharacterId() const { return this->id; }
+void Character::updateLocation(int roomId){ this->currentLocation = roomId; }
 
-Character::Type Character::getCharacterType() const { return this->characterType; }
+int Character::getId() const { return this->id; }
+
+std::string Character::getShortDesc() const { return this->shortdesc; }
+
+Character::Type Character::getType() const { return this->characterType; }
 
 bool Character::getIsSwapped() const {return this->isSwapped; }
+
+int Character::getLocation() const {return this->currentLocation; }
 
 std::unique_ptr<Clonable> Character::clone() {
      return std::make_unique<Character>(*this);

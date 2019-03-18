@@ -11,7 +11,16 @@ namespace commands {
     std::deque<std::pair<uintptr_t , std::string>> Move::process(std::unique_ptr<World>& world) {
         std::deque<std::pair<uintptr_t, std::string>> resultMessages;
 
-        std::cout << "calling " + commandWord;
+        int roomId = world->getCharacterLocation(callerConnection);
+        if(world->hasDoor(roomId, commandWord)){
+            int targetRoomId = world->getDoorTargetRoomId(roomId, commandWord);
+            bool moveResult = world->moveCharacter(roomId, targetRoomId, callerConnection);
+            if(moveResult){
+                resultMessages.push_back({callerConnection.id, world->getRoomEntitiesDescription(targetRoomId)});
+            }
+        }else{
+            resultMessages.push_back({callerConnection.id, "You cannot go in that direction."});
+        }
 
         return resultMessages;
     }

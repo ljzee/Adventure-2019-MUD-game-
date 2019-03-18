@@ -13,24 +13,46 @@ Room::Room(int id, std::string name, std::string desc, vector<Door> doors, vecto
 
 // Getters
 
-int Room::getID() const { return this->id; }
+int Room::getId() const { return this->id; }
 
 std::string Room::getName() const { return this->name; }
+std::string Room::getDesc() const { return this->desc; }
+std::vector<Door> Room::getDoors() const {return this->doors; }
 
 // Member functions
-std::string Room::outputDescString() {
-
-    std::string concatDesc = "";
-    for (auto &portion : this->desc) {
-        concatDesc +=  portion;
-        concatDesc += "\n";
-    }
-
-    return concatDesc;
+std::string Room::getRoomInfo() const {
+    return name + "\n" + desc;
 }
 
-std::string Room::getRoomInfo() {
-    return std::to_string(this->id) + "\n" + name + "\n" + desc + "\n";
+
+void Room::addCharacter(int characterId) {
+    characters.push_back(characterId);
+}
+
+void Room::removeCharacter(int characterId) {
+    characters.erase(std::remove(characters.begin(), characters.end(), characterId), characters.end());
+}
+
+std::vector<int> Room::getAllCharactersInRoom(){
+    return characters;
+}
+
+bool Room::hasDoor(const std::string& doorName){
+    auto result = std::find_if(doors.begin(), doors.end(),
+                               [doorName](const Door & door) -> bool {return door.dir == doorName; });
+    if(result != doors.end()){
+        return true;
+    }
+    return false;
+}
+
+int Room::getDoorId(const std::string& doorName){
+    auto result = std::find_if(doors.begin(), doors.end(),
+                               [doorName](const Door & door) -> bool {return door.dir == doorName; });
+    if(result != doors.end()){
+        return result->to;
+    }
+    return -1;
 }
 /*
  void Room::resetRoom() {

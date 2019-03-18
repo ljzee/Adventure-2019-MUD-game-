@@ -188,14 +188,14 @@ void JSONParser::printMap() {
     }
 }
 
-std::map<int, std::unique_ptr<Character>>& JSONParser::getCharacters() {
-    return characterContainer;
+std::unordered_map<int, std::unique_ptr<Character>> JSONParser::getCharacters() {
+    return std::move(characterContainer);
 }
 
-std::map<int, std::unique_ptr<Object>>& JSONParser::getObjects() {
-    return objectContainer;
+std::unordered_map<int, std::unique_ptr<Object>> JSONParser::getObjects() {
+    return std::move(objectContainer);
 }
 
-std::map<int, std::unique_ptr<Room>>& JSONParser::getRooms() {
-    return roomContainer;
+std::unordered_map<int, std::unique_ptr<Room>> JSONParser::getRooms() {
+    return std::move(roomContainer);
 }

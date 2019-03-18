@@ -33,7 +33,8 @@ class Character : public Clonable{
 		std::string description;
 		Type characterType;
 		int health;
-		Location currentLocation;
+		int currentLocation;
+		//Location currentLocation;
 		bool isSwapped;
 
 
@@ -45,10 +46,15 @@ class Character : public Clonable{
 
         ~Character();
 
+        //Setters
+        void updateLocation(int roomId);
+
 		// Getters
-		int getCharacterId() const;
-		Type getCharacterType() const;
+		int getId() const;
+		std::string getShortDesc() const;
+		Type getType() const;
 		bool getIsSwapped()const;
+		int getLocation() const;
 
         std::unique_ptr<Clonable> clone() override;
 		std::string outputCharacterInfo();

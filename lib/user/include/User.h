@@ -69,6 +69,12 @@ public:
         return currentConnection.id == other.id;
     }
 
+    ///Character operations
+    void addNewCharacter(std::pair<std::string, int> characterNameAndId);
+
+    int getOwnedCharacterId(std::string name);
+
+    std::string getOwnedCharacterInfo();
 
 private:
 
@@ -77,6 +83,7 @@ private:
     bool authenticated;
     std::deque<std::string> userMessageDeque;
     bool hasActiveAvatar;
+    std::vector<std::pair<std::string, int>> ownedCharacters;
 };
 
 #endif //ADVENTURE2019_USER_H
