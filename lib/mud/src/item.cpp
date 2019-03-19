@@ -97,14 +97,82 @@ miscItem::miscItem(std::string name, std::string desc, bool, isQuest, bool isDro
 Inventory::Inventory(int invSize)
     : maxSize(invSize)
     , curSize(0){
-}
-
-bool Inventory::findItem(int itemID) {
-    return this->invContainer.
-
 
 }
 
+bool Inventory::checkItem(int itemID) {
+    auto exists = invContainer.find(itemID);
+    return (exists == invContainer.end());
+}
 
+bool Inventory::findItem(itemManager IM, std::string itemName){
+    // needs IM to be finished first
+    return false;
+}
+
+bool Inventory::checkItemQuant(itemID itemID) {
+    auto exists = invContainer.find(itemID);
+    int returnQuant = 0;
+    if (!(exists == this->invContainer.end() )) {
+        returnQuant = exists->second;
+    }
+    return returnQuant;
+}
+
+std::string listItems(itemManager& IM) {
+    std::string returnString("");
+    std::string itemName("");
+    std::string quantStr("");
+    int i = 0;
+    for (auto item : invContainer) {
+        itemName = IM.getItemName(item.first);
+        quantStr = to_string(item.second);
+        returnString << "<" << itemName << " x " << quantStr << ">, ";
+        if (i % 2 == 0){
+            returnString << std::endl;
+        }
+        i++;
+    }
+    return returnString;
+}
+
+bool addItem(itemID item, int quantity) {
+    auto exists = invContainer.find(item);
+    int curQuant = 0;
+    if (!(exists == invContainer.end() )) {
+        curQuant = exists.second;
+        exists->second += quantity;
+    } else (exists == invContainer.end() ){
+        if (curSize = maxSize){
+            return false;
+        }
+        else {
+            curSize++;
+            invContainer.insert( std::make_pair<itemID,int>(item, quantity) );
+        }
+    }
+    exists = invContainer.find(item);
+    return (exists->second == (curQuant + quantity));
+}
+
+bool removeItem(itemID item, int quantity) {
+    auto exists = invContainer.find(item);
+    if (!(exists == invContainer.end() )) {
+        if (exists.second <= quantity) {
+            invContainer.erase(item);
+            curSize--;
+            return true;
+        } else {
+            exists.second -= quantity;
+            return true;
+        }
+    } else {
+        return false;
+    }
+}
+
+void alterInvSize(int newSize) {
+    maxSize = newSize;
+}
 
 

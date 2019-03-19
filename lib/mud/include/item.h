@@ -118,16 +118,16 @@ namespace item {
 
         Inventory(int invSize);
 
-        const bool checkItem(int itemID) const;
-        const bool findItem(itemManager IM, std::string itemName) const;
-        const bool checkItemQuant(int itemID) const;
+        const bool checkItem(itemID itemID) const;
+        const bool findItem(itemManager& IM, std::string itemName) const;
+        const bool checkItemQuant(itemID itemID) const;
         const int checkInvSize() const {return invSize;};
-        const std::string listItems(itemManager IM) const;
+        const std::string listItems(itemManager& IM) const;
 
         bool addItem(itemID item, int quantity);
-        bool removeItem(itemID item, int Quantity);
+        int removeItem(itemID item, int quantity);
 
-        bool alterInvSize(int newSize);
+        void alterInvSize(int newSize);
 
 
     private:
@@ -135,6 +135,7 @@ namespace item {
         std::unordered_map<itemID, int> invContainer;
         int maxSize;
         int curSize;
+
     };
 
 

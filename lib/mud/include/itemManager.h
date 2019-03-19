@@ -20,13 +20,12 @@ public:
     bool defineItem(int itemID, itemType itemClass, );
     bool defineItem()
 
-    itemID nextID();
-    baseItem* findItem(int itemID);
-
-
+    itemID nextID(){return itemMap.size()};
+    baseItem* findItem(itemID itemID);
+    const std::string getItemName(itemID) const;
 
 private:
-    std::map<itemID, baseItem*> itemTable;
+    std::map<itemID, baseItem*> itemMap;
 };
 
 #endif //ADVENTURE2019_ITEMMANAGER_H
