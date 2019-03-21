@@ -12,6 +12,7 @@
 #include "UserManager.h"
 #include <memory>
 #include <boost/algorithm/string.hpp>
+#include "utils.h"
 
 /**
  * Commander Class:

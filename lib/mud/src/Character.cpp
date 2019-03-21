@@ -10,7 +10,9 @@ Character::Character(int id, vector<std::string> keywords, std::string shortDesc
      characterType(Character::nonplayer),
      health(100),
      currentLocation(-1),
-     isSwapped(false){
+     isSwapped(false),
+     isPlayer(false)
+     {
 }
 
 Character::Character(int id, std::string avatarName) :
@@ -22,7 +24,9 @@ Character::Character(int id, std::string avatarName) :
      characterType(Character::player),
      health(100),
      currentLocation(-1),
-     isSwapped(false){
+     isSwapped(false),
+     isPlayer(true)
+     {
           this->keywords.push_back(this->shortdesc);
 }
 
@@ -37,6 +41,8 @@ std::string Character::getShortDesc() const { return this->shortdesc; }
 Character::Type Character::getType() const { return this->characterType; }
 
 bool Character::getIsSwapped() const {return this->isSwapped; }
+
+bool Character::isControlledByPlayer() const {return this->isPlayer; }
 
 int Character::getLocation() const {return this->currentLocation; }
 

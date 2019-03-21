@@ -7,6 +7,8 @@
 void AssociationController::addAssociation(uintptr_t connectionId, int characterId){
     connectionIdToCharacterId.insert({connectionId, characterId});
     characterIdToConnectionId.insert({characterId, connectionId});
+
+    std::cout << connectionId << std::endl;
 }
 
 void AssociationController::removeAssociation(uintptr_t connectionId){
@@ -22,7 +24,7 @@ uintptr_t AssociationController::getConnectionId(int characterId){
     if(result != characterIdToConnectionId.end()){
         return result->second;
     }
-    return -1;
+    return 0;
 }
 
 int AssociationController::getCharacterId(uintptr_t connectionId){

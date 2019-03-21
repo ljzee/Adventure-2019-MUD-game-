@@ -20,6 +20,7 @@ public:
     Room* getRoom(int roomId);
 
     std::string getRoomDoorsDescription(int roomId);
+    bool moveCharacter(int from, int to, int characterId);
 
     int getNumberOfRooms();
 

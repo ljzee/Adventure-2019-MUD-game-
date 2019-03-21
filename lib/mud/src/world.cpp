@@ -42,7 +42,7 @@ std::string World::getRoomCharactersDescription(int roomId){
     if(roomPtr != nullptr){
         auto roomCharacters = roomPtr->getAllCharactersInRoom();
         for(auto characterId : roomCharacters){
-            roomCharacterDescription = roomCharacterDescription + characterController->getCharacter(characterId)->getShortDesc() + " is here.";
+            roomCharacterDescription = roomCharacterDescription + characterController->getCharacter(characterId)->getShortDesc() + " is here.\n";
         }
     }
 
@@ -64,50 +64,92 @@ std::string World::getRoomEntitiesDescription(int roomId){
     return roomEntitiesDescription;
 }
 
+std::vector<uintptr_t> World::getRelevantPlayerConnections(networking::Connection messageCreator, const std::string& communicationMethod){
+    std::vector<uintptr_t> relevantPlayerConnection;
+
+    int characterId = associationController->getCharacterId(messageCreator.id);
+    Character* characterPtr = characterController->getCharacter(characterId);
+    int currentRoomId = characterPtr->getLocation();
+    Room* roomPtr = roomController->getRoom(currentRoomId);
+
+    if(communicationMethod == "say" || "yell"){
+        auto characterIds = roomPtr->getAllCharactersInRoom();
+        for(auto curId : characterIds){
+            uintptr_t connectionId = associationController->getConnectionId(curId);
+            if(connectionId != -1){
+                relevantPlayerConnection.push_back(connectionId);
+            }
+        }
+    }
+
+    if(communicationMethod == "yell"){
+        std::vector<int> adjacentRoomIds = roomPtr->getAdjacentRoomIds();
+
+        for(auto roomId : adjacentRoomIds){
+            Room* curRoomPtr = roomController->getRoom(roomId);
+            auto characterIds = curRoomPtr->getAllCharactersInRoom();
+            for(auto curId : characterIds){
+                uintptr_t connectionId = associationController->getConnectionId(curId);
+                if(connectionId != -1){
+                    relevantPlayerConnection.push_back(connectionId);
+                }
+            }
+        }
+    }
+
+    return relevantPlayerConnection;
+}
+
+std::pair<World::TargetPlayerStatus, uintptr_t> World::getTargetPlayerConnection(networking::Connection messageCreator, const std::string& characterName){
+    int characterId = associationController->getCharacterId(messageCreator.id);
+    Character* characterPtr = characterController->getCharacter(characterId);
+    int currentRoomId = characterPtr->getLocation();
+    Room* roomPtr = roomController->getRoom(currentRoomId);
+    auto characterIds = roomPtr->getAllCharactersInRoom();
+
+    for(auto curId : characterIds){
+        Character* curCharacterPtr = characterController->getCharacter(curId);
+        if(curCharacterPtr->getShortDesc() == characterName){
+            return {World::TargetPlayerStatus::in_room, associationController->getConnectionId(curId)};
+        }
+    }
+
+    return {World::TargetPlayerStatus::not_in_room, 0};
+}
+
+World::MovementStatus World::moveCharacter(std::string direction, networking::Connection connection){
+
+    //get the associated character id
+    int characterId = associationController->getCharacterId(connection.id);
+    Character* characterPtr = characterController->getCharacter(characterId);
+    int currentRoomId = characterPtr->getLocation();
+    Room* roomPtr = roomController->getRoom(currentRoomId);
+
+    if(roomPtr->hasDoor(direction)){
+        int targetRoomId = roomPtr->getDoorId(direction);
+        auto moveStatus = roomController->moveCharacter(currentRoomId, targetRoomId, characterId);
+        if(moveStatus){
+            characterPtr->updateLocation(targetRoomId);
+            return World::movement_success;
+        }else{
+            return World::movement_failed;
+        }
+    }
+    return World::door_not_exist;
+
+
+}
+
+std::string World::getCharacterName(networking::Connection connection){
+    int characterId = associationController->getCharacterId(connection.id);
+    Character* characterPtr = characterController->getCharacter(characterId);
+    return characterPtr->getShortDesc();
+}
+
 int World::getCharacterLocation(networking::Connection connection){
+
     int characterId = associationController->getCharacterId(connection.id);
     Character* characterPtr = characterController->getCharacter(characterId);
+    return characterPtr->getLocation();
 
-    if(characterPtr != nullptr){
-        return characterPtr->getLocation();
-    }
-
-    return -1;
-}
-
-bool World::hasDoor(int roomId, const std::string& doorName){
-    Room* roomPtr = roomController->getRoom(roomId);
-
-    if(roomPtr != nullptr){
-        return roomPtr->hasDoor(doorName);
-    }
-
-    return false;
-}
-
-int World::getDoorTargetRoomId(int roomId, const std::string& doorName){
-    Room* roomPtr = roomController->getRoom(roomId);
-
-    if(roomPtr != nullptr){
-        return roomPtr->getDoorId(doorName);
-    }
-
-    return -1;
-}
-
-bool World::moveCharacter(int from, int to, networking::Connection connection){
-    int characterId = associationController->getCharacterId(connection.id);
-    Character* characterPtr = characterController->getCharacter(characterId);
-    Room* fromRoomPtr = roomController->getRoom(from);
-    Room* toRoomPtr = roomController->getRoom(to);
-
-    if((fromRoomPtr != nullptr) && (toRoomPtr != nullptr)){
-        fromRoomPtr->removeCharacter(characterId);
-        toRoomPtr->addCharacter(characterId);
-
-        characterPtr->updateLocation(to);
-        return true;
-    }
-
-    return false;
 }

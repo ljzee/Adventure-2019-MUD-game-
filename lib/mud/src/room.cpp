@@ -54,6 +54,16 @@ int Room::getDoorId(const std::string& doorName){
     }
     return -1;
 }
+
+std::vector<int> Room::getAdjacentRoomIds(){
+    std::vector<int> adjacentRoomIds;
+
+    for(auto door: doors){
+        adjacentRoomIds.push_back(door.to);
+    }
+
+    return adjacentRoomIds;
+}
 /*
  void Room::resetRoom() {
 	int arbitrary_limit = 100;

@@ -47,6 +47,18 @@ std::string RoomController::getRoomDoorsDescription(int roomId){
     return doorDescriptions;
 }
 
+bool RoomController::moveCharacter(int from, int to, int characterId){
+    auto fromRoom = rooms.find(from);
+    auto toRoom = rooms.find(to);
+    if((fromRoom != rooms.end()) && (toRoom != rooms.end())){
+        fromRoom->second->removeCharacter(characterId);
+        toRoom->second->addCharacter(characterId);
+        return true;
+    }
+    return false;
+}
+
+
 int RoomController::getNumberOfRooms(){
     return rooms.size();
 }

@@ -9,17 +9,19 @@ namespace commands {
     Move::~Move(){}
 
     std::deque<std::pair<uintptr_t , std::string>> Move::process(std::unique_ptr<World>& world) {
+        //Messages to return to affected user(s)
         std::deque<std::pair<uintptr_t, std::string>> resultMessages;
 
-        int roomId = world->getCharacterLocation(callerConnection);
-        if(world->hasDoor(roomId, commandWord)){
-            int targetRoomId = world->getDoorTargetRoomId(roomId, commandWord);
-            bool moveResult = world->moveCharacter(roomId, targetRoomId, callerConnection);
-            if(moveResult){
-                resultMessages.push_back({callerConnection.id, world->getRoomEntitiesDescription(targetRoomId)});
-            }
+        auto moveResult = world->moveCharacter(commandWord, callerConnection);
+        if(moveResult == World::movement_success){
+            std::string roomEntitiesDescription = world->getRoomEntitiesDescription(world->getCharacterLocation(callerConnection));
+            resultMessages.push_back({callerConnection.id, roomEntitiesDescription});
+        }else if(moveResult == World::door_not_exist){
+            resultMessages.push_back({callerConnection.id, "This door does not exist!"});
+        }else if(moveResult == World::door_locked){
+            resultMessages.push_back({callerConnection.id, "This door is locked! You must unlock it first"});
         }else{
-            resultMessages.push_back({callerConnection.id, "You cannot go in that direction."});
+            resultMessages.push_back({callerConnection.id, "Movement failed."});
         }
 
         return resultMessages;

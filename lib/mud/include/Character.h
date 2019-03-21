@@ -36,6 +36,7 @@ class Character : public Clonable{
 		int currentLocation;
 		//Location currentLocation;
 		bool isSwapped;
+		bool isPlayer;
 
 
 	public:
@@ -53,8 +54,9 @@ class Character : public Clonable{
 		int getId() const;
 		std::string getShortDesc() const;
 		Type getType() const;
-		bool getIsSwapped()const;
 		int getLocation() const;
+	    bool getIsSwapped() const;
+	    bool isControlledByPlayer() const;
 
         std::unique_ptr<Clonable> clone() override;
 		std::string outputCharacterInfo();

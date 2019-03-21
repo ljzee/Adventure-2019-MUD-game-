@@ -18,6 +18,14 @@ public:
         name_taken = 0, creation_success = 1
     };
 
+    enum MovementStatus {
+        movement_success = 0, door_not_exist, door_locked, movement_failed
+    };
+
+    enum TargetPlayerStatus {
+        in_room = 0, not_in_room
+    };
+
     World(std::unique_ptr<RoomController> roomController,
           std::unique_ptr<CharacterController> characterController,
           std::unique_ptr<AssociationController> associationController);
@@ -26,17 +34,22 @@ public:
     std::pair<enum CharacterCreationStatus, int> createCharacter(networking::Connection connection, const std::string& name);
     std::string placeNewCharacter(networking::Connection connection);
 
-    ///Cleanup methods on logout or disconnect
+    ///Disassociate a connection with a player on logout/disconnect,
+    ///TODO: move character from active character storage to non-active character storage
     void removeAssociation(networking::Connection connection);
 
-    std::string getRoomCharactersDescription(int roomId);
+    ///Called when no arguments to look are specified or when character moves to new room
     std::string getRoomEntitiesDescription(int roomId);
 
-    int getCharacterLocation(networking::Connection connection);
+    ///Communicate Commands
+    std::vector<uintptr_t> getRelevantPlayerConnections(networking::Connection messageCreator, const std::string& communicationMethod);
+    std::pair<enum TargetPlayerStatus, uintptr_t> getTargetPlayerConnection(networking::Connection messageCreator, const std::string& characterName);
 
-    bool hasDoor(int roomId, const std::string& doorName);
-    int getDoorTargetRoomId(int roomId, const std::string& doorName);
-    bool moveCharacter(int from, int to, networking::Connection connection);
+    ///Move commands
+    enum MovementStatus moveCharacter(std::string direction, networking::Connection connection);
+
+    std::string getCharacterName(networking::Connection connection);
+    int getCharacterLocation(networking::Connection connection);
 
 private:
 
@@ -44,6 +57,7 @@ private:
    std::unique_ptr<CharacterController> characterController;
    std::unique_ptr<AssociationController> associationController;
 
+   std::string getRoomCharactersDescription(int roomId);
 };
 
 #endif //WORLD_H

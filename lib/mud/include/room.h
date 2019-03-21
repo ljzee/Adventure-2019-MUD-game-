@@ -36,11 +36,9 @@ public:
 	void removeCharacter(int characterId);
 	std::vector<int> getAllCharactersInRoom();
 
-	void addNpc(int characterId);
-	void removeNpc(int characterId);
-
 	bool hasDoor(const std::string& doorName);
 	int getDoorId(const std::string& doorName);
+	std::vector<int> getAdjacentRoomIds();
 
 private:
 
@@ -49,8 +47,6 @@ private:
 	std::string desc;
 	vector<Door> doors;
 	vector<ExtendDesc> extendedDesc;
-
-	vector<int> npcs;
 	vector<int> characters;
 
 };
