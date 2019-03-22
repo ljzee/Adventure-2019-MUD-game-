@@ -13,6 +13,7 @@
 #include <vector>
 #include "RegistrationManager.h"
 #include <regex>
+#include "constants.h"
 
 /**
  * UserManager Class:
@@ -22,8 +23,6 @@
  * - in charge of authenticating/logout a User
  *
  */
-
-
 
 class UserManager {
 public:

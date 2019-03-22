@@ -4,7 +4,6 @@
 #include <unordered_map>
 #include <set>
 #include <memory>
-#include <boost/bimap.hpp>
 #include <vector>
 #include "RoomController.h"
 #include "CharacterController.h"
@@ -53,6 +52,7 @@ public:
 
 private:
 
+   ///look inside .h files of controllers for more in-depth descriptions of their responsibilities
    std::unique_ptr<RoomController> roomController;
    std::unique_ptr<CharacterController> characterController;
    std::unique_ptr<AssociationController> associationController;

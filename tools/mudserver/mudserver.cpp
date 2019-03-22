@@ -22,6 +22,7 @@
 #include "RoomController.h"
 #include "AssociationController.h"
 #include "utils.h"
+#include "constants.h"
 
 #include "boost/algorithm/string.hpp"
 
@@ -60,7 +61,7 @@ onConnect(Connection c) {
     UsrMgr.printAllUsers();
 
     //SEND MESSAGE TO A PARTICULAR CONNECTION LIKE THIS
-    UsrMgr.sendMessage(user.getConnection(), "Welcome Aboard!\nLogin by typing !LOGIN <username> <password> or !REGISTER <username> <password>");
+    UsrMgr.sendMessage(user.getConnection(), ADMIN_CONSTANTS::WELCOME_PROMPT);
 
 }
 
@@ -72,9 +73,10 @@ onDisconnect(Connection c) {
     UsrMgr.removeUser(c);
     UsrMgr.printAllUsers();
 
-    disconnectedUsers.push_back(c);
+    disconnectedUsers.push_back(c); //disconnected users must be processed by the world to remove association
 }
 
+//required since the world has no notion that a player disconnected, the world keeps an association between conectionid and avatarid
 void removeDisconnectedAssociations(World& world){
     for(auto connection : disconnectedUsers){
         world.removeAssociation(connection);
@@ -85,11 +87,11 @@ void processCharacterCreation(Connection connection, const std::string& name, Wo
     auto result = world.createCharacter(connection, name);
     if(result.first == World::creation_success){
         UsrMgr.setHasActiveAvatar(connection, true);
-        UsrMgr.sendMessage(connection, "You have successfully created a new character.");
+        UsrMgr.sendMessage(connection, WORLD_CONSTANTS::CHARACTER_CREATE_SUCCESS);
         std::string roomEntitiesDescription = world.placeNewCharacter(connection);
         UsrMgr.sendMessage(connection, roomEntitiesDescription);
     }else if(result.first == World::name_taken){
-        UsrMgr.sendMessage(connection, "The character name you chose has already been taken.");
+        UsrMgr.sendMessage(connection, WORLD_CONSTANTS::CHARACTER_NAME_TAKEN);
     }
 }
 
@@ -111,12 +113,11 @@ processAuthenticatedMessages(const Message& message, World& world) {
         if(pair.first == "!SELECT"){
             std::cout << "calling !SELECT" << std::endl;
             UsrMgr.setHasActiveAvatar(message.connection, true);
-            UsrMgr.sendMessage(message.connection, "You've selected a character");
+            UsrMgr.sendMessage(message.connection, ADMIN_CONSTANTS::SELECT_SUCCESS);
         }else if(pair.first == "!NEW"){
             processCharacterCreation(message.connection, pair.second, world);
-            //UsrMgr.sendMessage(message.connection, "You've created a new character! Now call !SELECT [avatar_name] to choose a character.");
         }else{
-            UsrMgr.sendMessage(message.connection, "To select an existing avatar: !SELECT [avatar_name]\nTo create a new avatar: !NEW [avatar_name]");
+            UsrMgr.sendMessage(message.connection, ADMIN_CONSTANTS::SELECT_PROMPT);
         }
     }
 }
@@ -126,14 +127,14 @@ processUnauthenticatedMessages(const Message& message, World& world) {
     auto pair = SplitInitialWordAndRest(message.text);
     if (pair.first == "!REGISTER") {
         if(UsrMgr.registerUser(message.connection, message.text)){
-            UsrMgr.sendMessage(message.connection, "To select an existing avatar: !SELECT [avatar_name]\nTo create a new avatar: !NEW [avatar_name]");
+            UsrMgr.sendMessage(message.connection, ADMIN_CONSTANTS::SELECT_PROMPT);
         }
     } else if (pair.first == "!LOGIN") {
         if(UsrMgr.login(message.connection, message.text)){
-            UsrMgr.sendMessage(message.connection, "To select an existing avatar: !SELECT [avatar_name]\nTo create a new avatar: !NEW [avatar_name]");
+            UsrMgr.sendMessage(message.connection, ADMIN_CONSTANTS::SELECT_PROMPT);
         }
     } else {
-        UsrMgr.sendMessage(message.connection, "Welcome Aboard!\nLogin by typing !LOGIN <username> <password> or !REGISTER <username> <password>");
+        UsrMgr.sendMessage(message.connection, ADMIN_CONSTANTS::WELCOME_PROMPT);
     }
 }
 
@@ -189,8 +190,6 @@ void executeHeartbeat(std::unique_ptr<World>& world) {
 
 int
 main(int argc, char* argv[]) {
-    //Display the results of parsing the Area JSON file
-
     if (argc < 3) {
         std::cerr << "Usage:\n  " << argv[0] << " <port> <html response>\n"
                   << "  e.g. " << argv[0] << " 4002 ./webchat.html\n";

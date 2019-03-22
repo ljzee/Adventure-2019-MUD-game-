@@ -8,6 +8,16 @@
 #include <iostream>
 #include <unordered_map>
 
+/**
+ * AssociationController Class:
+ *
+ * - maintains the association between a connectionid to characterid
+ * - association is created when player creates a new character or select an existing character
+ * - association is removed when player logouts or disconnects
+ * - can get characterid from connectionid and vice versa
+ *
+ */
+
 class AssociationController {
 public:
 

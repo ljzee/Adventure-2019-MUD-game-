@@ -11,6 +11,13 @@
 
 #include "Character.h"
 
+/**
+ * CharacterController Class:
+ *
+ * - container class to store characters
+ * - contain methods to add, remove, and get a particular character
+ *
+ */
 
 class CharacterController {
 public:
@@ -22,7 +29,7 @@ public:
     Character* getCharacter(int avatarId);
 
 private:
-    int currentCharacterId = 0;
+    int currentCharacterId = 0;                                                 //keeps track of the next id to assign to a new character
     std::set<std::string> usedCharacterNames;                                   //keeps track of unusable avatar names
     std::unordered_map<int, std::unique_ptr<Character>> activeCharacterStore;   //stores all active player and non-player characters
 

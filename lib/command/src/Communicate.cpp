@@ -16,6 +16,7 @@ namespace commands {
 
             std::string returnMessage = characterName + " " + commandWord + "s " + "\"" + enteredCommand + "\"";
 
+            //getRelevantPlayerConnections will get the player connections affected by say or yell command
             auto relevantPlayerConnections = world->getRelevantPlayerConnections(callerConnection, commandWord);
             for(auto connection : relevantPlayerConnections){
                 resultMessages.push_back({connection, returnMessage});

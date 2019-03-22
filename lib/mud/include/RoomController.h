@@ -10,6 +10,13 @@
 #include <unordered_map>
 #include "room.h"
 
+/**
+ * RoomController Class:
+ *
+ * - container class to store rooms (rooms from all areas are stored in a single container)
+ * - contain methods to add, remove, and get a particular room
+ *
+ */
 
 class RoomController {
 

@@ -1,6 +1,7 @@
 # User
 add_library(utility
         src/utils.cpp
+        src/constants.cpp
 )
 
 target_include_directories(utility
