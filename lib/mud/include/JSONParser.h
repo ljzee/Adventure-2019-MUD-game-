@@ -21,7 +21,9 @@ private:
     std::unordered_map<int, std::unique_ptr<Object>> objectContainer;
     std::unordered_map<int, std::unique_ptr<Room>> roomContainer;
 public:
-    void generateArea();
+
+    void parseAreaJsonFiles();
+    void generateArea(const char * fileName);
     void generateCharacters(json& deserializedJson);
     void generateObjects(json& deserializedJson);
     void generateRooms(json& deserializedJson);

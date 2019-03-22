@@ -190,14 +190,16 @@ void executeHeartbeat(std::unique_ptr<World>& world) {
 int
 main(int argc, char* argv[]) {
     //Display the results of parsing the Area JSON file
-    JSONParser parser;
-    parser.generateArea();
 
     if (argc < 3) {
         std::cerr << "Usage:\n  " << argv[0] << " <port> <html response>\n"
                   << "  e.g. " << argv[0] << " 4002 ./webchat.html\n";
         return 1;
     }
+    JSONParser parser;
+    parser.parseAreaJsonFiles();
+
+
 
     bool done = false;
     unsigned short port = std::stoi(argv[1]);

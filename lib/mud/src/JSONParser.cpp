@@ -7,10 +7,43 @@ using std::vector;
 using json = nlohmann::json;
 
 
-void JSONParser::generateArea() {
+void JSONParser::parseAreaJsonFiles() {
+    const char * mirkwood = "mirkwood.json";
+    const char * shire = "shire.json";
+    const char * solace = "solace.json";
+
+    generateArea(mirkwood);
+    generateArea(shire);
+    generateArea(solace);
+
+    vector<Door> doorsToAreas;
+    doorsToAreas.push_back(Door{"west", "To Mirkwood", {}, 8800});
+    doorsToAreas.push_back(Door{"east", "To Shire", {}, 1100});
+    doorsToAreas.push_back(Door{"south", "To Solace", {}, 10500});
+
+    std::unique_ptr<Room> entranceRoom = std::make_unique<Room>(1, "Entrance Room", "Welcome to our adventure! Each door in this room leads to a different area. Go on and explore!", doorsToAreas, std::vector<ExtendDesc>());
+
+    roomContainer.insert({1, std::move(entranceRoom)});
+
+    Room* mirkwoodEntrance = roomContainer.find(8800)->second.get();
+    mirkwoodEntrance->addDoor(Door{"east", "To Entrance Room", {}, 1});
+
+    Room* shireEntrance = roomContainer.find(1100)->second.get();
+    shireEntrance->addDoor(Door{"west", "To Entrance Room", {}, 1});
+
+    Room* solaceEntrance = roomContainer.find(10500)->second.get();
+    solaceEntrance->addDoor(Door{"north", "To Entrance Room", {}, 1});
+
+}
+
+void JSONParser::generateArea(const char * fileName) {
 
     //put the JSON file to be read at the root directory of your build directory
-    ifstream file("mirkwood.json");
+    ifstream file(fileName);
+    if(file.fail()){
+        std::cerr << fileName << " does not exist" << std::endl;
+        return;
+    }
 
     json deserializedJson;
     file >> deserializedJson;

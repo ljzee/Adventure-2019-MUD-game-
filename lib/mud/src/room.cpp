@@ -37,6 +37,10 @@ std::vector<int> Room::getAllCharactersInRoom(){
     return characters;
 }
 
+void Room::addDoor(Door door){
+    doors.push_back(door);
+}
+
 bool Room::hasDoor(const std::string& doorName){
     auto result = std::find_if(doors.begin(), doors.end(),
                                [doorName](const Door & door) -> bool {return door.dir == doorName; });

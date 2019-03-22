@@ -21,14 +21,14 @@ std::pair<World::CharacterCreationStatus, int> World::createCharacter(networking
 std::string World::placeNewCharacter(networking::Connection connection){
 
     int characterId = associationController->getCharacterId(connection.id);
-    Room* roomPtr = roomController->getRoom(8800);
+    Room* roomPtr = roomController->getRoom(1);
     Character* characterPtr = characterController->getCharacter(characterId);
 
     if((roomPtr != nullptr) && (characterPtr != nullptr)){
         roomPtr->addCharacter(characterId);
         characterPtr->updateLocation(roomPtr->getId());
     }
-    return getRoomEntitiesDescription(8800);
+    return getRoomEntitiesDescription(1);
 }
 
 void World::removeAssociation(networking::Connection connection){

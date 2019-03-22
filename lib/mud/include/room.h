@@ -36,6 +36,7 @@ public:
 	void removeCharacter(int characterId);
 	std::vector<int> getAllCharactersInRoom();
 
+	void addDoor(Door door);
 	bool hasDoor(const std::string& doorName);
 	int getDoorId(const std::string& doorName);
 	std::vector<int> getAdjacentRoomIds();
