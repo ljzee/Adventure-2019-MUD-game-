@@ -8,36 +8,32 @@
 
 #include <iostream>
 #include <unordered_map>
-#include "area.h"
+#include "room.h"
 
+/**
+ * RoomController Class:
+ *
+ * - container class to store rooms (rooms from all areas are stored in a single container)
+ * - contain methods to add, remove, and get a particular room
+ *
+ */
 
 class RoomController {
 
 public:
-    RoomController(const std::string& pathToJSON);
-    // remove section
-    bool removeRoom(int id);
-    bool removeDoorFromRoom(int doorID, int roomID);
-    // remove section
+    //RoomController(const std::string& pathToJSON);
+    RoomController(std::unordered_map<int, std::unique_ptr<Room>> rooms);
+    void removeRoom(int roomId);
+    Room* getRoom(int roomId);
 
-    // add section
-    bool addCharacterToRoom(int npcID, int roomID);
-    bool addObjectToRoom(int objectID, int roomID);
-    bool addDoorToRoom(int doorID, int roomID);
-    // add section
+    std::string getRoomDoorsDescription(int roomId);
+    bool moveCharacter(int from, int to, int characterId);
 
-    bool moveCharacter(int currentRoomID, int newRoomID);
-
-    // will return description of the room, description of the characters present in the room
-    // and opened doors
-    std::string getFullRoomDescription(int roomID);
-
+    int getNumberOfRooms();
 
 private:
 
-    std::unordered_map<int, Room> rooms;
-
-    std::unordered_map<std::string, Area> areas;
+    std::unordered_map<int, std::unique_ptr<Room>> rooms;
 };
 
 

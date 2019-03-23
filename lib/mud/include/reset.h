@@ -1,6 +1,10 @@
 #ifndef RESET_H
 #define RESET_H
 
+#include <string>
+#include <sstream>
+#include <iostream>
+
 class Reset {
 	private:
 		std::string action;

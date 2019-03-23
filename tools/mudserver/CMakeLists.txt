@@ -18,6 +18,7 @@ target_link_libraries(mudserver
         enum
         mud
         command
+        utility
 )
 
 install(TARGETS mudserver

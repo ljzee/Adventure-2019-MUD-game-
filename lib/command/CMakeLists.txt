@@ -27,6 +27,7 @@ target_link_libraries(command
     mud
     networking
     user
+    utility
     ${Boost_LIBRARIES}
 )
 

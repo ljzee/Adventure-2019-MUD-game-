@@ -9,8 +9,10 @@
 #include "Command.h"
 #include "world.h"
 #include "Server.h"
+#include "UserManager.h"
 #include <memory>
 #include <boost/algorithm/string.hpp>
+#include "utils.h"
 
 /**
  * Commander Class:

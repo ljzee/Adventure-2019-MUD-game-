@@ -3,7 +3,7 @@
 #include "Command.h"
 
 namespace commands {
-    STRING_ENUM(MoveCommands, NORTH, SOUTH, EAST, WEST);
+    STRING_ENUM(MoveCommands, NORTH, SOUTH, EAST, WEST, NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST, UP, DOWN);
     class Move : public Command {
     public:
         Move(const networking::Connection connection, const std::string& commandWord, const std::string& enteredCommand);

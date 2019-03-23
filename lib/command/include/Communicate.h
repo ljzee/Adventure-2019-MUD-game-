@@ -1,6 +1,7 @@
 
 #pragma once
 #include "Command.h"
+#include "utils.h"
 
 namespace commands {
     STRING_ENUM(CommCommands, SAY, YELL, TELL);

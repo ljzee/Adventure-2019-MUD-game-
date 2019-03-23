@@ -17,8 +17,8 @@ Command::~Command(){
     
 }
 
-uintptr_t Command::getCallerConnectionId() {
-    return this->callerConnection.id;
+networking::Connection Command::getCallerConnection() {
+    return this->callerConnection;
 }
 
 //testing

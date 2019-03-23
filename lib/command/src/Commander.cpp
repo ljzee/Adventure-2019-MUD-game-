@@ -63,15 +63,14 @@ std::unordered_map<std::string, std::function<std::unique_ptr<Command>(networkin
 std::unique_ptr<Command> Commander::createNewCommand(const Message& msg) {
     
     std::string text = msg.text;
-    boost::trim_if(text, boost::is_any_of(" "));
     boost::to_lower(text);
-    auto commandWord = text.substr(0, text.find(' '));
-    auto command = commandMap.find(commandWord);
+    auto commandWordAndRest = SplitInitialWordAndRest(text);
+    auto command = commandMap.find(commandWordAndRest.first);
 
     if(command != commandMap.end()) {
-        return command->second(msg.connection, commandWord, text);
+        return command->second(msg.connection, commandWordAndRest.first, commandWordAndRest.second);
     }
     else {
-        return commandMap[NotExistCommandsHelper::to_string(NotExistCommands::NOTEXIST)](msg.connection, commandWord, text);
+        return commandMap[NotExistCommandsHelper::to_string(NotExistCommands::NOTEXIST)](msg.connection, commandWordAndRest.first, commandWordAndRest.second);
     }
 }
