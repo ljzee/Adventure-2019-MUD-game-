@@ -8,13 +8,30 @@ using json = nlohmann::json;
 
 
 void JSONParser::parseAreaJsonFiles() {
-    const char * mirkwood = "mirkwood.json";
-    const char * shire = "shire.json";
-    const char * solace = "solace.json";
+    bool buildlingArea = true;
+    while (buildlingArea) {
+        std::string jsonDirectory;
+        cout << "type CANCEL to end start-up process" << endl;
+        cout << "Input JSON directory address::" << endl;
+        cin >> jsonDirectory;
+        if (jsonDirectory == "CANCEL") exit(1);
+        if (jsonDirectory.back() != '/') jsonDirectory = jsonDirectory + '/';
 
-    generateArea(mirkwood);
-    generateArea(shire);
-    generateArea(solace);
+        std::string mirkwood = jsonDirectory + "mirkwood.json";
+        std::string shire = jsonDirectory + "shire.json";
+        std::string solace = jsonDirectory + "solace.json";
+
+        buildlingArea = false;
+
+        try {
+            generateArea(mirkwood.c_str());
+            generateArea(shire.c_str());
+            generateArea(solace.c_str());
+        } catch (...) {
+            buildlingArea = true;
+            cout << "invalid directory.";
+        }
+    }
 
     vector<Door> doorsToAreas;
     doorsToAreas.push_back(Door{"west", "To Mirkwood", {}, 8800});
@@ -42,9 +59,10 @@ void JSONParser::generateArea(const char * fileName) {
     ifstream file(fileName);
     if(file.fail()){
         std::cerr << fileName << " does not exist" << std::endl;
+        throw "invalid directory.";
         return;
     }
-
+    cout << "building area: " << fileName << endl;
     json deserializedJson;
     file >> deserializedJson;
     file.close();
