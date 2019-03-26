@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <utility>
 
 namespace item {
 
@@ -23,6 +24,7 @@ namespace item {
         };
 
         baseItem(itemType type, std::string name, std::string desc, bool quest, bool droppable);
+        virtual std::unique_ptr<baseItem> clone() const = 0;
 
         // Getters
         const itemType getType() const { return itemClass; };
@@ -55,6 +57,9 @@ namespace item {
 
     public:
         usableItem(int itemEffect, sellValue);
+        virtual std::unique_ptr<baseItem> clone() const override {
+            return std::make_unique<usableItem>(*this);
+        }
 
         // Getters
         const int getEffect() const { return effectID; };
@@ -79,6 +84,9 @@ namespace item {
 
         equipItem(std::string name, std::string desc, bool isQuest, bool isDroppable,
                   int slot, int atk, int def, int eID)
+        virtual std::unique_ptr<baseItem> clone() const override {
+            return std::make_unique<usableItem>(*this);
+        }
 
         // Getters
         const int getSlot() const {return equipSlot; };

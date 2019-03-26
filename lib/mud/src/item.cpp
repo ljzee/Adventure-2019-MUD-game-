@@ -7,6 +7,7 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
+#include <utility>
 
 using namespace item;
 
@@ -105,7 +106,7 @@ bool Inventory::checkItem(int itemID) {
     return (exists == invContainer.end());
 }
 
-bool Inventory::findItem(itemManager IM, std::string itemName){
+bool Inventory::findItem(itemManager& IM, std::string itemName){
     // needs IM to be finished first
     return false;
 }

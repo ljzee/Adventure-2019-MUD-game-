@@ -6,6 +6,7 @@
 #define ADVENTURE2019_ITEMMANAGER_H
 
 #include "item.h"
+#include <utility>
 
 namespace item;
 
@@ -13,19 +14,16 @@ typedef int itemID;
 
 class itemManager {
 public:
-    void loadFromFile();
-    void writeToJSON();
 
     //define item methods per class
-    bool defineItem(int itemID, itemType itemClass, );
-    bool defineItem()
-
-    itemID nextID(){return itemMap.size()};
-    baseItem* findItem(itemID itemID);
-    const std::string getItemName(itemID) const;
+    void addItem(std::unique_ptr<baseItem> item);
+    void removeItem(itemID);
 
 private:
-    std::map<itemID, baseItem*> itemMap;
+
+    std::map<itemID, std::unique_ptr<baseItem>> itemMap;
+    std::map<int, Inventory> InventoryMap;
+
 };
 
 #endif //ADVENTURE2019_ITEMMANAGER_H
