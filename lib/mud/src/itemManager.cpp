@@ -19,7 +19,15 @@ bool itemManager::removeItem(itemID item){
     itemMap.erase(item);
 }
 
-std::string itemManager::getItemName(itemID item) {
-
+std::unique_ptr<baseItem> itemLookup(itemID id) {
+    auto exists = itemMap.find(id);
+    if (!(exists == itemMap.end() )){
+        return exists->second;
+    } else {
+        return itemMap.begin()->second;
+    }
 }
+
+
+
 

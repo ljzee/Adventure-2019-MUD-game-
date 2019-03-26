@@ -106,11 +106,6 @@ bool Inventory::checkItem(int itemID) {
     return (exists == invContainer.end());
 }
 
-bool Inventory::findItem(itemManager& IM, std::string itemName){
-    // needs IM to be finished first
-    return false;
-}
-
 bool Inventory::checkItemQuant(itemID itemID) {
     auto exists = invContainer.find(itemID);
     int returnQuant = 0;
@@ -126,7 +121,8 @@ std::string listItems(itemManager& IM) {
     std::string quantStr("");
     int i = 0;
     for (auto item : invContainer) {
-        itemName = IM.getItemName(item.first);
+        auto itemReference = IM.itemLookup(item.first);
+        auto itemName = itemReference->getName();
         quantStr = to_string(item.second);
         returnString << "<" << itemName << " x " << quantStr << ">, ";
         if (i % 2 == 0){

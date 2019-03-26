@@ -15,13 +15,19 @@ typedef int itemID;
 class itemManager {
 public:
 
-    //define item methods per class
+    //read and load from JSON to be managed in JSONParser
+
+    // ITEMS ===================================================================
     void addItem(std::unique_ptr<baseItem> item);
     void removeItem(itemID);
 
+    const std::unique_ptr<baseItem> itemLookup(itemID id) const;
+
+    // INVENTORY ================================================================
+
 private:
 
-    std::map<itemID, std::unique_ptr<baseItem>> itemMap;
+    std::map<itemID, std::unique_ptr<baseItem> > itemMap;
     std::map<int, Inventory> InventoryMap;
 
 };

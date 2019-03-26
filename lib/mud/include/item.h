@@ -114,6 +114,9 @@ namespace item {
 
     public:
         miscItem();
+        virtual std::unique_ptr<baseItem> clone() const override {
+            return std::make_unique<miscItem>(*this);
+        }
 
     private:
     };
@@ -126,8 +129,10 @@ namespace item {
 
         Inventory(int invSize);
 
+        std::unique_ptr<baseItem> referenceItem(itemManager& IM, itemID id);
+
         const bool checkItem(itemID itemID) const;
-        const bool findItem(itemManager& IM, std::string itemName) const;
+
         const bool checkItemQuant(itemID itemID) const;
         const int checkInvSize() const {return invSize;};
         const std::string listItems(itemManager& IM) const;
