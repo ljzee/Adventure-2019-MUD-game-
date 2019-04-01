@@ -29,9 +29,9 @@ public:
           std::unique_ptr<CharacterController> characterController,
           std::unique_ptr<AssociationController> associationController);
 
-    ///Character creation methods
-    std::pair<enum CharacterCreationStatus, int> createCharacter(networking::Connection connection, const std::string& name);
-    std::string placeNewCharacter(networking::Connection connection);
+    ///Character creation/selection methods
+    std::pair<enum CharacterCreationStatus, int> createCharacter(const std::string& name);
+    std::string selectCharacter(networking::Connection connection, int characterId);
 
     ///Disassociate a connection with a player on logout/disconnect,
     ///TODO: move character from active character storage to non-active character storage
@@ -57,6 +57,7 @@ private:
    std::unique_ptr<CharacterController> characterController;
    std::unique_ptr<AssociationController> associationController;
 
+   std::string placeCharacter(int characterId);
    std::string getRoomCharactersDescription(int roomId);
 };
 

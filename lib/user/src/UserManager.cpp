@@ -143,6 +143,27 @@ bool UserManager::ifHasActiveAvatar(const networking::Connection &con) {
     return -1;
 }
 
+void UserManager::addNewCharacter(const networking::Connection &con, std::pair<std::string, int> characterNameAndId) {
+    auto user = connectedUsers.find(con.id);
+    if(user != connectedUsers.end()){
+        user->second.addNewCharacter(characterNameAndId);
+    }
+}
+
+int UserManager::getOwnedCharacterId(const networking::Connection &con, const std::string& characterName){
+    auto user = connectedUsers.find(con.id);
+    if(user != connectedUsers.end()){
+        return user->second.getOwnedCharacterId(characterName);
+    }
+    return -1;
+}
+
+std::string UserManager::getOwnedCharacterInfo(const networking::Connection &con){
+    auto user = connectedUsers.find(con.id);
+    return user->second.getOwnedCharacterInfo();
+
+}
+
 void UserManager::printAllUsers() {
     std::cout << "Connected Users: " << std::endl;
     for (auto user : connectedUsers)

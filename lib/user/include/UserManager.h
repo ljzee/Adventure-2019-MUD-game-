@@ -63,6 +63,12 @@ public:
 
     bool ifHasActiveAvatar(const networking::Connection &con);
 
+    void addNewCharacter(const networking::Connection &con, std::pair<std::string, int> characterNameAndId);
+
+    int getOwnedCharacterId(const networking::Connection &con, const std::string& characterName);
+
+    std::string getOwnedCharacterInfo(const networking::Connection &con);
+
     void printAllUsers(); //For Testing
 
 private:

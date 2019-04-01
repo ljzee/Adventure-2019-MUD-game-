@@ -60,6 +60,7 @@ void User::reset() {
     this->username = "";
     this->authenticated = false;
     this->hasActiveAvatar = false;
+    this->ownedCharacters.clear();
 }
 
 ///User Message Container Operations
@@ -95,7 +96,7 @@ void User::addNewCharacter(std::pair<std::string, int> characterNameAndId){
     ownedCharacters.push_back(characterNameAndId);
 }
 
-int User::getOwnedCharacterId(std::string name){
+int User::getOwnedCharacterId(const std::string& name){
     auto result = std::find_if(ownedCharacters.begin(), ownedCharacters.end(),
                                [name](const std::pair<std::string, int> & p) -> bool {return p.first == name; });
     if(result != ownedCharacters.end()){
@@ -105,7 +106,7 @@ int User::getOwnedCharacterId(std::string name){
 }
 
 std::string User::getOwnedCharacterInfo(){
-    std::string ownedCharacterInfo = std::string("Your characters:");
+    std::string ownedCharacterInfo = std::string("Your characters: ");
     for(auto character : ownedCharacters){
         ownedCharacterInfo = ownedCharacterInfo + character.first + " ";
     }

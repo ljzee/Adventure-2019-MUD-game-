@@ -15,6 +15,7 @@ namespace ADMIN_CONSTANTS {
     extern const std::string WELCOME_PROMPT;
     extern const std::string SELECT_PROMPT;
     extern const std::string SELECT_SUCCESS;
+    extern const std::string SELECT_FAIL;
 }
 
 namespace AUTH_CONSTANTS{
