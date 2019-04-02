@@ -6,8 +6,9 @@
 
 namespace ADMIN_CONSTANTS {
     extern const std::string WELCOME_PROMPT = "Welcome Aboard!\nLogin by typing !LOGIN <username> <password> or !REGISTER <username> <password>";
-    extern const std::string SELECT_PROMPT = "To select an existing avatar: !SELECT [avatar_name]\nTo create a new avatar: !NEW [avatar_name]";
+    extern const std::string SELECT_PROMPT = "To select an existing avatar: !SELECT [character_name]\nTo create a new avatar: !NEW [avatar_name]";
     extern const std::string SELECT_SUCCESS = "You've selected a character";
+    extern const std::string SELECT_FAIL = "You do not own that character";
 }
 
 namespace AUTH_CONSTANTS{
@@ -23,6 +24,6 @@ namespace AUTH_CONSTANTS{
 }
 
 namespace WORLD_CONSTANTS{
-    extern const std::string CHARACTER_CREATE_SUCCESS = "You have successfully created a new character.";
+    extern const std::string CHARACTER_CREATE_SUCCESS = "You have successfully created a new character. !SELECT [character_name] to start playing.";
     extern const std::string CHARACTER_NAME_TAKEN = "The character name you chose has already been taken.";
 }

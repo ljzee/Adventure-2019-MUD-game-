@@ -23,7 +23,7 @@ Character::Character(int id, std::string avatarName) :
      description(""),
      characterType(Character::player),
      health(100),
-     currentLocation(-1),
+     currentLocation(1),
      isSwapped(false),
      isPlayer(true)
      {

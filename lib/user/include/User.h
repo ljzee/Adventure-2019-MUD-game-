@@ -72,7 +72,7 @@ public:
     ///Character operations
     void addNewCharacter(std::pair<std::string, int> characterNameAndId);
 
-    int getOwnedCharacterId(std::string name);
+    int getOwnedCharacterId(const std::string& name);
 
     std::string getOwnedCharacterInfo();
 

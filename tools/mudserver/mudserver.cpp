@@ -84,15 +84,30 @@ void removeDisconnectedAssociations(World& world){
 }
 
 void processCharacterCreation(Connection connection, const std::string& name, World& world){
-    auto result = world.createCharacter(connection, name);
+    auto result = world.createCharacter(name);
     if(result.first == World::creation_success){
-        UsrMgr.setHasActiveAvatar(connection, true);
+        UsrMgr.addNewCharacter(connection, {name, result.second});
         UsrMgr.sendMessage(connection, WORLD_CONSTANTS::CHARACTER_CREATE_SUCCESS);
-        std::string roomEntitiesDescription = world.placeNewCharacter(connection);
-        UsrMgr.sendMessage(connection, roomEntitiesDescription);
+        UsrMgr.sendMessage(connection, UsrMgr.getOwnedCharacterInfo(connection));
     }else if(result.first == World::name_taken){
         UsrMgr.sendMessage(connection, WORLD_CONSTANTS::CHARACTER_NAME_TAKEN);
     }
+}
+
+void processCharacterSelection(Connection connection, const std::string& name, World& world){
+
+    int characterId = UsrMgr.getOwnedCharacterId(connection, name);
+    if(characterId != -1) {
+        std::string roomDesc = world.selectCharacter(connection, characterId);
+        UsrMgr.setHasActiveAvatar(connection, true);
+        UsrMgr.sendMessage(connection, ADMIN_CONSTANTS::SELECT_SUCCESS);
+        UsrMgr.sendMessage(connection, roomDesc);
+    }else{
+        UsrMgr.sendMessage(connection, ADMIN_CONSTANTS::SELECT_FAIL);
+        UsrMgr.sendMessage(connection, ADMIN_CONSTANTS::SELECT_PROMPT);
+        UsrMgr.sendMessage(connection, UsrMgr.getOwnedCharacterInfo(connection));
+    }
+
 }
 
 void
@@ -101,23 +116,24 @@ processAuthenticatedMessages(const Message& message, World& world) {
     if(pair.first == "!LOGOUT") {
         UsrMgr.logout(message.connection);
         world.removeAssociation(message.connection);
-        UsrMgr.printAllUsers();
+        //UsrMgr.printAllUsers();
     }else if(UsrMgr.ifHasActiveAvatar(message.connection)){
         if(pair.first == "!SWITCH"){
             UsrMgr.setHasActiveAvatar(message.connection, false);
             world.removeAssociation(message.connection);
+            UsrMgr.sendMessage(message.connection, ADMIN_CONSTANTS::SELECT_PROMPT);
+            UsrMgr.sendMessage(message.connection, UsrMgr.getOwnedCharacterInfo(message.connection));
         }else {
             cmdQueue.addCommand(message, std::move(Commander::createNewCommand(message)));
         }
     }else{
         if(pair.first == "!SELECT"){
-            std::cout << "calling !SELECT" << std::endl;
-            UsrMgr.setHasActiveAvatar(message.connection, true);
-            UsrMgr.sendMessage(message.connection, ADMIN_CONSTANTS::SELECT_SUCCESS);
+            processCharacterSelection(message.connection, pair.second, world);
         }else if(pair.first == "!NEW"){
             processCharacterCreation(message.connection, pair.second, world);
         }else{
             UsrMgr.sendMessage(message.connection, ADMIN_CONSTANTS::SELECT_PROMPT);
+            UsrMgr.sendMessage(message.connection, UsrMgr.getOwnedCharacterInfo(message.connection));
         }
     }
 }
@@ -128,10 +144,12 @@ processUnauthenticatedMessages(const Message& message, World& world) {
     if (pair.first == "!REGISTER") {
         if(UsrMgr.registerUser(message.connection, message.text)){
             UsrMgr.sendMessage(message.connection, ADMIN_CONSTANTS::SELECT_PROMPT);
+            UsrMgr.sendMessage(message.connection, UsrMgr.getOwnedCharacterInfo(message.connection));
         }
     } else if (pair.first == "!LOGIN") {
         if(UsrMgr.login(message.connection, message.text)){
             UsrMgr.sendMessage(message.connection, ADMIN_CONSTANTS::SELECT_PROMPT);
+            UsrMgr.sendMessage(message.connection, UsrMgr.getOwnedCharacterInfo(message.connection));
         }
     } else {
         UsrMgr.sendMessage(message.connection, ADMIN_CONSTANTS::WELCOME_PROMPT);

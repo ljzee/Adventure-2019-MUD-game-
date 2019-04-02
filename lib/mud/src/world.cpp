@@ -9,29 +9,47 @@ World::World(std::unique_ptr<RoomController> roomController,
 
 }
 
-std::pair<World::CharacterCreationStatus, int> World::createCharacter(networking::Connection connection, const std::string& name){
+std::pair<World::CharacterCreationStatus, int> World::createCharacter(const std::string& name){
     if(characterController->checkCharacterName(name)){
         int characterId = characterController->createCharacter(name);
-        associationController->addAssociation(connection.id, characterId);
         return {World::CharacterCreationStatus::creation_success, characterId};
     }
     return {World::CharacterCreationStatus::name_taken, -1};
 }
 
-std::string World::placeNewCharacter(networking::Connection connection){
+std::string World::placeCharacter(int characterId){
 
-    int characterId = associationController->getCharacterId(connection.id);
-    Room* roomPtr = roomController->getRoom(1);
     Character* characterPtr = characterController->getCharacter(characterId);
 
-    if((roomPtr != nullptr) && (characterPtr != nullptr)){
-        roomPtr->addCharacter(characterId);
-        characterPtr->updateLocation(roomPtr->getId());
+    if(characterPtr != nullptr){
+        int roomId = characterPtr->getLocation();
+        Room* roomPtr = roomController->getRoom(roomId);
+        if(roomPtr != nullptr){
+            roomPtr->addCharacter(characterId);
+            return getRoomEntitiesDescription(roomId);
+        }
+
+        return std::string("Unable to place character");
     }
-    return getRoomEntitiesDescription(1);
+    return std::string("Unable to place character");
+}
+
+std::string World::selectCharacter(networking::Connection connection, int characterId){
+    associationController->addAssociation(connection.id, characterId);
+    std::string roomDesc = placeCharacter(characterId);
+    return roomDesc;
 }
 
 void World::removeAssociation(networking::Connection connection){
+    int characterId = associationController->getCharacterId(connection.id);
+    Character* characterPtr = characterController->getCharacter(characterId);
+    if(characterPtr != nullptr){
+        int roomId = characterPtr->getLocation();
+        Room* roomPtr = roomController->getRoom(roomId);
+        if(roomPtr != nullptr){
+            roomPtr->removeCharacter(characterId);
+        }
+    }
     associationController->removeAssociation(connection.id);
 }
 
