@@ -3,9 +3,9 @@
 #include "Command.h"
 
 namespace commands {
+    STRING_ENUM(MoveCommands, NORTH, SOUTH, EAST, WEST, NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST, UP, DOWN);
     class Move : public Command {
     public:
-        static const std::vector<std::string> values;
         Move(const networking::Connection connection, const std::string& commandWord, const std::string& enteredCommand);
 
         ~Move();

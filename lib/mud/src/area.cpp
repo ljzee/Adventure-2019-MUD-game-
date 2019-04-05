@@ -3,9 +3,9 @@
 
 Area::Area(std::string name) : name(name) {}
 
-std::string Area::getAreaName() const { return this->name; }
+std::string Area::getName() const { return this->name; }
 
-void Area::initializeArea(vector<Npc> newNpcs, vector<Object> newObjects,
+void Area::initializeArea(vector<Character> newNpcs, vector<Object> newObjects,
                          vector<Room> newRooms, vector<StructReset> newResets) {
 
     Npcs = std::move(newNpcs);
@@ -14,8 +14,7 @@ void Area::initializeArea(vector<Npc> newNpcs, vector<Object> newObjects,
     Resets = std::move(newResets);
 }
 
-void Area::getAreaInfo() {
-    std::cout << "Area statistics. For testing if the JSON Parser is working" << std::endl;
+void Area::getInfo() {
 
     std::cout << "Area name: " << name << std::endl;
 

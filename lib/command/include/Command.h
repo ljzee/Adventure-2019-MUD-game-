@@ -13,6 +13,7 @@
 #include "boost/assign/list_of.hpp"
 #include "world.h"
 #include "Server.h"
+#include "string_enum.h"
 
 /**
  * Command Class:
@@ -31,7 +32,7 @@ public:
     Command(const networking::Connection connection, const std::string& commandWord, const std::string& enteredCommand);
     virtual ~Command() = 0;
 
-    uintptr_t getCallerConnectionId();
+    networking::Connection getCallerConnection();
     virtual std::deque<std::pair<uintptr_t, std::string>> process(std::unique_ptr<World>& world) = 0;
 };
 

@@ -2,9 +2,9 @@
 #include "Command.h"
 
 namespace commands {
+  STRING_ENUM(SwapCommands, SWAP);
   class CommandSwap : public Command {
   public:
-      static const std::vector<std::string> values;
       CommandSwap(const networking::Connection connection, const std::string& commandWord, const std::string& enteredCommand);
 
       ~CommandSwap();

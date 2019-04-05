@@ -1,4 +1,6 @@
+add_subdirectory(enum)
 add_subdirectory(networking)
 add_subdirectory(user)
 add_subdirectory(mud)
 add_subdirectory(command)
+add_subdirectory(utility)

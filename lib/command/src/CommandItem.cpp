@@ -1,7 +1,6 @@
 #include "CommandItem.h"
 
 namespace commands {
-    std::vector<std::string> const CommandItem::values = boost::assign::list_of("get")("put")("drop")("give")("wear")("remove");
     CommandItem::CommandItem(const networking::Connection connection,
                              const std::string &commandWord,
                              const std::string &enteredCommand): Command(connection, commandWord, enteredCommand)

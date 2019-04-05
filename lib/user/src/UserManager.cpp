@@ -37,14 +37,14 @@ bool UserManager::login(const networking::Connection &con, const std::string &us
     const std::string LOGIN_REGEX = "!LOGIN [a-zA-Z0-9!@#$%^&*()_+=-]+ [[a-zA-Z0-9!@#$%^&*()_+=-]+";
 
     if (!(std::regex_match(userInfo, std::regex(LOGIN_REGEX)))) {
-        sendMessage(con, "Malformed authenticate call message.");
+        sendMessage(con, AUTH_CONSTANTS::MALFORMED);
         return false;
     }
 
     auto userCredentials = parseCredentials(userInfo);
 
     if(activeUsernames.find(userCredentials[1]) != activeUsernames.end()){
-        sendMessage(con, "This user is already logged on elsewhere.");
+        sendMessage(con, AUTH_CONSTANTS::ALREADY_LOGGED_IN);
         return false;
     }else {
         auto loginResult = rManager->validateUser(userCredentials[1], userCredentials[2]);
@@ -66,15 +66,15 @@ void UserManager::logout(const networking::Connection &con) {
     auto user = connectedUsers.find(con.id);
     activeUsernames.erase(user->second.getUsername());
     user->second.reset();
-    sendMessage(con, std::string("You have successfully logged out."));
-    sendMessage(con, std::string("Login with !LOGIN <user> <pass> or register with !REGISTER <user> <pass>"));
+    sendMessage(con, std::string(AUTH_CONSTANTS::LOGOUT));
+    sendMessage(con, std::string(AUTH_CONSTANTS::LOGIN_PROMPT));
 }
 
 bool UserManager::registerUser(const networking::Connection& con, const std::string& userInfo) {
     const std::string REGISTER_REGEX = "!REGISTER [a-zA-Z0-9!@#$%^&*()_+=-]+ [[a-zA-Z0-9!@#$%^&*()_+=-]+";
 
     if (!(std::regex_match(userInfo, std::regex(REGISTER_REGEX)))) {
-        sendMessage(con, "Malformed authenticate call message.");
+        sendMessage(con, AUTH_CONSTANTS::MALFORMED);
         return false;
     } else {
         auto userCredentials = parseCredentials(userInfo);
@@ -141,6 +141,27 @@ bool UserManager::ifHasActiveAvatar(const networking::Connection &con) {
         return user->second.getHasActiveAvatar();
     }
     return -1;
+}
+
+void UserManager::addNewCharacter(const networking::Connection &con, std::pair<std::string, int> characterNameAndId) {
+    auto user = connectedUsers.find(con.id);
+    if(user != connectedUsers.end()){
+        user->second.addNewCharacter(characterNameAndId);
+    }
+}
+
+int UserManager::getOwnedCharacterId(const networking::Connection &con, const std::string& characterName){
+    auto user = connectedUsers.find(con.id);
+    if(user != connectedUsers.end()){
+        return user->second.getOwnedCharacterId(characterName);
+    }
+    return -1;
+}
+
+std::string UserManager::getOwnedCharacterInfo(const networking::Connection &con){
+    auto user = connectedUsers.find(con.id);
+    return user->second.getOwnedCharacterInfo();
+
 }
 
 void UserManager::printAllUsers() {

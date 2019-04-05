@@ -21,11 +21,11 @@ std::pair<std::string, bool> RegistrationManager::registerUser(const std::string
         //TODO: call JsonParser to update user credentials file
         allCredentials.insert(std::make_pair(username, pwd));
         ifRegistered = true;
-        os << "You've successfully registered and logged in.";
+        os << AUTH_CONSTANTS::REGISTER_SUCCESS;
     } else if(registrationStatus == LoginState::WRONG_PASSWORD) {
-        os << "This username is already being used. Please, choose a different one.";
+        os << AUTH_CONSTANTS::USERNAME_TAKEN;
     } else {
-        os << "Malformed register call message. Please type !REGISTER <username> <password>.";
+        os << AUTH_CONSTANTS::REGISTER_MALFORMED;
     }
     return std::make_pair(os.str(), ifRegistered);
 }
@@ -37,13 +37,13 @@ std::pair<std::string, bool> RegistrationManager::validateUser(const std::string
 
     switch (validationState) {
         case (LoginState::WRONG_LOGIN):
-            os << "Username or password is incorrect. Please try again.";
+            os << AUTH_CONSTANTS::INCORRECT_CREDENTIALS;
             break;
         case (LoginState::WRONG_PASSWORD):
-            os << "Username or password is incorrect. Please try again.";
+            os << AUTH_CONSTANTS::INCORRECT_CREDENTIALS;
             break;
         case (LoginState::CORRECT_PASSWORD):
-            os << "You've successfully logged in.";
+            os << AUTH_CONSTANTS::LOGIN;
             ifValidated = true;
         default:
             break;

@@ -13,6 +13,7 @@
 #include <vector>
 #include "RegistrationManager.h"
 #include <regex>
+#include "constants.h"
 
 /**
  * UserManager Class:
@@ -22,8 +23,6 @@
  * - in charge of authenticating/logout a User
  *
  */
-
-
 
 class UserManager {
 public:
@@ -63,6 +62,12 @@ public:
     void setHasActiveAvatar(const networking::Connection &con, bool b);
 
     bool ifHasActiveAvatar(const networking::Connection &con);
+
+    void addNewCharacter(const networking::Connection &con, std::pair<std::string, int> characterNameAndId);
+
+    int getOwnedCharacterId(const networking::Connection &con, const std::string& characterName);
+
+    std::string getOwnedCharacterInfo(const networking::Connection &con);
 
     void printAllUsers(); //For Testing
 

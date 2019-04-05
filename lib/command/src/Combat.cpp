@@ -1,7 +1,6 @@
 #include "Combat.h"
 
 namespace commands {
-    std::vector<std::string> const CommandCombat::values = boost::assign::list_of("attack")("kill");
     CommandCombat::CommandCombat(const networking::Connection connection,
                                  const std::string &commandWord,
                                  const std::string &enteredCommand): Command(connection, commandWord, enteredCommand)

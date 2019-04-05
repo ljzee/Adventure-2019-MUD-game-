@@ -23,9 +23,11 @@ target_include_directories(command
 
 target_link_libraries(command
   PRIVATE
+    enum
     mud
     networking
     user
+    utility
     ${Boost_LIBRARIES}
 )
 

@@ -2,7 +2,6 @@
 
 namespace commands {
      ///Handles swap
-    std::vector<std::string> const CommandSwap::values = boost::assign::list_of("swap");
     CommandSwap::CommandSwap(const networking::Connection connection,
                                  const std::string &commandWord,
                                  const std::string &enteredCommand): Command(connection, commandWord, enteredCommand)

@@ -1,7 +1,6 @@
 #include "Look.h"
 
 namespace commands {
-    std::vector<std::string> const Look::values = boost::assign::list_of("look")("examine");
     Look::Look(const networking::Connection connection,
                              const std::string &commandWord,
                              const std::string &enteredCommand): Command(connection, commandWord, enteredCommand)

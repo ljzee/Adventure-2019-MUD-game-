@@ -13,6 +13,7 @@
 #include "Server.h"
 #include <vector>
 #include "../../mud/include/JSONParser.h"
+#include "constants.h"
 
 enum LoginState {
     CORRECT_LOGIN,
