@@ -16,7 +16,7 @@ bool CharacterController::CharacterController::checkCharacterName(const std::str
 
 int CharacterController::createCharacter(const std::string& name){
     int assignedId = getNextCharacterId();
-    std::unique_ptr character = std::make_unique<Character>(assignedId, name);
+    std::unique_ptr<Character> character = std::make_unique<Character>(assignedId, name);
     activeCharacterStore.insert({assignedId, std::move(character)});
     usedCharacterNames.insert(name);
     return assignedId;

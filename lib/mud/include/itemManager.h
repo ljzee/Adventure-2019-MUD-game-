@@ -6,30 +6,34 @@
 #define ADVENTURE2019_ITEMMANAGER_H
 
 #include "item.h"
+#include "inventory.h"
 #include <utility>
+#include <unordered_map>
 
-namespace item;
+namespace item {
 
-typedef int itemID;
+    typedef int itemID;
 
-class itemManager {
-public:
+    class itemManager {
+    public:
 
-    //read and load from JSON to be managed in JSONParser
+        //read and load from JSON to be managed in JSONParser
 
-    // ITEMS ===================================================================
-    void addItem(std::unique_ptr<baseItem> item);
-    void removeItem(itemID);
+        // ITEMS ===================================================================
+        void addItem(std::unique_ptr <baseItem> item);
 
-    const std::unique_ptr<baseItem> itemLookup(itemID id) const;
+        void removeItem(itemID id);
 
-    // INVENTORY ================================================================
+        const std::unique_ptr <baseItem> itemLookup(itemID id) const;
 
-private:
+        // INVENTORY ================================================================
 
-    std::map<itemID, std::unique_ptr<baseItem> > itemMap;
-    std::map<int, Inventory> InventoryMap;
+    private:
 
-};
+        std::unordered_map<itemID, std::unique_ptr<baseItem>> itemMap;
+        std::unordered_map<itemID, Inventory> InventoryMap;
+
+    };
+}
 
 #endif //ADVENTURE2019_ITEMMANAGER_H

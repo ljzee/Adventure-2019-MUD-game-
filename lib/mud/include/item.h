@@ -5,12 +5,11 @@
 #ifndef ADVENTURE2019_ITEM_H
 #define ADVENTURE2019_ITEM_H
 
-#include "itemManager.h"
-
 #include <string>
 #include <vector>
 #include <unordered_map>
 #include <utility>
+#include <memory>
 
 namespace item {
 
@@ -22,7 +21,7 @@ namespace item {
         enum itemType {
             CONSUMABLE, EQUIPMENT, MISC
         };
-
+        baseItem();
         baseItem(itemType type, std::string name, std::string desc, bool quest, bool droppable);
         virtual std::unique_ptr<baseItem> clone() const = 0;
 
@@ -56,7 +55,8 @@ namespace item {
     class usableItem : public baseItem {
 
     public:
-        usableItem(int itemEffect, sellValue);
+        usableItem(std::string name, std::string desc, bool isQuest, bool isDroppable,
+                       int eID, int sellVal);
         virtual std::unique_ptr<baseItem> clone() const override {
             return std::make_unique<usableItem>(*this);
         }
@@ -83,8 +83,8 @@ namespace item {
     public:
 
         equipItem(std::string name, std::string desc, bool isQuest, bool isDroppable,
-                  int slot, int atk, int def, int eID)
-        virtual std::unique_ptr<baseItem> clone() const override {
+                  int slot, int atk, int def, int eID);
+        std::unique_ptr<baseItem> clone() const override {
             return std::make_unique<usableItem>(*this);
         }
 
@@ -121,35 +121,6 @@ namespace item {
     private:
     };
 
-
-// INVENTORY
-    class Inventory {
-    public:
-        static const int maxQuant = 99;
-
-        Inventory(int invSize);
-
-        std::unique_ptr<baseItem> referenceItem(itemManager& IM, itemID id);
-
-        const bool checkItem(itemID itemID) const;
-
-        const bool checkItemQuant(itemID itemID) const;
-        const int checkInvSize() const {return invSize;};
-        const std::string listItems(itemManager& IM) const;
-
-        bool addItem(itemID item, int quantity);
-        int removeItem(itemID item, int quantity);
-
-        void alterInvSize(int newSize);
-
-
-    private:
-        // invContainer maps an item's itemID to its quantity within the inventory.
-        std::unordered_map<itemID, int> invContainer;
-        int maxSize;
-        int curSize;
-
-    };
 
 
     /*

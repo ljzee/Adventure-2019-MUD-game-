@@ -11,20 +11,20 @@
 
 using json = nlohmann::json;
 
-bool itemManager::addItem(std::unique_ptr<baseItem> item){
-    itemMap.insert({itemMap.size(), item});
+void itemManager::addItem(std::unique_ptr<baseItem> item) {
+    itemMap.insert({itemMap.size(), std::move(item)});
 }
 
-bool itemManager::removeItem(itemID item){
+void itemManager::removeItem(itemID item){
     itemMap.erase(item);
 }
 
-std::unique_ptr<baseItem> itemLookup(itemID id) {
+const std::unique_ptr<baseItem> itemManager::itemLookup(itemID id) const{
     auto exists = itemMap.find(id);
     if (!(exists == itemMap.end() )){
-        return exists->second;
+        return exists->second.get();
     } else {
-        return itemMap.begin()->second;
+        return itemMap.begin()->second.get();
     }
 }
 
