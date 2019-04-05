@@ -8,9 +8,8 @@ add_library(mud
         src/clonable.cpp
         src/RoomController.cpp
         src/CharacterController.cpp
-        src/AssociationController.cpp)
-
-
+        src/AssociationController.cpp
+        )
 
 find_package(Boost 1.68 COMPONENTS system filesystem REQUIRED)
 
