@@ -1,7 +1,13 @@
 add_library(command
-  src/command.cpp
-  src/commander.cpp
-        src/commandDeclaration.cpp
+  src/Command.cpp
+  src/Commander.cpp
+  src/Combat.cpp
+  src/CommandItem.cpp
+  src/Communicate.cpp
+  src/Move.cpp
+  src/Look.cpp
+  src/CommandNotExist.cpp
+  src/Swap.cpp
 )
 
 find_package(Boost 1.68 COMPONENTS system REQUIRED)

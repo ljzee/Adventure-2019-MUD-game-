@@ -17,7 +17,7 @@
 #include <unistd.h>
 #include <vector>
 #include "world.h"
-#include "commander.h"
+#include "Commander.h"
 
 #include "boost/algorithm/string.hpp"
 
@@ -25,26 +25,20 @@
 using networking::Server;
 using networking::Connection;
 using networking::Message;
-#include <regex>
 
 
 UserManager UsrMgr;
-
-int globalId = 0; //TEMPORARILY FOR TESTING
 
 void
 onConnect(Connection c) {
     std::cout << "New connection found: " << c.id << "\n";
 
     User user{c};
-    user.setActiveAvatarId(globalId);
-    globalId++;
     UsrMgr.addUser(user);
     UsrMgr.printAllUsers();
 
     //SEND MESSAGE TO A PARTICULAR CONNECTION LIKE THIS
-    UsrMgr.sendMessage(user.getConnection(), "Welcome Aboard!");
-    UsrMgr.sendMessage(user.getConnection(), "Login by typing !LOGIN <username> <password> or !REGISTER <username> <password>");
+    UsrMgr.sendMessage(user.getConnection(), "Welcome Aboard!\nLogin by typing !LOGIN <username> <password> or !REGISTER <username> <password>");
 
 }
 
@@ -72,8 +66,8 @@ processMessages(Server &server,
                 Commander& commander) {
 
     for (auto& message : incoming) {
-        std::cout << message.text << endl; // stores in terminal
-        UsrMgr.sendMessage(message.connection, message.text); // stores on client
+        //std::cout << message.text << endl; // stores in terminal
+        //UsrMgr.sendMessage(message.connection, message.text); // stores on client
         if (message.text == "quit") {
             server.disconnect(message.connection);
         } else if (message.text == "shutdown") {
@@ -132,7 +126,6 @@ main(int argc, char* argv[]) {
         auto incoming = server.receive();
         processMessages(server, incoming, done, commander);
         commander.executeHeartbeat(UsrMgr);
-        //world.update(UsrMgr);
         auto outgoing = UsrMgr.buildOutgoing();
         server.send(outgoing);
         sleep(1);
@@ -145,11 +138,28 @@ main(int argc, char* argv[]) {
 void
 processAuthenticatedMessages(const Message& message, Commander& commander) {
     // is LOGOUT? else it's a command
-    if (boost::contains(message.text, "!LOGOUT")) {
+    if(boost::contains(message.text, "!LOGOUT")) {
         UsrMgr.logout(message.connection);
         UsrMgr.printAllUsers();
-    }else if(UsrMgr.getUserActiveAvatarId(message.connection) != -1){
-        commander.generateCommandObject(message.connection, UsrMgr.getUserActiveAvatarId(message.connection), message.text);
+    }else if(UsrMgr.ifHasActiveAvatar(message.connection)){
+        if(boost::contains(message.text, "!SWITCH")){
+            //TODO: Implement the switch of characters while in game
+            UsrMgr.setHasActiveAvatar(message.connection, false);
+        }else {
+            commander.createNewCommand(message.connection, message.text);
+        }
+    }else{
+        if(boost::contains(message.text, "!SELECT")){
+            std::cout << "calling !SELECT" << std::endl;
+            UsrMgr.setHasActiveAvatar(message.connection, true);
+            UsrMgr.sendMessage(message.connection, "You've selected a character");
+        }else if(boost::contains(message.text, "!NEW")){
+            std::cout << "calling !NEW" << std::endl;
+            //UsrMgr.setHasActiveAvatar(message.connection, true);
+            UsrMgr.sendMessage(message.connection, "You've created a new character! Now call !SELECT [avatar_name] to choose a character.");
+        }else{
+            UsrMgr.sendMessage(message.connection, "To select an existing avatar: !SELECT [avatar_name]\nTo create a new avatar: !NEW [avatar_name]\nYour avatars: Swordmaster101, thievingBoss, swedishfish");
+        }
     }
 }
 
@@ -157,13 +167,11 @@ void
 processUnauthenticatedMessages(const Message& message, Commander& commander) {
     if (boost::contains(message.text ,"!REGISTER")) {
         if(UsrMgr.registerUser(message.connection, message.text)){
-            UsrMgr.setUserActiveAvatarId(message.connection, globalId);
-            globalId++;
+            UsrMgr.sendMessage(message.connection, "To select an existing avatar: !SELECT [avatar_name]\nTo create a new avatar: !NEW [avatar_name]\nYour avatars: Swordmaster101, thievingBoss, swedishfish");
         }
     } else if (boost::contains(message.text, "!LOGIN")) {
         if(UsrMgr.login(message.connection, message.text)){
-            UsrMgr.setUserActiveAvatarId(message.connection, globalId);
-            globalId++;
+            UsrMgr.sendMessage(message.connection, "To select an existing avatar: !SELECT [avatar_name]\nTo create a new avatar: !NEW [avatar_name]\nYour avatars: Swordmaster101, thievingBoss, swedishfish");
         }
     } else {
         UsrMgr.sendMessage(message.connection, std::string("Login with !LOGIN <user> <pass> or register with !REGISTER <user> <pass>"));

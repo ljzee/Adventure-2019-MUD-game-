@@ -56,12 +56,13 @@ public:
     //send message to a particular user
     void sendMessage(const networking::Connection& con, const std::string& message);
 
+    void sendMessageQueue(const std::deque<std::pair<uintptr_t, std::string>>& messageQueue);
     //build a deque of all messages to be sent to each user
     std::deque<networking::Message> buildOutgoing();
 
-    void setUserActiveAvatarId(const networking::Connection &con, int id);
+    void setHasActiveAvatar(const networking::Connection &con, bool b);
 
-    int getUserActiveAvatarId(const networking::Connection &con);
+    bool ifHasActiveAvatar(const networking::Connection &con);
 
     void printAllUsers(); //For Testing
 

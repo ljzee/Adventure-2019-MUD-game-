@@ -22,6 +22,7 @@ void UserManager::addUser(User &newUser) {
 
 //remove a current user, on logout or disconnect
 void UserManager::removeUser(const networking::Connection& con) {
+    logout(con);
     connectedUsers.erase(con.id);
 }
 
@@ -103,7 +104,16 @@ bool UserManager::isAuthenticated(const networking::Connection& con) {
 //send message to a particular user
 void UserManager::sendMessage(const networking::Connection& con, const std::string& message) {
     auto user = connectedUsers.find(con.id);
-    user->second.sendMessage(message);
+    if(user != connectedUsers.end()) {
+        user->second.sendMessage(message);
+    }
+}
+
+void UserManager::sendMessageQueue(const std::deque<std::pair<uintptr_t, std::string>> &messageQueue) {
+    for(auto message : messageQueue){
+        networking::Connection con = {message.first};
+        sendMessage(con, message.second);
+    }
 }
 
 //build a deque of all messages to be sent to each user
@@ -118,17 +128,17 @@ std::deque<networking::Message> UserManager::buildOutgoing() {
     return outgoing;
 }
 
-void UserManager::setUserActiveAvatarId(const networking::Connection &con, int id) {
+void UserManager::setHasActiveAvatar(const networking::Connection &con, bool b) {
     auto user = connectedUsers.find(con.id);
     if(user != connectedUsers.end()){
-        user->second.setActiveAvatarId(id);
+        user->second.setHasActiveAvatar(b);
     }
 }
 
-int UserManager::getUserActiveAvatarId(const networking::Connection &con) {
+bool UserManager::ifHasActiveAvatar(const networking::Connection &con) {
     auto user = connectedUsers.find(con.id);
     if(user != connectedUsers.end()){
-        return user->second.getActiveAvatarId();
+        return user->second.getHasActiveAvatar();
     }
     return -1;
 }

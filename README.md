@@ -1,4 +1,4 @@
-# Babka group CMPT373 Project
+# Babka group CMPT373 Project Yohoo
 
 ## Dependencies
 
