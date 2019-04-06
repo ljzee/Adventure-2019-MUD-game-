@@ -12,10 +12,11 @@ void JSONParser::parseAreaJsonFiles() {
     while (buildlingArea) {
         std::string jsonDirectory;
         cout << "type CANCEL to end start-up process" << endl;
+        cout << "<enter> if JSON files are in build directory" << endl;
         cout << "Input JSON directory address::" << endl;
-        cin >> jsonDirectory;
+        getline(std::cin, jsonDirectory);
         if (jsonDirectory == "CANCEL") exit(1);
-        if (jsonDirectory.back() != '/') jsonDirectory = jsonDirectory + '/';
+        else if (!jsonDirectory.empty() && jsonDirectory.back() != '/') jsonDirectory = jsonDirectory + '/';
 
         std::string mirkwood = jsonDirectory + "mirkwood.json";
         std::string shire = jsonDirectory + "shire.json";
