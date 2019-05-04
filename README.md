@@ -1,5 +1,4 @@
-# Babka group CMPT373 Project Yohoo
-
+# Adventure 2019 (Mud Game)
 ## Dependencies
 
 This project requires:
